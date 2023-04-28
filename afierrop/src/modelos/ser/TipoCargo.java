@@ -9,6 +9,10 @@ package modelos.ser;
  * @author artur
  */
 public enum TipoCargo {
+
+    /**
+     * Los tipos que hay de cargo
+     */
     OFICIAL, GUERRERO;
 
 }

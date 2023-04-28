@@ -5,7 +5,6 @@
 package modelos.ser.humano;
 
 import modelos.ser.TipoCargo;
-import modelos.ser.TipoRaza;
 
 /**
  *
@@ -13,13 +12,15 @@ import modelos.ser.TipoRaza;
  */
 public class Artillero extends Humano {
 
+    /**
+     * Constructor de Artillero. Hereda de humano y luego de ser. Artillero
+     * asigna sus atributos unicos (nombre, coste, tipo de cargo, vida y
+     * puntos), Humano asigna su atributo unico que es la raza humana y los
+     * demás los deja, y Ser (el padre de todos) asigna a todos los valores como
+     * los que se le pasa por parametro, que son los que se le pasa mediante sus
+     * hijos.
+     */
     public Artillero() {
-        super();
-        this.coste = 50;
-        this.cargo = TipoCargo.GUERRERO;
-        this.raza = TipoRaza.HUMANO;
-        this.vida = 150;
-        this.puntos = 100;
-
+        super("Artillero", 50, TipoCargo.GUERRERO, 150, 100);
     }
 }

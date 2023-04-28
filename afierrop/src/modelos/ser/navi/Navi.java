@@ -5,11 +5,29 @@
 package modelos.ser.navi;
 
 import modelos.ser.Ser;
+import modelos.ser.TipoCargo;
+import modelos.ser.TipoRaza;
 
 /**
  *
  * @author artur
  */
 public abstract class Navi extends Ser {
+
+    /**
+     * Constructor de Navi.Solo asigna el atributo de raza especificamente como
+     * raza navi, su hijo esepcifica los demas atributos.Hereda de la clase ser
+     * su constructor que asigna a los atributos como los parametros que se le
+     * asigna, asignados con sus hijos. Datos sin especificar:
+     *
+     * @param nombre
+     * @param coste
+     * @param cargo
+     * @param vida
+     * @param puntos
+     */
+    public Navi(String nombre, int coste, TipoCargo cargo, int vida, int puntos) {
+        super(nombre, coste, cargo, TipoRaza.NAVI, vida, puntos);
+    }
 
 }

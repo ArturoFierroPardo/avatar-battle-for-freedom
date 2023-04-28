@@ -5,7 +5,6 @@
 package modelos.ser.humano;
 
 import modelos.ser.TipoCargo;
-import modelos.ser.TipoRaza;
 
 /**
  *
@@ -13,13 +12,16 @@ import modelos.ser.TipoRaza;
  */
 public class Comandante extends Humano {
 
+    /**
+     * Constructor de Comandante. Hereda de humano y luego de ser. Comandante
+     * asigna sus atributos unicos (nombre, coste, tipo de cargo, vida y
+     * puntos), Humano asigna su atributo unico que es la raza humana y los
+     * demás los deja, y Ser (el padre de todos) asigna a todos los valores como
+     * los que se le pasa por parametro, que son los que se le pasa mediante sus
+     * hijos.
+     */
     public Comandante() {
-        super();
-        this.coste = 100;
-        this.cargo = TipoCargo.OFICIAL;
-        this.raza = TipoRaza.HUMANO;
-        this.vida = 150;
-        this.puntos = 400;
+        super("Comandante de SecOps", 100, TipoCargo.OFICIAL, 150, 400);
     }
 
 }

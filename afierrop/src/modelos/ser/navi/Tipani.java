@@ -5,7 +5,6 @@
 package modelos.ser.navi;
 
 import modelos.ser.TipoCargo;
-import modelos.ser.TipoRaza;
 
 /**
  *
@@ -13,13 +12,15 @@ import modelos.ser.TipoRaza;
  */
 public class Tipani extends Navi {
 
+    /**
+     * Constructor de Tipani. Hereda de navi y luego de ser. Omaticaya asigna
+     * sus atributos unicos (nombre, coste, tipo de cargo, vida y puntos), navi
+     * asigna su atributo unico que es la raza navi y los demás los deja, y Ser
+     * (el padre de todos) asigna a todos los valores como los que se le pasa
+     * por parametro, que son los que se le pasa mediante sus hijos.
+     */
     public Tipani() {
-        super();
-        this.coste = 50;
-        this.cargo = TipoCargo.GUERRERO;
-        this.raza = TipoRaza.NAVI;
-        this.vida = 300;
-        this.puntos = 250;
+        super("Tipani", 50, TipoCargo.GUERRERO, 300, 250);
 
     }
 }

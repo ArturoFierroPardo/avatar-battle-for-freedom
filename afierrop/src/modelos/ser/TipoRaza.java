@@ -9,6 +9,10 @@ package modelos.ser;
  * @author artur
  */
 public enum TipoRaza {
+
+    /**
+     * Los tipos que hay de raza
+     */
     HUMANO, NAVI;
 
 }
