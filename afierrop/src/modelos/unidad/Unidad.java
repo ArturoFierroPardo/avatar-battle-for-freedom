@@ -92,4 +92,19 @@ public abstract class Unidad {
 
     }
 
+    public String getNombre() {
+        return this.nombre;
+    }
+
+    @Override
+    public String toString() {
+        return "Nombre: " + this.nombre + "\n"
+                + "Coste: " + this.coste + "\n"
+                + "Energia de defensa: " + this.energiadefensa + "\n"
+                + "Energia de ataque: " + this.energiataque + "\n"
+                + "Energia de movimiento: " + this.energiamov + "\n"
+                + "Potencia: " + this.potencia + "\n"
+                + "Puntos: " + this.puntos + " \n";
+
+    }
 }

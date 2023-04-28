@@ -4,6 +4,11 @@
  */
 package aplicacion;
 
+import modelos.ser.Ser;
+import modelos.ser.humano.Artillero;
+import modelos.unidad.Unidad;
+import modelos.unidad.bestia.Banshee;
+
 /**
  *
  * @author artur
@@ -14,7 +19,10 @@ public class Aplicacion {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("Prueba para github");
+        Unidad banshee = new Banshee();
+        Ser artillero = new Artillero();
+        System.out.println(banshee.toString());
+        System.out.println(artillero.toString());
     }
 
 }
