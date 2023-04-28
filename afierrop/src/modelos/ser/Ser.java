@@ -63,6 +63,8 @@ public abstract class Ser {
 
     /**
      * Setters
+     *
+     * @param vida
      */
     public void setVida(int vida) {
         this.vida = vida;
@@ -81,6 +83,10 @@ public abstract class Ser {
         return this.vida;
     }
 
+    /**
+     * Override de toString, al cual acceden todos sus hijos cada uno con sus
+     * datos gracias a la herencia de clases.
+     */
     @Override
     public String toString() {
         return "Nombre: " + this.nombre + "\n"

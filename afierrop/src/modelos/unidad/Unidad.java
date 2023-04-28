@@ -92,10 +92,46 @@ public abstract class Unidad {
 
     }
 
-    public String getNombre() {
-        return this.nombre;
+    /**
+     * Setters
+     *
+     * @param energiadefensa
+     * @param energiataque
+     * @param energiamov
+     */
+    public void setEnergiadefensa(int energiadefensa) {
+        this.energiadefensa = energiadefensa;
     }
 
+    public void setEnergiataque(int energiataque) {
+        this.energiataque = energiataque;
+    }
+
+    public void setEnergiamov(int energiamov) {
+        this.energiamov = energiamov;
+    }
+
+    /**
+     * Getters
+     *
+     * @return
+     */
+    public int getEnergiadefensa() {
+        return this.energiadefensa;
+    }
+
+    public int getEnergiataque() {
+        return this.energiataque;
+    }
+
+    public int getEnergiamov() {
+        return this.energiamov;
+    }
+
+    /**
+     * Override de toString, al cual acceden todos sus hijos cada uno con sus
+     * datos gracias a la herencia de clases.
+     */
     @Override
     public String toString() {
         return "Nombre: " + this.nombre + "\n"
