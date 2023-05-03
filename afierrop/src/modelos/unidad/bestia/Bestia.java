@@ -5,7 +5,7 @@
 package modelos.unidad.bestia;
 
 import java.util.ArrayList;
-import modelos.configuraciones.Coordenadas;
+import modelos.coordenadas.Coordenadas;
 import modelos.ser.Ser;
 import modelos.unidad.Unidad;
 

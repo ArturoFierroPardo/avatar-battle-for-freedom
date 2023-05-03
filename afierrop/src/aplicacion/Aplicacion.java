@@ -4,9 +4,11 @@
  */
 package aplicacion;
 
+import modelos.coordenadas.Coordenadas;
 import modelos.equipo.Equipo;
 import modelos.escenario.ArbolMadre;
 import modelos.escenario.Escenario;
+import modelos.excepciones.FueradeMapaException;
 import modelos.jugador.Jugador;
 import modelos.ser.Ser;
 import modelos.ser.humano.Artillero;
@@ -22,13 +24,14 @@ public class Aplicacion {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FueradeMapaException {
         Escenario escenario = new ArbolMadre();
         Unidad banshee = new Banshee();
         Ser artillero = new Artillero();
+        Coordenadas coordenada = new Coordenadas(301, 301, escenario);
         Jugador jugador = new Jugador("Arturo", Equipo.RDA, escenario);
 
-        System.out.println(jugador.toString());
+        System.out.println(coordenada.toString());
 
     }
 

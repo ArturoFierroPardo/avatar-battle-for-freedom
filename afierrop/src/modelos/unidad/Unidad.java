@@ -5,7 +5,7 @@
 package modelos.unidad;
 
 import java.util.ArrayList;
-import modelos.configuraciones.Coordenadas;
+import modelos.coordenadas.Coordenadas;
 import modelos.ser.Ser;
 
 /**
@@ -208,7 +208,6 @@ public abstract class Unidad {
                 + "Energia de movimiento: " + this.energiamov + "\n"
                 + "Potencia: " + this.potencia + "\n"
                 + "Puntos: " + this.puntosderrota + " \n"
-                + "Seres en la unidad: " + this.tripulantes.size() + "\n"
                 + "Energia que gasta al moverse: " + this.energiagastadaxmov + "\n"
                 + "Maximas casilla que puede moverse por turno: " + this.maxmov + "\n"
                 + "Rango de ataque: " + this.rangoataque + " casillas\n";
