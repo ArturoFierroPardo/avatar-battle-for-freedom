@@ -19,7 +19,7 @@ public class Thanator extends Bestia {
      * comprar la unidad
      */
     public Thanator() {
-        super("Thanator", 8000, 9000, 9000, 6000, 600, 4000, null, null);
+        super("Thanator", 8000, 9000, 9000, 6000, 600, 4000, null, null, 10, "50", 5);
     }
 
 }

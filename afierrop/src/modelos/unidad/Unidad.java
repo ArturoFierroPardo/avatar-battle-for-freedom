@@ -36,7 +36,7 @@ public abstract class Unidad {
     private int energiataque;
 
     /**
-     * Cuanta energia de movimiento, se gasta en funcion de cuanto se va
+     * Cuanta energia de movimiento tiene, se gasta en funcion de cuanto se va
      * moviendo
      */
     private int energiamov;
@@ -63,9 +63,24 @@ public abstract class Unidad {
     private Coordenadas posicion;
 
     /**
+     * Energia consumida al moverse una casilla
+     */
+    private int energiagastadaxmov;
+
+    /**
+     * Maximas casillas que se puede mover en un turno
+     */
+    private String maxmov;
+
+    /**
+     * Rango de ataque
+     */
+    private int rangoataque;
+
+    /**
      * Constructor de Unidad.Recibe por parametros todo sus atributos que son
-     * especificados por sus hijos los cuales heredan este constructor.Datos
-     * sinespecificar:
+     * especificados por sus hijos los cuales heredan este constructor. Datos
+     * sin especificar:
      *
      * @param nombre
      * @param coste
@@ -76,10 +91,13 @@ public abstract class Unidad {
      * @param puntosderrota
      * @param tripulantes
      * @param posicion
+     * @param energiagastadaxmov
+     * @param maxmov
+     * @param rangoataque
      *
      *
      */
-    public Unidad(String nombre, int coste, int energiadefensa, int energiataque, int energiamov, int potencia, int puntosderrota, ArrayList<Ser> tripulantes, Coordenadas posicion) {
+    public Unidad(String nombre, int coste, int energiadefensa, int energiataque, int energiamov, int potencia, int puntosderrota, ArrayList<Ser> tripulantes, Coordenadas posicion, int energiagastadaxmov, String maxmov, int rangoataque) {
         this.nombre = nombre;
         this.coste = coste;
         this.energiadefensa = energiadefensa;
@@ -89,6 +107,9 @@ public abstract class Unidad {
         this.puntosderrota = puntosderrota;
         this.tripulantes = null;
         this.posicion = null;
+        this.energiagastadaxmov = energiagastadaxmov;
+        this.maxmov = maxmov;
+        this.rangoataque = rangoataque;
 
     }
 
@@ -162,6 +183,18 @@ public abstract class Unidad {
         return this.posicion;
     }
 
+    public int getEnergiagastadaxmov() {
+        return this.energiagastadaxmov;
+    }
+
+    public String geMaxmov() {
+        return this.maxmov;
+    }
+
+    public int getRangoataque() {
+        return this.rangoataque;
+    }
+
     /**
      * Override de toString, al cual acceden todos sus hijos cada uno con sus
      * datos gracias a la herencia de clases.
@@ -175,6 +208,9 @@ public abstract class Unidad {
                 + "Energia de movimiento: " + this.energiamov + "\n"
                 + "Potencia: " + this.potencia + "\n"
                 + "Puntos: " + this.puntosderrota + " \n"
-                + "Seres en la unidad: " + this.tripulantes.size();
+                + "Seres en la unidad: " + this.tripulantes.size() + "\n"
+                + "Energia que gasta al moverse: " + this.energiagastadaxmov + "\n"
+                + "Maximas casilla que puede moverse por turno: " + this.maxmov + "\n"
+                + "Rango de ataque: " + this.rangoataque + " casillas\n";
     }
 }

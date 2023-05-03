@@ -19,7 +19,7 @@ public class Titanothere extends Bestia {
      * con setters al comprar la unidad
      */
     public Titanothere() {
-        super("Titanothere Cabezamartillo", 1000, 11000, 11000, 4500, 300, 250, null, null);
+        super("Titanothere Cabezamartillo", 1000, 11000, 11000, 4500, 300, 250, null, null, 25, "2", 1);
     }
 
 }
