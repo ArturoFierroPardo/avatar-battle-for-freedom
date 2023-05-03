@@ -50,7 +50,7 @@ public abstract class Unidad {
     /**
      * Puntos que se ganan al destruirlo
      */
-    private int puntos;
+    private int puntosderrota;
 
     /**
      * Numero de tripulantes que necesita
@@ -73,20 +73,20 @@ public abstract class Unidad {
      * @param energiataque
      * @param energiamov
      * @param potencia
-     * @param puntos
+     * @param puntosderrota
      * @param tripulantes
      * @param posicion
      *
      *
      */
-    public Unidad(String nombre, int coste, int energiadefensa, int energiataque, int energiamov, int potencia, int puntos, ArrayList<Ser> tripulantes, Coordenadas posicion) {
+    public Unidad(String nombre, int coste, int energiadefensa, int energiataque, int energiamov, int potencia, int puntosderrota, ArrayList<Ser> tripulantes, Coordenadas posicion) {
         this.nombre = nombre;
         this.coste = coste;
         this.energiadefensa = energiadefensa;
         this.energiataque = energiataque;
         this.energiamov = energiamov;
         this.potencia = potencia;
-        this.puntos = puntos;
+        this.puntosderrota = puntosderrota;
         this.tripulantes = null;
         this.posicion = null;
 
@@ -98,6 +98,8 @@ public abstract class Unidad {
      * @param energiadefensa
      * @param energiataque
      * @param energiamov
+     * @param posicion
+     * @param tripulantes
      */
     public void setEnergiadefensa(int energiadefensa) {
         this.energiadefensa = energiadefensa;
@@ -111,11 +113,27 @@ public abstract class Unidad {
         this.energiamov = energiamov;
     }
 
+    public void setPosicion(Coordenadas posicion) {
+        this.posicion = posicion;
+    }
+
+    public void setTripulantes(ArrayList<Ser> tripulantes) {
+        this.tripulantes = tripulantes;
+    }
+
     /**
      * Getters
      *
      * @return
      */
+    public String getNombre() {
+        return this.nombre;
+    }
+
+    public int getCoste() {
+        return this.coste;
+    }
+
     public int getEnergiadefensa() {
         return this.energiadefensa;
     }
@@ -126,6 +144,22 @@ public abstract class Unidad {
 
     public int getEnergiamov() {
         return this.energiamov;
+    }
+
+    public int getPotencia() {
+        return this.potencia;
+    }
+
+    public int getPuntosderrota() {
+        return this.puntosderrota;
+    }
+
+    public ArrayList<Ser> getTripulantes() {
+        return this.tripulantes;
+    }
+
+    public Coordenadas getPosicon() {
+        return this.posicion;
     }
 
     /**
@@ -140,7 +174,7 @@ public abstract class Unidad {
                 + "Energia de ataque: " + this.energiataque + "\n"
                 + "Energia de movimiento: " + this.energiamov + "\n"
                 + "Potencia: " + this.potencia + "\n"
-                + "Puntos: " + this.puntos + " \n";
-
+                + "Puntos: " + this.puntosderrota + " \n"
+                + "Seres en la unidad: " + this.tripulantes.size();
     }
 }

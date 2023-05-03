@@ -24,10 +24,10 @@ public abstract class Humano extends Ser {
      * @param coste
      * @param cargo
      * @param vida
-     * @param puntos
+     * @param puntosderrota
      */
-    public Humano(String nombre, int coste, TipoCargo cargo, int vida, int puntos) {
-        super(nombre, coste, cargo, TipoRaza.HUMANO, vida, puntos);
+    public Humano(String nombre, int coste, TipoCargo cargo, int vida, int puntosderrota) {
+        super(nombre, coste, cargo, TipoRaza.HUMANO, vida, puntosderrota);
 
     }
 

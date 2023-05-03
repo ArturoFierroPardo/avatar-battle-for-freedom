@@ -11,7 +11,7 @@ package modelos.ser;
 public enum TipoCargo {
 
     /**
-     * Los tipos que hay de cargo
+     * Clase enumerada que consta de dos tipos de cargos.
      */
     OFICIAL, GUERRERO;
 

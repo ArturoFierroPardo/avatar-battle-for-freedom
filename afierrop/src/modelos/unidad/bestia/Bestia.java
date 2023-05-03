@@ -26,12 +26,12 @@ public abstract class Bestia extends Unidad {
      * @param energiataque
      * @param energiamov
      * @param potencia
-     * @param puntos
+     * @param puntosderrota
      * @param tripulantes
      * @param posicion
      */
-    public Bestia(String nombre, int coste, int energiadefensa, int energiataque, int energiamov, int potencia, int puntos, ArrayList<Ser> tripulantes, Coordenadas posicion) {
-        super(nombre, coste, energiadefensa, energiataque, energiamov, potencia, puntos, tripulantes, posicion);
+    public Bestia(String nombre, int coste, int energiadefensa, int energiataque, int energiamov, int potencia, int puntosderrota, ArrayList<Ser> tripulantes, Coordenadas posicion) {
+        super(nombre, coste, energiadefensa, energiataque, energiamov, potencia, puntosderrota, tripulantes, posicion);
     }
 
 }

@@ -27,12 +27,12 @@ public abstract class Maquina extends Unidad {
      * @param energiataque
      * @param energiamov
      * @param potencia
-     * @param puntos
+     * @param puntosderrota
      * @param tripulantes
      * @param posicion
      */
-    public Maquina(String nombre, int coste, int energiadefensa, int energiataque, int energiamov, int potencia, int puntos, ArrayList<Ser> tripulantes, Coordenadas posicion) {
-        super(nombre, coste, energiadefensa, energiataque, energiamov, potencia, puntos, tripulantes, posicion);
+    public Maquina(String nombre, int coste, int energiadefensa, int energiataque, int energiamov, int potencia, int puntosderrota, ArrayList<Ser> tripulantes, Coordenadas posicion) {
+        super(nombre, coste, energiadefensa, energiataque, energiamov, potencia, puntosderrota, tripulantes, posicion);
     }
 
 }

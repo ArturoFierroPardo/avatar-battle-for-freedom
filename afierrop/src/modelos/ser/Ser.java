@@ -33,7 +33,7 @@ public abstract class Ser {
     /**
      * Puntos que se recibe al derrotarlo
      */
-    private int puntos;
+    private int puntosderrota;
 
     /**
      * Nombre del ser
@@ -50,15 +50,15 @@ public abstract class Ser {
      * @param cargo
      * @param raza
      * @param vida
-     * @param puntos
+     * @param puntosderrota
      */
-    public Ser(String nombre, int coste, TipoCargo cargo, TipoRaza raza, int vida, int puntos) {
+    public Ser(String nombre, int coste, TipoCargo cargo, TipoRaza raza, int vida, int puntosderrota) {
         this.nombre = nombre;
         this.coste = coste;
         this.cargo = cargo;
         this.raza = raza;
         this.vida = vida;
-        this.puntos = puntos;
+        this.puntosderrota = puntosderrota;
     }
 
     /**
@@ -75,12 +75,28 @@ public abstract class Ser {
      *
      * @return
      */
+    public String getNombre() {
+        return this.nombre;
+    }
+
     public int getCoste() {
         return this.coste;
     }
 
+    public TipoCargo getCargo() {
+        return this.cargo;
+    }
+
+    public TipoRaza getRaza() {
+        return this.raza;
+    }
+
     public int getVida() {
         return this.vida;
+    }
+
+    public int getPuntosderrota() {
+        return this.puntosderrota;
     }
 
     /**
@@ -94,7 +110,7 @@ public abstract class Ser {
                 + "Cargo: " + this.cargo + "\n"
                 + "Raza: " + this.raza + "\n"
                 + "Vida: " + this.vida + "\n"
-                + "Puntos: " + this.puntos + " \n";
+                + "Puntos: " + this.puntosderrota + " \n";
 
     }
 }

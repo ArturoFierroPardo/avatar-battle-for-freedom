@@ -4,6 +4,10 @@
  */
 package aplicacion;
 
+import modelos.equipo.Equipo;
+import modelos.escenario.ArbolMadre;
+import modelos.escenario.Escenario;
+import modelos.jugador.Jugador;
 import modelos.ser.Ser;
 import modelos.ser.humano.Artillero;
 import modelos.unidad.Unidad;
@@ -19,10 +23,13 @@ public class Aplicacion {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        Escenario escenario = new ArbolMadre();
         Unidad banshee = new Banshee();
         Ser artillero = new Artillero();
-        System.out.println(banshee.toString());
-        System.out.println(artillero.toString());
+        Jugador jugador = new Jugador("Arturo", Equipo.RDA, escenario);
+
+        System.out.println(jugador.toString());
+
     }
 
 }

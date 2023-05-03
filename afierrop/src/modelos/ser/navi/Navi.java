@@ -24,10 +24,10 @@ public abstract class Navi extends Ser {
      * @param coste
      * @param cargo
      * @param vida
-     * @param puntos
+     * @param puntosderrota
      */
-    public Navi(String nombre, int coste, TipoCargo cargo, int vida, int puntos) {
-        super(nombre, coste, cargo, TipoRaza.NAVI, vida, puntos);
+    public Navi(String nombre, int coste, TipoCargo cargo, int vida, int puntosderrota) {
+        super(nombre, coste, cargo, TipoRaza.NAVI, vida, puntosderrota);
     }
 
 }

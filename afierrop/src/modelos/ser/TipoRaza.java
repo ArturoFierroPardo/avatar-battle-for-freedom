@@ -11,7 +11,7 @@ package modelos.ser;
 public enum TipoRaza {
 
     /**
-     * Los tipos que hay de raza
+     * Clase enumerada que consta de dos tipos de raza.
      */
     HUMANO, NAVI;
 
