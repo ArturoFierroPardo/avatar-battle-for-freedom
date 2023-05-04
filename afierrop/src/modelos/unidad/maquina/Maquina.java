@@ -18,7 +18,7 @@ public abstract class Maquina extends Unidad {
     /**
      * Constructor de Maquina.Su hijo esepcifica los atributos.Hereda de la
      * clase unidad su constructor que asigna a los atributos como los
-     * parametros que se le asigna, asignados con sus hijos. Datos sin
+     * parametros que se le asigna, asignados con sus hijos.Datos sin
      * especificar:
      *
      * @param nombre
@@ -33,9 +33,11 @@ public abstract class Maquina extends Unidad {
      * @param energiagastadaxmov
      * @param maxmov
      * @param rangoataque
+     * @param seresneed
      */
-    public Maquina(String nombre, int coste, int energiadefensa, int energiataque, int energiamov, int potencia, int puntosderrota, ArrayList<Ser> tripulantes, Coordenadas posicion, int energiagastadaxmov, String maxmov, int rangoataque) {
-        super(nombre, coste, energiadefensa, energiataque, energiamov, potencia, puntosderrota, tripulantes, posicion, energiagastadaxmov, maxmov, rangoataque);
+    public Maquina(String nombre, int coste, int energiadefensa, int energiataque, int energiamov, int potencia, int puntosderrota, ArrayList<Ser> tripulantes, Coordenadas posicion, int energiagastadaxmov, String maxmov, int rangoataque, int seresneed) {
+        super(nombre, coste, energiadefensa, energiataque, energiamov, potencia, puntosderrota, tripulantes, posicion, energiagastadaxmov, maxmov, rangoataque, seresneed);
+
     }
 
 }

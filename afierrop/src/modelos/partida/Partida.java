@@ -57,7 +57,7 @@ public class Partida {
 
     @Override
     public String toString() {
-        return "La partida empieza, donde luchará " + this.jugador1 + " contra " + this.jugador2 + " en el escenario " + this.escenario;
+        return "La partida comienza, lucharán " + this.jugador1 + " contra " + this.jugador2 + " en el escenario " + this.escenario;
     }
 
 }

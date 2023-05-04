@@ -13,7 +13,7 @@ import modelos.jugador.Jugador;
 import modelos.ser.Ser;
 import modelos.ser.humano.Artillero;
 import modelos.unidad.Unidad;
-import modelos.unidad.bestia.Banshee;
+import modelos.unidad.maquina.AT99;
 
 /**
  *
@@ -26,12 +26,12 @@ public class Aplicacion {
      */
     public static void main(String[] args) throws FueradeMapaException {
         Escenario escenario = new ArbolMadre();
-        Unidad banshee = new Banshee();
+        Unidad at99 = new AT99();
         Ser artillero = new Artillero();
-        Coordenadas coordenada = new Coordenadas(301, 301, escenario);
+        Coordenadas coordenada = new Coordenadas(299, 299, escenario);
         Jugador jugador = new Jugador("Arturo", Equipo.RDA, escenario);
 
-        System.out.println(coordenada.toString());
+        System.out.println(at99.toString());
 
     }
 

@@ -78,9 +78,14 @@ public abstract class Unidad {
     private int rangoataque;
 
     /**
+     * Seres necesarios para el funcionamiento
+     */
+    private int seresneed;
+
+    /**
      * Constructor de Unidad.Recibe por parametros todo sus atributos que son
-     * especificados por sus hijos los cuales heredan este constructor. Datos
-     * sin especificar:
+     * especificados por sus hijos los cuales heredan este constructor.Datos sin
+     * especificar:
      *
      * @param nombre
      * @param coste
@@ -94,10 +99,11 @@ public abstract class Unidad {
      * @param energiagastadaxmov
      * @param maxmov
      * @param rangoataque
+     * @param seresneed
      *
      *
      */
-    public Unidad(String nombre, int coste, int energiadefensa, int energiataque, int energiamov, int potencia, int puntosderrota, ArrayList<Ser> tripulantes, Coordenadas posicion, int energiagastadaxmov, String maxmov, int rangoataque) {
+    public Unidad(String nombre, int coste, int energiadefensa, int energiataque, int energiamov, int potencia, int puntosderrota, ArrayList<Ser> tripulantes, Coordenadas posicion, int energiagastadaxmov, String maxmov, int rangoataque, int seresneed) {
         this.nombre = nombre;
         this.coste = coste;
         this.energiadefensa = energiadefensa;
@@ -110,6 +116,7 @@ public abstract class Unidad {
         this.energiagastadaxmov = energiagastadaxmov;
         this.maxmov = maxmov;
         this.rangoataque = rangoataque;
+        this.seresneed = seresneed;
 
     }
 
@@ -195,6 +202,10 @@ public abstract class Unidad {
         return this.rangoataque;
     }
 
+    public int getSeresneed() {
+        return this.seresneed;
+    }
+
     /**
      * Override de toString, al cual acceden todos sus hijos cada uno con sus
      * datos gracias a la herencia de clases.
@@ -208,8 +219,9 @@ public abstract class Unidad {
                 + "Energia de movimiento: " + this.energiamov + "\n"
                 + "Potencia: " + this.potencia + "\n"
                 + "Puntos: " + this.puntosderrota + " \n"
+                + "Seres necesarios para el funcionamiento: " + this.seresneed + "\n"
                 + "Energia que gasta al moverse: " + this.energiagastadaxmov + "\n"
-                + "Maximas casilla que puede moverse por turno: " + this.maxmov + "\n"
+                + "Maximas casillas que puede moverse por turno: " + this.maxmov + "\n"
                 + "Rango de ataque: " + this.rangoataque + " casillas\n";
     }
 }

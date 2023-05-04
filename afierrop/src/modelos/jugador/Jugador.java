@@ -61,9 +61,14 @@ public class Jugador {
      * Setters
      *
      * @param ejercito
+     * @param puntos
      */
     public void setEjercito(Ejercito ejercito) {
         this.ejercito = ejercito;
+    }
+
+    public void setPuntos(int puntos) {
+        this.puntos = puntos;
     }
 
     /**

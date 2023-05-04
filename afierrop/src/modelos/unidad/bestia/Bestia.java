@@ -18,7 +18,7 @@ public abstract class Bestia extends Unidad {
     /**
      * Constructor de Bestia.Su hijo esepcifica los atributos.Hereda de la clase
      * unidad su constructor que asigna a los atributos como los parametros que
-     * se le asigna, asignados con sus hijos. Datos sin especificar:
+     * se le asigna, asignados con sus hijos.Datos sin especificar:
      *
      * @param nombre
      * @param coste
@@ -29,9 +29,13 @@ public abstract class Bestia extends Unidad {
      * @param puntosderrota
      * @param tripulantes
      * @param posicion
+     * @param energiagastadaxmov
+     * @param maxmov
+     * @param rangoataque
+     * @param seresneed
      */
-    public Bestia(String nombre, int coste, int energiadefensa, int energiataque, int energiamov, int potencia, int puntosderrota, ArrayList<Ser> tripulantes, Coordenadas posicion, int energiagastadaxmov, String maxmov, int rangoataque) {
-        super(nombre, coste, energiadefensa, energiataque, energiamov, potencia, puntosderrota, tripulantes, posicion, energiagastadaxmov, maxmov, rangoataque);
+    public Bestia(String nombre, int coste, int energiadefensa, int energiataque, int energiamov, int potencia, int puntosderrota, ArrayList<Ser> tripulantes, Coordenadas posicion, int energiagastadaxmov, String maxmov, int rangoataque, int seresneed) {
+        super(nombre, coste, energiadefensa, energiataque, energiamov, potencia, puntosderrota, tripulantes, posicion, energiagastadaxmov, maxmov, rangoataque, seresneed);
     }
 
 }

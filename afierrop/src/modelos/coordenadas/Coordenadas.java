@@ -110,10 +110,11 @@ public class Coordenadas {
 
     /**
      * Funcion para comprobar la excepcion de si esta fuera del mapa la
-     * coordenada Y. Recibe un escenario para comprobar dependiendo de su maximo
+     * coordenada Y.Recibe un escenario para comprobar dependiendo de su maximo
      * en Y.
      *
      * @param Y
+     * @param escenario
      * @throws modelos.excepciones.FueradeMapaException
      */
     public void checkCoordenadaY(int Y, Escenario escenario) throws FueradeMapaException {

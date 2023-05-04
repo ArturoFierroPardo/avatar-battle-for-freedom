@@ -11,6 +11,6 @@ package modelos.excepciones;
 public class FueradeMapaException extends Exception {
 
     /**
-     * Excepcion que salta si sale del mapa
+     * Excepcion para las coordenadas que salta si se salen del mapa
      */
 }

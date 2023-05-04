@@ -14,13 +14,14 @@ public class Aerospatiale extends Maquina {
      * Constructor de Aerospatiale. Hereda de Maquina y luego de Unidad.
      * Aerospatiale asigna sus atributos unicos (nombre, coste, energias,
      * potencia, puntos, tripulantes, posicion, energia gastada al moverse,
-     * maximo movimiento y rango de ataque), Unidad (el padre de todos) asigna a
-     * todos los valores como los que se le pasa por parametro, que son los que
-     * se le pasa mediante sus hijos. Posicion y tripulantes se asignan con
-     * setters al comprar la unidad
+     * maximo movimiento, rango de ataque y seres necesarios para el
+     * funcionamiento), Unidad (el padre de todos) asigna a todos los valores
+     * como los que se le pasa por parametro, que son los que se le pasa
+     * mediante sus hijos. Posicion y tripulantes se asignan con setters al
+     * comprar la unidad
      */
     public Aerospatiale() {
-        super("Aerospatiale SA-2 Samson", 2500, 1000, 1000, 500, 80, 1500, null, null, 50, "10", 5);
+        super("Aerospatiale SA-2 Samson", 2500, 1000, 1000, 500, 80, 1500, null, null, 50, "10", 5, 2);
     }
 
 }
