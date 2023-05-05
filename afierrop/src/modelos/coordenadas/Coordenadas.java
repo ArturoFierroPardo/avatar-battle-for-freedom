@@ -7,6 +7,7 @@ package modelos.coordenadas;
 import java.util.Random;
 import modelos.escenario.Escenario;
 import modelos.excepciones.FueradeMapaException;
+import utils.Utils;
 
 /**
  *
@@ -40,11 +41,18 @@ public class Coordenadas {
      * @throws modelos.excepciones.FueradeMapaException
      */
     public Coordenadas(int x, int y, Escenario escenario) throws FueradeMapaException {
-        this.x = x;
-        this.y = y;
-        checkCoordenadaX(this.x, escenario);
-        checkCoordenadaY(this.y, escenario);
-
+        while (true) {
+            try {
+                this.x = x;
+                this.y = y;
+                checkCoordenadaX(this.x, escenario);
+                checkCoordenadaY(this.y, escenario);
+                break;
+            } catch (FueradeMapaException fme) {
+                x = Utils.leerEntero("Vuelva a introducir su posicion en X que no se pase del limite " + escenario.getXmax() + ":");
+                y = Utils.leerEntero("Vuelva a introducir su posicion en Y que no se pase del limite " + escenario.getYmax() + ":");
+            }
+        }
     }
 
     /**
@@ -55,11 +63,20 @@ public class Coordenadas {
      * @throws modelos.excepciones.FueradeMapaException
      */
     public Coordenadas(Escenario escenario) throws FueradeMapaException {
-        Random rand = new Random();
-        this.x = rand.nextInt(escenario.getXmax());
-        this.y = rand.nextInt(escenario.getYmax());
-        checkCoordenadaX(this.x, escenario);
-        checkCoordenadaY(this.y, escenario);
+        while (true) {
+            try {
+                Random rand = new Random();
+                this.x = rand.nextInt(escenario.getXmax());
+                this.y = rand.nextInt(escenario.getYmax());
+                checkCoordenadaX(this.x, escenario);
+                checkCoordenadaY(this.y, escenario);
+                break;
+            } catch (FueradeMapaException fme) {
+                Random rand = new Random();
+                x = rand.nextInt(escenario.getXmax());
+                y = rand.nextInt(escenario.getYmax());
+            }
+        }
     }
 
     /**
