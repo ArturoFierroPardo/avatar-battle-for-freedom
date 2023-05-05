@@ -28,7 +28,7 @@ public class Aplicacion {
         Escenario escenario = new ArbolMadre();
         Unidad at99 = new AT99();
         Ser artillero = new Artillero();
-        Coordenadas coordenada = new Coordenadas(299, 299, escenario);
+        Coordenadas coordenada = new Coordenadas(escenario);
         Jugador jugador = new Jugador("Arturo", Equipo.RDA, escenario);
 
         System.out.println(coordenada.toString());

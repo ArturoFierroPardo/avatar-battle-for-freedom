@@ -5,7 +5,6 @@
 package modelos.ejercito;
 
 import java.util.ArrayList;
-import modelos.ser.Ser;
 import modelos.unidad.Unidad;
 
 /**
@@ -20,18 +19,12 @@ public class Ejercito {
     private ArrayList<Unidad> unidades;
 
     /**
-     * Lista de los seres que tiene el ejercito
-     */
-    private ArrayList<Ser> seres;
-
-    /**
      * Constructor de Ejercito, el cual, tiene de atributos dos arraylists de
      * unidades y seres, los cuales, estan instaciados en null, porque, no se
      * añadiran hasta que se compren.
      */
     public Ejercito() {
-        this.unidades = null;
-        this.seres = null;
+        this.unidades = new ArrayList<Unidad>();
     }
 
     /**
@@ -44,10 +37,6 @@ public class Ejercito {
         this.unidades = unidades;
     }
 
-    public void setSeres(ArrayList<Ser> seres) {
-        this.seres = seres;
-    }
-
     /**
      * Getters
      *
@@ -57,17 +46,13 @@ public class Ejercito {
         return this.unidades;
     }
 
-    public ArrayList<Ser> getSeres() {
-        return this.seres;
-    }
-
     /**
      * Función toString que devuelve un String con el ejercito de unidades y el
      * numeros de seres que los pilotan
      */
     @Override
     public String toString() {
-        return "Su ejercito consta de " + this.unidades + " y de " + this.seres;
+        return "Su ejercito consta de " + this.unidades;
     }
 
 }

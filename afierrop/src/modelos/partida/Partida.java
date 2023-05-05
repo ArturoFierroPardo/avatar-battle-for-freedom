@@ -6,6 +6,7 @@ package modelos.partida;
 
 import modelos.escenario.Escenario;
 import modelos.jugador.Jugador;
+import modelos.unidad.Unidad;
 
 /**
  *
@@ -29,6 +30,11 @@ public class Partida {
     private Escenario escenario;
 
     /**
+     * Mapa en el que se juega. Para guardar donde estan las unidades
+     */
+    private Unidad[][] mapa;
+
+    /**
      * Constructor de partida en el que se pasa por parametros dos jugadores que
      * jugaran uno contra el otro y un escenario en el que jugar.
      *
@@ -40,6 +46,7 @@ public class Partida {
         this.jugador1 = jugador1;
         this.jugador2 = jugador2;
         this.escenario = escenario;
+        this.mapa = new Unidad[escenario.getXmax()][escenario.getYmax()];
     }
 
     /**

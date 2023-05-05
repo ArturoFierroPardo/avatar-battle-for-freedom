@@ -54,7 +54,7 @@ public class Jugador {
         this.nombre = nombre;
         this.equipo = equipo;
         this.puntos = escenario.getPuntoscomienzo();
-        this.ejercito = null;
+        this.ejercito = new Ejercito();
     }
 
     /**
