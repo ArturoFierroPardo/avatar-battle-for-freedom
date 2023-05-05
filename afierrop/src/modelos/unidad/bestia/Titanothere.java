@@ -4,6 +4,9 @@
  */
 package modelos.unidad.bestia;
 
+import java.util.ArrayList;
+import modelos.ser.Ser;
+
 /**
  *
  * @author artur
@@ -21,7 +24,7 @@ public class Titanothere extends Bestia {
      * comprar la unidad
      */
     public Titanothere() {
-        super("Titanothere Cabezamartillo", 1000, 11000, 11000, 4500, 300, 250, null, null, 25, "2", 1, 1);
+        super("Titanothere Cabezamartillo", null, 1000, 11000, 11000, 4500, 300, 250, new ArrayList<Ser>(), null, 25, "2", 1, 1);
     }
 
 }

@@ -19,8 +19,8 @@ public class Ejercito {
     private ArrayList<Unidad> unidades;
 
     /**
-     * Constructor de Ejercito, el cual, tiene de atributos dos arraylists de
-     * unidades y seres, los cuales, estan instaciados en null, porque, no se
+     * Constructor de Ejercito, el cual, tiene de atributos un arraylist de
+     * unidade, el cuale, esta instaciado como un ArrayList vacio, porque, no se
      * añadiran hasta que se compren.
      */
     public Ejercito() {
@@ -31,7 +31,6 @@ public class Ejercito {
      * Setters
      *
      * @param unidades
-     * @param seres
      */
     public void setUnidades(ArrayList<Unidad> unidades) {
         this.unidades = unidades;
@@ -47,8 +46,7 @@ public class Ejercito {
     }
 
     /**
-     * Función toString que devuelve un String con el ejercito de unidades y el
-     * numeros de seres que los pilotan
+     * Función toString que devuelve un String con el ejercito de unidades
      */
     @Override
     public String toString() {

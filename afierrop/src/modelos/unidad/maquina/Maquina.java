@@ -6,6 +6,7 @@ package modelos.unidad.maquina;
 
 import java.util.ArrayList;
 import modelos.coordenadas.Coordenadas;
+import modelos.jugador.Jugador;
 import modelos.ser.Ser;
 import modelos.unidad.Unidad;
 
@@ -22,6 +23,7 @@ public abstract class Maquina extends Unidad {
      * especificar:
      *
      * @param nombre
+     * @param jugador
      * @param coste
      * @param energiadefensa
      * @param energiataque
@@ -35,8 +37,8 @@ public abstract class Maquina extends Unidad {
      * @param rangoataque
      * @param seresneed
      */
-    public Maquina(String nombre, int coste, int energiadefensa, int energiataque, int energiamov, int potencia, int puntosderrota, ArrayList<Ser> tripulantes, Coordenadas posicion, int energiagastadaxmov, String maxmov, int rangoataque, int seresneed) {
-        super(nombre, coste, energiadefensa, energiataque, energiamov, potencia, puntosderrota, tripulantes, posicion, energiagastadaxmov, maxmov, rangoataque, seresneed);
+    public Maquina(String nombre, Jugador jugador, int coste, int energiadefensa, int energiataque, int energiamov, int potencia, int puntosderrota, ArrayList<Ser> tripulantes, Coordenadas posicion, int energiagastadaxmov, String maxmov, int rangoataque, int seresneed) {
+        super(nombre, jugador, coste, energiadefensa, energiataque, energiamov, potencia, puntosderrota, tripulantes, posicion, energiagastadaxmov, maxmov, rangoataque, seresneed);
 
     }
 

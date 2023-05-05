@@ -35,6 +35,11 @@ public class Partida {
     private Unidad[][] mapa;
 
     /**
+     * turnos de la partida
+     */
+    private int turnos;
+
+    /**
      * Constructor de partida en el que se pasa por parametros dos jugadores que
      * jugaran uno contra el otro y un escenario en el que jugar.
      *
@@ -60,6 +65,10 @@ public class Partida {
 
     public Jugador getJugador2() {
         return this.jugador2;
+    }
+
+    public int getTurnos() {
+        return this.turnos;
     }
 
     @Override

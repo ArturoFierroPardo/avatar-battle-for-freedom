@@ -37,6 +37,7 @@ public class Coordenadas {
      *
      * @param x
      * @param y
+     * @param escenario
      * @throws modelos.excepciones.FueradeMapaException
      */
     public Coordenadas(int x, int y, Escenario escenario) throws FueradeMapaException {
@@ -51,6 +52,7 @@ public class Coordenadas {
      * poder ver su limite maximo, el cual pone a los atributos x e y
      * aleatoriamente en funcion del escenario para que no se pase.
      *
+     * @param escenario
      * @throws modelos.excepciones.FueradeMapaException
      */
     public Coordenadas(Escenario escenario) throws FueradeMapaException {

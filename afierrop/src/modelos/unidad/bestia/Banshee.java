@@ -4,6 +4,9 @@
  */
 package modelos.unidad.bestia;
 
+import java.util.ArrayList;
+import modelos.ser.Ser;
+
 /**
  *
  * @author artur
@@ -20,7 +23,7 @@ public class Banshee extends Bestia {
      * tripulantes se asignan con setters al comprar la unidad
      */
     public Banshee() {
-        super("Banshee de Montaña", 2000, 3500, 8000, 3500, 300, 1000, null, null, 10, "Casilla aleatoria", 3, 2);
+        super("Banshee de Montaña", null, 2000, 3500, 8000, 3500, 300, 1000, new ArrayList<Ser>(), null, 10, "Casilla aleatoria", 3, 2);
     }
 
 }

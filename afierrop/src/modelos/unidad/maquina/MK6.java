@@ -4,6 +4,9 @@
  */
 package modelos.unidad.maquina;
 
+import java.util.ArrayList;
+import modelos.ser.Ser;
+
 /**
  *
  * @author artur
@@ -20,7 +23,7 @@ public class MK6 extends Maquina {
      * con setters al comprar la unidad
      */
     public MK6() {
-        super("Plataforma de Movilidad Amplificada Mitsubishi MK-6", 500, 0, 1000, 500, 20, 50, null, null, 25, "2", 1, 1);
+        super("Plataforma de Movilidad Amplificada Mitsubishi MK-6", null, 500, 0, 1000, 500, 20, 50, new ArrayList<Ser>(), null, 25, "2", 1, 1);
     }
 
 }

@@ -6,6 +6,7 @@ package modelos.unidad;
 
 import java.util.ArrayList;
 import modelos.coordenadas.Coordenadas;
+import modelos.jugador.Jugador;
 import modelos.ser.Ser;
 
 /**
@@ -18,6 +19,11 @@ public abstract class Unidad {
      * Nombre de la unidad
      */
     private String nombre;
+
+    /**
+     * Jugador al que pertenece la unidad
+     */
+    private Jugador jugador;
 
     /**
      * Coste de la unidad
@@ -88,6 +94,7 @@ public abstract class Unidad {
      * especificar:
      *
      * @param nombre
+     * @param jugador
      * @param coste
      * @param energiadefensa
      * @param energiataque
@@ -103,16 +110,17 @@ public abstract class Unidad {
      *
      *
      */
-    public Unidad(String nombre, int coste, int energiadefensa, int energiataque, int energiamov, int potencia, int puntosderrota, ArrayList<Ser> tripulantes, Coordenadas posicion, int energiagastadaxmov, String maxmov, int rangoataque, int seresneed) {
+    public Unidad(String nombre, Jugador jugador, int coste, int energiadefensa, int energiataque, int energiamov, int potencia, int puntosderrota, ArrayList<Ser> tripulantes, Coordenadas posicion, int energiagastadaxmov, String maxmov, int rangoataque, int seresneed) {
         this.nombre = nombre;
+        this.jugador = jugador;
         this.coste = coste;
         this.energiadefensa = energiadefensa;
         this.energiataque = energiataque;
         this.energiamov = energiamov;
         this.potencia = potencia;
         this.puntosderrota = puntosderrota;
-        this.tripulantes = null;
-        this.posicion = null;
+        this.tripulantes = tripulantes;
+        this.posicion = posicion;
         this.energiagastadaxmov = energiagastadaxmov;
         this.maxmov = maxmov;
         this.rangoataque = rangoataque;
@@ -128,6 +136,7 @@ public abstract class Unidad {
      * @param energiamov
      * @param posicion
      * @param tripulantes
+     * @param jugador
      */
     public void setEnergiadefensa(int energiadefensa) {
         this.energiadefensa = energiadefensa;
@@ -147,6 +156,10 @@ public abstract class Unidad {
 
     public void setTripulantes(ArrayList<Ser> tripulantes) {
         this.tripulantes = tripulantes;
+    }
+
+    public void setJugador(Jugador jugador) {
+        this.jugador = jugador;
     }
 
     /**
@@ -206,6 +219,10 @@ public abstract class Unidad {
         return this.seresneed;
     }
 
+    public Jugador getJugador() {
+        return this.jugador;
+    }
+
     /**
      * Override de toString, al cual acceden todos sus hijos cada uno con sus
      * datos gracias a la herencia de clases.
@@ -218,7 +235,8 @@ public abstract class Unidad {
                 + "Energia de ataque: " + this.energiataque + "\n"
                 + "Energia de movimiento: " + this.energiamov + "\n"
                 + "Potencia: " + this.potencia + "\n"
-                + "Puntos: " + this.puntosderrota + " \n"
+                + "Puntos si se derrota: " + this.puntosderrota + " \n"
+                + "Tripulantes actuales: " + this.tripulantes + "\n"
                 + "Seres necesarios para el funcionamiento: " + this.seresneed + "\n"
                 + "Energia que gasta al moverse: " + this.energiagastadaxmov + "\n"
                 + "Maximas casillas que puede moverse por turno: " + this.maxmov + "\n"

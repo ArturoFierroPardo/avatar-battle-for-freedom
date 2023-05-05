@@ -31,7 +31,7 @@ public class Aplicacion {
         Coordenadas coordenada = new Coordenadas(escenario);
         Jugador jugador = new Jugador("Arturo", Equipo.RDA, escenario);
 
-        System.out.println(coordenada.toString());
+        System.out.println(artillero.toString());
 
     }
 

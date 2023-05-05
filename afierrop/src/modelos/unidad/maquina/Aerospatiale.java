@@ -4,6 +4,9 @@
  */
 package modelos.unidad.maquina;
 
+import java.util.ArrayList;
+import modelos.ser.Ser;
+
 /**
  *
  * @author artur
@@ -21,7 +24,7 @@ public class Aerospatiale extends Maquina {
      * comprar la unidad
      */
     public Aerospatiale() {
-        super("Aerospatiale SA-2 Samson", 2500, 1000, 1000, 500, 80, 1500, null, null, 50, "10", 5, 2);
+        super("Aerospatiale SA-2 Samson", null, 2500, 1000, 1000, 500, 80, 1500, new ArrayList<Ser>(), null, 50, "10", 5, 2);
     }
 
 }

@@ -4,6 +4,9 @@
  */
 package modelos.unidad.bestia;
 
+import java.util.ArrayList;
+import modelos.ser.Ser;
+
 /**
  *
  * @author artur
@@ -20,7 +23,7 @@ public class Thanator extends Bestia {
      * tripulantes se asignan con setters al comprar la unidad
      */
     public Thanator() {
-        super("Thanator", 8000, 9000, 9000, 6000, 600, 4000, null, null, 10, "50", 5, 3);
+        super("Thanator", null, 8000, 9000, 9000, 6000, 600, 4000, new ArrayList<Ser>(), null, 10, "50", 5, 3);
     }
 
 }
