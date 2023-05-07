@@ -7,6 +7,9 @@ package modelos.menu;
 import modelos.equipo.Equipo;
 import modelos.excepciones.PuntosdeCompraInsuficientesException;
 import modelos.jugador.Jugador;
+import modelos.ser.Ser;
+import modelos.ser.humano.Artillero;
+import modelos.ser.humano.Comandante;
 import modelos.unidad.Unidad;
 import modelos.unidad.bestia.Banshee;
 import modelos.unidad.bestia.Thanator;
@@ -34,7 +37,7 @@ public class Menu {
         System.out.println("2) Mover una unidad");
         System.out.println("3) Atacar a una unidad enemiga");
         System.out.println("4) Finalizar el turno");
-        int opcion = Utils.leerEntero("Elija que quiere hacer escribiendo el nº correspondiente: ");
+        int opcion = Utils.leerEntero("Elija que quiere hacer escribiendo el numero correspondiente: ");
         switch (opcion) {
             case 1:
                 compraUnidad();
@@ -60,14 +63,43 @@ public class Menu {
                     System.out.println("1) Comprar AT99 - Escorpion: \n" + at99.toStringInfo());
                     System.out.println("2) Comprar Aerospatiale SA-2 Samson: \n" + aerospatiale.toStringInfo());
                     System.out.println("3) Comprar Plataforma de Movilidad Amplificada Mitsubishi MK-6: \n" + mk6.toStringInfo());
-                    int eleccion = Utils.leerEntero("Elija que quiere comprar introduciendo un nº: ");
+                    System.out.println("4) No comprar nada");
+                    int eleccionunidades = Utils.leerEntero("Elija que quiere comprar introduciendo el numero correspondiente: ");
 
-                    switch (eleccion) {
+                    switch (eleccionunidades) {
                         case 1:
                             jugadorjuega.comprarUnidad(at99);
-                            System.out.println(jugadorjuega.getNombre() + " ha comprado un " + at99.getNombre());
-                            System.out.println(jugadorjuega.getEjercito());
-                            break;
+                            int eleccionserescompra = Utils.leerEntero("¿Desea comprar seres que tripulen esta unidad? Necesita " + at99.getSeresneed() + "para poder estar operativo \n1) SI \n2) NO");
+                            switch (eleccionserescompra) {
+                                case 1:
+                                    int nseres = Utils.leerEntero("¿Cuantos desea comprar que no supere " + at99.getSeresneed() + "?");
+                                    for (int i = 0; i < nseres; i++) {
+                                        Ser comandante = new Comandante();
+                                        Ser artillero = new Artillero();
+                                        System.out.println("MERCADO DE SERES:");
+                                        System.out.println("1) Comprar Comandante: " + comandante.toStringInfo());
+                                        System.out.println("2) Comprar Artillero: " + artillero.toStringInfo());
+                                        System.out.println("3) No comprar nada");
+                                        int eleccionseres = Utils.leerEntero("Elija que quiere compra introduciendo el numero correspondiente: ");
+                                        switch (eleccionseres) {
+                                            case 1:
+                                                jugadorjuega.comprarSeres(at99, comandante);
+                                                System.out.println(jugadorjuega.getNombre() + " ha comprado un " + comandante.getNombre());
+                                                break;
+                                            case 2:
+                                                jugadorjuega.comprarSeres(at99, artillero);
+                                                System.out.println(jugadorjuega.getNombre() + " ha comprado un " + artillero.getNombre());
+                                                break;
+                                            case 3:
+                                                System.out.println(jugadorjuega.getNombre() + " no ha comprado ningun ser");
+                                                break;
+                                        }
+                                    }
+                                    break;
+                                case 2:
+                                    System.out.println(jugadorjuega.getNombre() + " no ha comprado ningun ser");
+                                    break;
+                            }
                         case 2:
                             jugadorjuega.comprarUnidad(aerospatiale);
                             System.out.println(jugadorjuega.getNombre() + " ha comprado un " + aerospatiale.getNombre());
@@ -77,6 +109,9 @@ public class Menu {
                             jugadorjuega.comprarUnidad(mk6);
                             System.out.println(jugadorjuega.getNombre() + " ha comprado un " + mk6.getNombre());
                             System.out.println(jugadorjuega.getEjercito());
+                            break;
+                        case 4:
+                            System.out.println(jugadorjuega.getNombre() + " no ha comprado ninguna unidad");
                             break;
                     }
                 }
@@ -88,9 +123,10 @@ public class Menu {
                     System.out.println("1) Comprar Banshee de Montaña: \n" + banshee.toStringInfo());
                     System.out.println("2) Comprar Thanator: \n" + thanator.toStringInfo());
                     System.out.println("3) Comprar Titanothere Cabezamartillo: \n" + titanothere.toStringInfo());
-                    int eleccion = Utils.leerEntero("Elija que quiere comprar introduciendo un nº: ");
+                    System.out.println("4) No comprar nada");
+                    int eleccionunidades = Utils.leerEntero("Elija que quiere comprar introduciendo el numero correspondiente: ");
 
-                    switch (eleccion) {
+                    switch (eleccionunidades) {
                         case 1:
                             jugadorjuega.comprarUnidad(banshee);
                             System.out.println(jugadorjuega.getNombre() + " ha comprado un " + banshee.getNombre());
@@ -106,6 +142,8 @@ public class Menu {
                             System.out.println(jugadorjuega.getNombre() + " ha comprado un " + titanothere.getNombre());
                             System.out.println(jugadorjuega.getEjercito());
                             break;
+                        case 4:
+                            System.out.println(jugadorjuega.getNombre() + " no ha comprado ninguna unidad");
                     }
                 }
                 break;
