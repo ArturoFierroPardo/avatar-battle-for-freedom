@@ -31,8 +31,12 @@ public class Main {
         Coordenadas coordenada = new Coordenadas(escenario);
         Jugador jugador = new Jugador("Arturo", Equipo.RDA, escenario);
 
-        Menu menu = new Menu(jugador);
+        Menu menu = new Menu(jugador, escenario);
         menu.enseñarMenu();
+        System.out.println(jugador.getEjercito().toString());
+        /**
+         * Mañana ver si la posicion y el dueño estan bien
+         */
 
     }
 
