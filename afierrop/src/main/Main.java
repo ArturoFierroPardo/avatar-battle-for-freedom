@@ -11,12 +11,7 @@ import modelos.escenario.Escenario;
 import modelos.excepciones.FueradeMapaException;
 import modelos.excepciones.PuntosdeCompraInsuficientesException;
 import modelos.jugador.Jugador;
-import modelos.ser.Ser;
-import modelos.ser.humano.Artillero;
-import modelos.ser.humano.Comandante;
-import modelos.unidad.Unidad;
-import modelos.unidad.bestia.Banshee;
-import modelos.unidad.maquina.AT99;
+import modelos.menu.Menu;
 
 /**
  *
@@ -33,20 +28,11 @@ public class Main {
          * Main para comprobar que funcionan cosas manualmente
          */
         Escenario escenario = new ArbolMadre();
-        Unidad at99 = new AT99();
-        Unidad at992 = new AT99();
-        Unidad banshee = new Banshee();
-        Ser artillero = new Artillero();
-        Ser comandante = new Comandante();
         Coordenadas coordenada = new Coordenadas(escenario);
         Jugador jugador = new Jugador("Arturo", Equipo.RDA, escenario);
 
-        jugador.comprarUnidad(at99);
-        jugador.comprarSeres(at99, artillero);
-        jugador.comprarUnidad(at992);
-        jugador.comprarSeres(at992, comandante);
-
-        System.out.println(jugador.getEjercito());
+        Menu menu = new Menu(jugador);
+        menu.enseñarMenu();
 
     }
 

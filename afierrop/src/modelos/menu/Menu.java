@@ -27,14 +27,30 @@ import utils.Utils;
  */
 public class Menu {
 
+    /**
+     * Indica el jugador que esta en el turno jugando
+     */
     private Jugador jugadorjuega;
 
+    /**
+     * Constructor de menu que necesita el jugado que este jugando actualmente
+     * en el turno
+     *
+     * @param jugadorjuega
+     */
     public Menu(Jugador jugadorjuega) {
         this.jugadorjuega = jugadorjuega;
     }
 
+    /**
+     * * Funcion enseñarMenu() que al llamarse enseña por pantala las distintas
+     * opciones que tiene el jugador.Dependiendo de cual escoja se llamara a una
+     * funcion especifica
+     *
+     * @throws modelos.excepciones.PuntosdeCompraInsuficientesException
+     */
     public void enseñarMenu() throws PuntosdeCompraInsuficientesException {
-        System.out.println("MENU:");
+        System.out.println("\\\\\\\\\\\\\\\\\\\\MENU/////////////////////");
         System.out.println("1) Comprar una unidad");
         System.out.println("2) Mover una unidad");
         System.out.println("3) Atacar a una unidad enemiga");
@@ -43,27 +59,56 @@ public class Menu {
         switch (opcion) {
             case 1:
                 compraUnidad();
+            /*Cambiar turno */
             case 2:
             /*Mover unidad*/
+ /*Cambiar turno */
             case 3:
             /*Atacar a una unidad*/
+ /*Cambiar turno */
             case 4:
             /*Cambiar turno*/
 
         }
     }
 
+    /**
+     * Funcion comprarUnidad(). Primero pide cuantas unidades desea comprar el
+     * jugador y en funcion de eso el mercado se repetira x veces. Después ve si
+     * el jugador es de un equipo o de otro, en funcion de ello se crearan unas
+     * unidades u otras y se le dara a elegir entre unas unidad u otras al
+     * jugador. Se le pedira que elija si quiere comprar alguna o si no quiere;
+     * si quiere se añade al ejercito del jugador; se compran llamando a una
+     * funcion de compra en la clase jugador que si no tiene los puntos
+     * necesarios lanza una excepcion. Una vez elejida la unidad, se le pregunta
+     * al usuario si quiere comprarle seres o no pero siempre que quiera comprar
+     * se le pedira como maximo el numero de seres que necesite la maquina. Una
+     * vez comprados los seres, se añaden a la tripulacion de dicha unidad; se
+     * compran mediante una funcion de compra en la clase usuario que si no
+     * tiene los puntos necesarios se lanza una excepcion. Una vez haya
+     * efectuado toda su compra se acaba su turno. Si el jugador no tiene los
+     * puntos necesarios para comprar una unidad o ser se lanzara una excepcion
+     * desde la funcion compra tanto de seres o de unidades en la clase jugador,
+     * que sera cacheada en esta funcion (por ello el try catch). Si se atrapa
+     * la excepcion saldra un mensaje por pantalla de que no puede comprarlo,
+     * además, de que gracias al bucle while(true) se repetira el proceso de
+     * compra. Si no se lanza ninguna excepcion el bucle while(true) se acaba
+     * gracias a un break efectuado al acabar todas las funciones anteriores de
+     * compra.
+     */
     private void compraUnidad() throws PuntosdeCompraInsuficientesException {
         boolean bucle = true;
+        System.out.println("\\\\\\\\\\\\\\\\\\\\\\MERCADO GENERAL//////////////////////");
         int nunidades = Utils.leerEntero("Cuantas unidades desea comprar?");
-        while (bucle) {
-            try {
-                for (int j = 0; j < nunidades; j++) {
+        for (int j = 0; j < nunidades; j++) {
+            while (bucle) {
+                try {
+
                     if (jugadorjuega.getEquipo() == Equipo.RDA) {
                         Unidad at99 = new AT99();
                         Unidad aerospatiale = new Aerospatiale();
                         Unidad mk6 = new MK6();
-                        System.out.println("MERCADO DE UNIDADES: ");
+                        System.out.println("\\\\\\\\\\\\\\\\\\\\\\MERCADO DE UNIDADES//////////////////////: ");
                         System.out.println("1) Comprar AT99 - Escorpion: \n" + at99.toStringInfo());
                         System.out.println("2) Comprar Aerospatiale SA-2 Samson: \n" + aerospatiale.toStringInfo());
                         System.out.println("3) Comprar Plataforma de Movilidad Amplificada Mitsubishi MK-6: \n" + mk6.toStringInfo());
@@ -80,7 +125,7 @@ public class Menu {
                                         for (int i = 0; i < nseres; i++) {
                                             Ser comandante = new Comandante();
                                             Ser artillero = new Artillero();
-                                            System.out.println("MERCADO DE SERES:");
+                                            System.out.println("\\\\\\\\\\\\\\\\\\\\\\MERCADO DE SERES://////////////////////");
                                             System.out.println("1) Comprar Comandante: " + comandante.toStringInfo());
                                             System.out.println("2) Comprar Artillero: " + artillero.toStringInfo());
                                             System.out.println("3) No comprar nada");
@@ -304,10 +349,12 @@ public class Menu {
                                 System.out.println(jugadorjuega.getNombre() + " no ha comprado ninguna unidad");
                         }
                     }
+
+                    break;
+                } catch (PuntosdeCompraInsuficientesException pci) {
+                    System.out.println("NO TIENE SUFICIENTES PUNTOS PARA COMPRAR ESTA UNIDAD");
+
                 }
-                break;
-            } catch (PuntosdeCompraInsuficientesException pci) {
-                System.out.println("NO TIENE SUFICIENTES PUNTOS PARA COMPRAR ESTA UNIDAD");
             }
         }
     }

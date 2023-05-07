@@ -224,15 +224,7 @@ public abstract class Unidad {
     }
 
     /**
-     * Funcion que solo devuelve en modo string el nombre de la unidad
-     */
-    public String toStringNombre() {
-        return this.nombre;
-    }
-
-    /**
-     * Override de toString, al cual acceden todos sus hijos cada uno con sus
-     * datos gracias a la herencia de clases.
+     * Override de toString, que devuelve un string con toda la información
      */
     public String toStringInfo() {
         return "Nombre: " + this.nombre + "\n"
