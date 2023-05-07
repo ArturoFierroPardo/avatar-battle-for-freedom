@@ -71,6 +71,24 @@ public class Partida {
         return this.turnos;
     }
 
+    /**
+     * Funcion que inicia la partida
+     */
+    public void comienzaPartida() {
+        Jugador jugadorjuega = this.jugador1;
+        /**
+         * bucle while(boolean i = true) que invoque un objeto menu, lo enseñe y
+         * el jugador elija que quiere hacer pidiendoselo por pantalla y
+         * ejecutar la accion. Ir cambiando turnos cambiando el jugador actual y
+         * turnos++ con un bucle if, hasta que uno sea derrotado entonces i =
+         * false y se acaba la partida.
+         */
+    }
+
+    /**
+     * Override de toString que devuelve un String con la informacion de la
+     * partida, que jugadores juegan y en que escenario
+     */
     @Override
     public String toString() {
         return "La partida comienza, lucharán " + this.jugador1 + " contra " + this.jugador2 + " en el escenario " + this.escenario;
