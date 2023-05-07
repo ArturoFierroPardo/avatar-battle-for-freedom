@@ -46,8 +46,8 @@ public class Ejercito {
     }
 
     /**
-     * Override de toString que devuelve un String con el nombre de las
-     * unidades, gracias a un bucle for-each
+     * Override de toString que devuelve un String con un ArrayList de las
+     * unidades.
      */
     @Override
     public String toString() {

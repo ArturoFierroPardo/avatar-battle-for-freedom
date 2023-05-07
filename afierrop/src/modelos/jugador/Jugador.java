@@ -99,7 +99,7 @@ public class Jugador {
      * Función de compra de Unidades.Si el jugador tiene los puntos necesarios
      * para la compra de la unidad, se compra y se restan los puntos gastados.Si
      * no, se lanza la excepcion que sera catcheada en el menu para repetirlo
-     * con un bucle
+     * con un bucle.
      *
      * @param unidad
      * @throws modelos.excepciones.PuntosdeCompraInsuficientesException
@@ -118,7 +118,7 @@ public class Jugador {
      * Función de compra de seres.Si el jugador tiene los puntos necesarios para
      * la compra de el ser, se compra y se restan los puntos gastados.Si no, se
      * lanza la excepcion que sera catcheada en el menu para repetirlo con un
-     * bucle
+     * bucle.
      *
      * @param unidad
      * @param ser
