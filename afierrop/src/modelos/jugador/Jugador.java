@@ -7,6 +7,9 @@ package modelos.jugador;
 import modelos.ejercito.Ejercito;
 import modelos.equipo.Equipo;
 import modelos.escenario.Escenario;
+import modelos.excepciones.PuntosdeCompraInsuficientesException;
+import modelos.ser.Ser;
+import modelos.unidad.Unidad;
 
 /**
  *
@@ -90,6 +93,37 @@ public class Jugador {
 
     public Ejercito getEjercito() {
         return this.ejercito;
+    }
+
+    /**
+     * Función de compra de Unidades. Si el jugador tiene los puntos necesarios
+     * para la compra de la unidad, se compra y se restan los puntos gastados.
+     * Si no, se lanza la excepcion que sera catcheada en el menu para repetirlo
+     * con un bucle
+     */
+    public void comprarUnidad(Unidad unidad) throws PuntosdeCompraInsuficientesException {
+        if (this.puntos >= unidad.getCoste()) {
+            this.ejercito.getUnidades().add(unidad);
+            this.puntos = this.puntos - unidad.getCoste();
+        } else {
+            throw new PuntosdeCompraInsuficientesException();
+        }
+
+    }
+
+    /**
+     * Función de compra de seres. Si el jugador tiene los puntos necesarios
+     * para la compra de el ser, se compra y se restan los puntos gastados. Si
+     * no, se lanza la excepcion que sera catcheada en el menu para repetirlo
+     * con un bucle
+     */
+    public void comprarSeres(Unidad unidad, Ser ser) throws PuntosdeCompraInsuficientesException {
+        if (this.puntos >= ser.getCoste()) {
+            unidad.getTripulantes().add(ser);
+            this.puntos = this.puntos - ser.getCoste();
+        } else {
+            throw new PuntosdeCompraInsuficientesException();
+        }
     }
 
     /**

@@ -105,6 +105,13 @@ public abstract class Ser {
      */
     @Override
     public String toString() {
+        return "Nombre: " + this.nombre;
+    }
+
+    /**
+     * Funcion que imprime toda la informacion del ser
+     */
+    public String toStringCompleto() {
         return "Nombre: " + this.nombre + "\n"
                 + "Coste: " + this.coste + "\n"
                 + "Cargo: " + this.cargo + "\n"

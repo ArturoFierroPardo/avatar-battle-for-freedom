@@ -46,11 +46,18 @@ public class Ejercito {
     }
 
     /**
-     * Función toString que devuelve un String con el ejercito de unidades
+     * Override de toString que devuelve un String con el nombre de las
+     * unidades, gracias a un bucle for-each
      */
     @Override
     public String toString() {
-        return "Su ejercito consta de " + this.unidades;
+        String nombre = "";
+        String tripulantes = "";
+        for (Unidad unidad : this.unidades) {
+            tripulantes += unidad.getTripulantes();
+            nombre += unidad.getNombre() + " tripulado por " + tripulantes + ", ";
+        }
+        return "Su ejercito consta de " + nombre;
     }
 
 }
