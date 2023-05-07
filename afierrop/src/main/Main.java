@@ -34,6 +34,7 @@ public class Main {
          */
         Escenario escenario = new ArbolMadre();
         Unidad at99 = new AT99();
+        Unidad at992 = new AT99();
         Unidad banshee = new Banshee();
         Ser artillero = new Artillero();
         Ser comandante = new Comandante();
@@ -42,6 +43,8 @@ public class Main {
 
         jugador.comprarUnidad(at99);
         jugador.comprarSeres(at99, artillero);
+        jugador.comprarUnidad(at992);
+        jugador.comprarSeres(at992, comandante);
 
         System.out.println(jugador.getEjercito());
 

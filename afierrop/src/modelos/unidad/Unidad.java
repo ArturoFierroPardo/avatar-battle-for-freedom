@@ -234,8 +234,7 @@ public abstract class Unidad {
      * Override de toString, al cual acceden todos sus hijos cada uno con sus
      * datos gracias a la herencia de clases.
      */
-    @Override
-    public String toString() {
+    public String toStringInfo() {
         return "Nombre: " + this.nombre + "\n"
                 + "Coste: " + this.coste + "\n"
                 + "Energia de defensa: " + this.energiadefensa + "\n"
@@ -248,5 +247,14 @@ public abstract class Unidad {
                 + "Energia que gasta al moverse: " + this.energiagastadaxmov + "\n"
                 + "Maximas casillas que puede moverse por turno: " + this.maxmov + "\n"
                 + "Rango de ataque: " + this.rangoataque + " casillas\n";
+    }
+
+    /**
+     * Override de toString que devuelve el nombre de la unidad y sus
+     * tripulantes
+     */
+    @Override
+    public String toString() {
+        return this.nombre + " tripulado por " + this.tripulantes;
     }
 }

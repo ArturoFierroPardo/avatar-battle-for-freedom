@@ -96,10 +96,13 @@ public class Jugador {
     }
 
     /**
-     * Función de compra de Unidades. Si el jugador tiene los puntos necesarios
-     * para la compra de la unidad, se compra y se restan los puntos gastados.
-     * Si no, se lanza la excepcion que sera catcheada en el menu para repetirlo
+     * Función de compra de Unidades.Si el jugador tiene los puntos necesarios
+     * para la compra de la unidad, se compra y se restan los puntos gastados.Si
+     * no, se lanza la excepcion que sera catcheada en el menu para repetirlo
      * con un bucle
+     *
+     * @param unidad
+     * @throws modelos.excepciones.PuntosdeCompraInsuficientesException
      */
     public void comprarUnidad(Unidad unidad) throws PuntosdeCompraInsuficientesException {
         if (this.puntos >= unidad.getCoste()) {
@@ -112,10 +115,14 @@ public class Jugador {
     }
 
     /**
-     * Función de compra de seres. Si el jugador tiene los puntos necesarios
-     * para la compra de el ser, se compra y se restan los puntos gastados. Si
-     * no, se lanza la excepcion que sera catcheada en el menu para repetirlo
-     * con un bucle
+     * Función de compra de seres.Si el jugador tiene los puntos necesarios para
+     * la compra de el ser, se compra y se restan los puntos gastados.Si no, se
+     * lanza la excepcion que sera catcheada en el menu para repetirlo con un
+     * bucle
+     *
+     * @param unidad
+     * @param ser
+     * @throws modelos.excepciones.PuntosdeCompraInsuficientesException
      */
     public void comprarSeres(Unidad unidad, Ser ser) throws PuntosdeCompraInsuficientesException {
         if (this.puntos >= ser.getCoste()) {

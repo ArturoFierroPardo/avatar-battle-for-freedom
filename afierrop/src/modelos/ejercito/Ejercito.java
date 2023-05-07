@@ -24,7 +24,7 @@ public class Ejercito {
      * añadiran hasta que se compren.
      */
     public Ejercito() {
-        this.unidades = new ArrayList<Unidad>();
+        this.unidades = new ArrayList<>();
     }
 
     /**
@@ -51,13 +51,7 @@ public class Ejercito {
      */
     @Override
     public String toString() {
-        String nombre = "";
-        String tripulantes = "";
-        for (Unidad unidad : this.unidades) {
-            tripulantes += unidad.getTripulantes();
-            nombre += unidad.getNombre() + " tripulado por " + tripulantes + ", ";
-        }
-        return "Su ejercito consta de " + nombre;
+        return "Su ejercito consta de " + this.unidades;
     }
 
 }

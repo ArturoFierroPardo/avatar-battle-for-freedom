@@ -100,18 +100,9 @@ public abstract class Ser {
     }
 
     /**
-     * Override de toString, al cual acceden todos sus hijos cada uno con sus
-     * datos gracias a la herencia de clases.
-     */
-    @Override
-    public String toString() {
-        return "Nombre: " + this.nombre;
-    }
-
-    /**
      * Funcion que imprime toda la informacion del ser
      */
-    public String toStringCompleto() {
+    public String toStringInfo() {
         return "Nombre: " + this.nombre + "\n"
                 + "Coste: " + this.coste + "\n"
                 + "Cargo: " + this.cargo + "\n"
@@ -120,4 +111,13 @@ public abstract class Ser {
                 + "Puntos: " + this.puntosderrota + " \n";
 
     }
+
+    /**
+     * Override de toString, el cual imprime solo el nombre.
+     */
+    @Override
+    public String toString() {
+        return this.nombre;
+    }
+
 }
