@@ -4,6 +4,7 @@
  */
 package main;
 
+import interfaz.menu.Menu;
 import modelos.coordenadas.Coordenadas;
 import modelos.equipo.Equipo;
 import modelos.escenario.ArbolMadre;
@@ -11,7 +12,6 @@ import modelos.escenario.Escenario;
 import modelos.excepciones.FueradeMapaException;
 import modelos.excepciones.PuntosdeCompraInsuficientesException;
 import modelos.jugador.Jugador;
-import modelos.menu.Menu;
 
 /**
  *
@@ -33,10 +33,6 @@ public class Main {
 
         Menu menu = new Menu(jugador, escenario);
         menu.enseñarMenu();
-        System.out.println(jugador.getEjercito().toString());
-        /**
-         * Mañana ver si la posicion y el dueño estan bien
-         */
 
     }
 

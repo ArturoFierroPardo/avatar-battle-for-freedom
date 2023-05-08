@@ -2,9 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package modelos.partida;
+package interfaz.partida;
 
+import interfaz.menu.Menu;
 import modelos.escenario.Escenario;
+import modelos.excepciones.FueradeMapaException;
+import modelos.excepciones.PuntosdeCompraInsuficientesException;
 import modelos.jugador.Jugador;
 import modelos.unidad.Unidad;
 
@@ -52,6 +55,7 @@ public class Partida {
         this.jugador2 = jugador2;
         this.escenario = escenario;
         this.mapa = new Unidad[escenario.getXmax()][escenario.getYmax()];
+        this.turnos = 0;
     }
 
     /**
@@ -72,17 +76,44 @@ public class Partida {
     }
 
     /**
-     * Funcion que inicia la partida
+     * Funcion que inicia la partida. Crea un menu que recibe por parametro el
+     * jugador que juega en funcion de una funcion de turnos y un escenario.
+     * Enseña el menu al jugador actual y cuando acabe se añade un turno más.
+     * Gracias a un bucle se va repitiendo hasta que alguien gane.
+     *
+     * @throws modelos.excepciones.PuntosdeCompraInsuficientesException
+     * @throws modelos.excepciones.FueradeMapaException
      */
-    public void comienzaPartida() {
-        Jugador jugadorjuega = this.jugador1;
+    public void comienzaPartida() throws PuntosdeCompraInsuficientesException, FueradeMapaException {
+        Menu menu = new Menu(turnos(), escenario);
+        menu.enseñarMenu();
+        this.turnos++;
+
         /**
          * bucle while(boolean i = true) que invoque un objeto menu, lo enseñe y
          * el jugador elija que quiere hacer pidiendoselo por pantalla y
          * ejecutar la accion. Ir cambiando turnos cambiando el jugador actual y
          * turnos++ con un bucle if, hasta que uno sea derrotado entonces i =
-         * false y se acaba la partida.
+         * false y se acaba la partida. Hacer funcion para ver cuando alguien
+         * gane la partida.
          */
+    }
+
+    /**
+     * Funcion que pasa los turnos calculando el resto de la variable turnos que
+     * empieza en 0.
+     *
+     * @return
+     */
+    public Jugador turnos() {
+        Jugador jugadorjuega = this.jugador1;
+        if (this.turnos % 2 == 0) {
+            jugadorjuega = this.jugador1;
+        }
+        if (this.turnos % 2 == 1) {
+            jugadorjuega = this.jugador2;
+        }
+        return jugadorjuega;
     }
 
     /**
