@@ -110,12 +110,13 @@ public class Menu {
      */
     private void compraUnidad() throws PuntosdeCompraInsuficientesException, FueradeMapaException {
         boolean bucle = true;
+        boolean bucleunidades = false;
+        boolean bucleseres = false;
         System.out.println("\\\\\\\\\\\\\\\\\\\\\\MERCADO GENERAL//////////////////////");
         int nunidades = Utils.leerEntero("Cuantas unidades desea comprar?");
         for (int j = 0; j < nunidades; j++) {
             while (bucle) {
                 try {
-
                     if (this.jugadorjuega.getEquipo() == Equipo.RDA) {
                         Unidad at99 = new AT99();
                         Unidad aerospatiale = new Aerospatiale();
@@ -126,256 +127,247 @@ public class Menu {
                         System.out.println("2) Comprar Aerospatiale SA-2 Samson: \n" + aerospatiale.toStringInfo());
                         System.out.println("3) Comprar Plataforma de Movilidad Amplificada Mitsubishi MK-6: \n" + mk6.toStringInfo());
                         System.out.println("4) No comprar nada");
-                        int eleccionunidades = Utils.leerEntero("Elija que quiere comprar introduciendo el numero correspondiente: ");
-
-                        switch (eleccionunidades) {
-                            case 1:
-                                this.jugadorjuega.comprarUnidad(at99);
-                                at99.setJugador(this.jugadorjuega);
-                                at99.setPosicion(posicion);
-                                int eleccionserescompra1 = Utils.leerEntero("Desea comprar seres que tripulen esta unidad? Necesita " + at99.getSeresneed() + " para poder estar operativo \n1) SI \n2) NO");
-                                switch (eleccionserescompra1) {
-                                    case 1:
-                                        int nseres = Utils.leerEntero("Cuantos seres desea comprar que no supere " + at99.getSeresneed() + "?");
-                                        for (int i = 0; i < nseres; i++) {
-                                            Ser comandante = new Comandante();
-                                            Ser artillero = new Artillero();
-                                            System.out.println("\\\\\\\\\\\\\\\\\\\\\\MERCADO DE SERES://////////////////////");
-                                            System.out.println("1) Comprar Comandante: " + comandante.toStringInfo());
-                                            System.out.println("2) Comprar Artillero: " + artillero.toStringInfo());
-                                            System.out.println("3) No comprar nada");
-                                            int eleccionseres = Utils.leerEntero("Elija que quiere compra introduciendo el numero correspondiente: ");
+                        do {
+                            int eleccionunidades = Utils.leerEntero("Elija que quiere comprar introduciendo el numero correspondiente: ");
+                            switch (eleccionunidades) {
+                                case 1:
+                                    this.jugadorjuega.comprarUnidad(at99);
+                                    at99.setJugador(this.jugadorjuega);
+                                    at99.setPosicion(posicion);
+                                    for (int i = 0; i < at99.getSeresneed(); i++) {
+                                        Ser comandante = new Comandante();
+                                        Ser artillero = new Artillero();
+                                        System.out.println("\\\\\\\\\\\\\\\\\\\\\\MERCADO DE SERES://////////////////////");
+                                        System.out.println("1) Comprar Comandante: " + comandante.toStringInfo());
+                                        System.out.println("2) Comprar Artillero: " + artillero.toStringInfo());
+                                        do {
+                                            int eleccionseres = Utils.leerEntero("Elija que quiere comprar introduciendo el numero correspondiente: ");
                                             switch (eleccionseres) {
                                                 case 1:
                                                     this.jugadorjuega.comprarSeres(at99, comandante);
                                                     System.out.println(this.jugadorjuega.getNombre() + " ha comprado un " + comandante.getNombre());
+                                                    bucleseres = false;
                                                     break;
                                                 case 2:
                                                     this.jugadorjuega.comprarSeres(at99, artillero);
                                                     System.out.println(this.jugadorjuega.getNombre() + " ha comprado un " + artillero.getNombre());
+                                                    bucleseres = false;
                                                     break;
-                                                case 3:
-                                                    System.out.println(this.jugadorjuega.getNombre() + " no ha comprado ningun ser");
+                                                default:
+                                                    System.out.println("OPCION INVALIDA. VUELVA A INTENTARLO CORRECTAMENTE");
+                                                    bucleseres = true;
                                                     break;
                                             }
-                                        }
-                                        break;
-                                    case 2:
-                                        System.out.println(this.jugadorjuega.getNombre() + " no ha comprado ningun ser");
-                                        break;
-                                }
-                                System.out.println(this.jugadorjuega.getEjercito());
-                                break;
-                            case 2:
-                                this.jugadorjuega.comprarUnidad(aerospatiale);
-                                aerospatiale.setJugador(this.jugadorjuega);
-                                aerospatiale.setPosicion(posicion);
-                                int eleccionserescompra2 = Utils.leerEntero("Desea comprar seres que tripulen esta unidad? Necesita " + aerospatiale.getSeresneed() + " para poder estar operativo \n1) SI \n2) NO");
-                                switch (eleccionserescompra2) {
-                                    case 1:
-                                        int nseres = Utils.leerEntero("Cuantos seres desea comprar que no supere " + aerospatiale.getSeresneed() + "?");
-                                        for (int i = 0; i < nseres; i++) {
-                                            Ser comandante = new Comandante();
-                                            Ser artillero = new Artillero();
-                                            System.out.println("MERCADO DE SERES:");
-                                            System.out.println("1) Comprar Comandante: " + comandante.toStringInfo());
-                                            System.out.println("2) Comprar Artillero: " + artillero.toStringInfo());
-                                            System.out.println("3) No comprar nada");
-                                            int eleccionseres = Utils.leerEntero("Elija que quiere compra introduciendo el numero correspondiente: ");
+                                        } while (bucleseres);
+                                    }
+                                    System.out.println(this.jugadorjuega.getEjercito());
+                                    bucleunidades = false;
+                                    break;
+                                case 2:
+                                    this.jugadorjuega.comprarUnidad(aerospatiale);
+                                    aerospatiale.setJugador(this.jugadorjuega);
+                                    aerospatiale.setPosicion(posicion);
+                                    for (int i = 0; i < aerospatiale.getSeresneed(); i++) {
+                                        Ser comandante = new Comandante();
+                                        Ser artillero = new Artillero();
+                                        System.out.println("\\\\\\\\\\\\\\\\\\\\\\MERCADO DE SERES://////////////////////:");
+                                        System.out.println("1) Comprar Comandante: " + comandante.toStringInfo());
+                                        System.out.println("2) Comprar Artillero: " + artillero.toStringInfo());
+                                        do {
+                                            int eleccionseres = Utils.leerEntero("Elija que quiere comprar introduciendo el numero correspondiente: ");
                                             switch (eleccionseres) {
                                                 case 1:
                                                     this.jugadorjuega.comprarSeres(aerospatiale, comandante);
                                                     System.out.println(this.jugadorjuega.getNombre() + " ha comprado un " + comandante.getNombre());
+                                                    bucleseres = false;
                                                     break;
                                                 case 2:
                                                     this.jugadorjuega.comprarSeres(aerospatiale, artillero);
                                                     System.out.println(this.jugadorjuega.getNombre() + " ha comprado un " + artillero.getNombre());
+                                                    bucleseres = false;
                                                     break;
-                                                case 3:
-                                                    System.out.println(this.jugadorjuega.getNombre() + " no ha comprado ningun ser");
+                                                default:
+                                                    System.out.println("OPCION INVALIDA. VUELVA A INTENTARLO CORRECTAMENTE");
+                                                    bucleseres = true;
                                                     break;
+
                                             }
-                                        }
-                                        break;
-                                    case 2:
-                                        System.out.println(this.jugadorjuega.getNombre() + " no ha comprado ningun ser");
-                                        break;
-                                }
-                                System.out.println(this.jugadorjuega.getEjercito());
-                                break;
-                            case 3:
-                                this.jugadorjuega.comprarUnidad(mk6);
-                                mk6.setJugador(this.jugadorjuega);
-                                mk6.setPosicion(posicion);
-                                int eleccionserescompra3 = Utils.leerEntero("Desea comprar seres que tripulen esta unidad? Necesita " + mk6.getSeresneed() + " para poder estar operativo \n1) SI \n2) NO");
-                                switch (eleccionserescompra3) {
-                                    case 1:
-                                        int nseres = Utils.leerEntero("Cuantos seres desea comprar que no supere " + mk6.getSeresneed() + "?");
-                                        for (int i = 0; i < nseres; i++) {
-                                            Ser comandante = new Comandante();
-                                            Ser artillero = new Artillero();
-                                            System.out.println("MERCADO DE SERES:");
-                                            System.out.println("1) Comprar Comandante: " + comandante.toStringInfo());
-                                            System.out.println("2) Comprar Artillero: " + artillero.toStringInfo());
-                                            System.out.println("3) No comprar nada");
-                                            int eleccionseres = Utils.leerEntero("Elija que quiere compra introduciendo el numero correspondiente: ");
+
+                                        } while (bucleseres);
+                                    }
+
+                                    System.out.println(this.jugadorjuega.getEjercito());
+                                    bucleunidades = false;
+                                    break;
+                                case 3:
+                                    this.jugadorjuega.comprarUnidad(mk6);
+                                    mk6.setJugador(this.jugadorjuega);
+                                    mk6.setPosicion(posicion);
+                                    for (int i = 0; i < mk6.getSeresneed(); i++) {
+                                        Ser comandante = new Comandante();
+                                        Ser artillero = new Artillero();
+                                        System.out.println("\\\\\\\\\\\\\\\\\\\\\\MERCADO DE SERES://////////////////////:");
+                                        System.out.println("1) Comprar Comandante: " + comandante.toStringInfo());
+                                        System.out.println("2) Comprar Artillero: " + artillero.toStringInfo());
+                                        do {
+                                            int eleccionseres = Utils.leerEntero("Elija que quiere comprar introduciendo el numero correspondiente: ");
                                             switch (eleccionseres) {
                                                 case 1:
                                                     this.jugadorjuega.comprarSeres(mk6, comandante);
                                                     System.out.println(this.jugadorjuega.getNombre() + " ha comprado un " + comandante.getNombre());
+                                                    bucleseres = false;
                                                     break;
                                                 case 2:
                                                     this.jugadorjuega.comprarSeres(mk6, artillero);
                                                     System.out.println(this.jugadorjuega.getNombre() + " ha comprado un " + artillero.getNombre());
+                                                    bucleseres = false;
                                                     break;
-                                                case 3:
-                                                    System.out.println(this.jugadorjuega.getNombre() + " no ha comprado ningun ser");
+                                                default:
+                                                    System.out.println("OPCION INVALIDA. VUELVA A INTENTARLO CORRECTAMENTE");
+                                                    bucleseres = true;
                                                     break;
                                             }
-                                        }
-                                        break;
-                                    case 2:
-                                        System.out.println(this.jugadorjuega.getNombre() + " no ha comprado ningun ser");
-                                        break;
-                                }
-                                System.out.println(this.jugadorjuega.getEjercito());
-                                break;
-                            case 4:
-                                System.out.println(this.jugadorjuega.getNombre() + " no ha comprado ninguna unidad");
-                                break;
-                        }
-                    }
-                    if (this.jugadorjuega.getEquipo() == Equipo.Navi) {
+
+                                        } while (bucleseres);
+                                    }
+
+                                    System.out.println(this.jugadorjuega.getEjercito());
+                                    bucleunidades = false;
+                                    break;
+                                case 4:
+                                    System.out.println(this.jugadorjuega.getNombre() + " no ha comprado ninguna unidad");
+                                    bucleunidades = false;
+                                    break;
+                                default:
+                                    System.out.println("OPCION INVALIDA. VUELVA A INTENTARLO CORRECTAMENTE");
+                                    bucleunidades = true;
+                                    break;
+                            }
+                        } while (bucleunidades);
+
+                    } else {
                         Unidad banshee = new Banshee();
                         Unidad thanator = new Thanator();
                         Unidad titanothere = new Titanothere();
                         Coordenadas posicion = new Coordenadas(this.escenario);
-                        System.out.println("MERCADO DE UNIDADES: ");
+                        System.out.println("\\\\\\\\\\\\\\\\\\\\\\MERCADO DE UNIDADES//////////////////////: ");
                         System.out.println("1) Comprar Banshee de Montaña: \n" + banshee.toStringInfo());
                         System.out.println("2) Comprar Thanator: \n" + thanator.toStringInfo());
                         System.out.println("3) Comprar Titanothere Cabezamartillo: \n" + titanothere.toStringInfo());
                         System.out.println("4) No comprar nada");
-                        int eleccionunidades = Utils.leerEntero("Elija que quiere comprar introduciendo el numero correspondiente: ");
-
-                        switch (eleccionunidades) {
-                            case 1:
-                                this.jugadorjuega.comprarUnidad(banshee);
-                                banshee.setJugador(this.jugadorjuega);
-                                banshee.setPosicion(posicion);
-                                int eleccionserescompra1 = Utils.leerEntero("Desea comprar seres que tripulen esta unidad? Necesita " + banshee.getSeresneed() + " para poder estar operativo \n1) SI \n2) NO");
-                                switch (eleccionserescompra1) {
-                                    case 1:
-                                        int nseres = Utils.leerEntero("Cuantos seres desea comprar que no supere " + banshee.getSeresneed() + "?");
-                                        for (int i = 0; i < nseres; i++) {
-                                            Ser omaticaya = new Omaticaya();
-                                            Ser tipani = new Tipani();
-                                            System.out.println("MERCADO DE SERES:");
-                                            System.out.println("1) Comprar Omaticaya: " + omaticaya.toStringInfo());
-                                            System.out.println("2) Comprar Tipani: " + tipani.toStringInfo());
-                                            System.out.println("3) No comprar nada");
-                                            int eleccionseres = Utils.leerEntero("Elija que quiere compra introduciendo el numero correspondiente: ");
+                        do {
+                            int eleccionunidades = Utils.leerEntero("Elija que quiere comprar introduciendo el numero correspondiente: ");
+                            switch (eleccionunidades) {
+                                case 1:
+                                    this.jugadorjuega.comprarUnidad(banshee);
+                                    banshee.setJugador(this.jugadorjuega);
+                                    banshee.setPosicion(posicion);
+                                    for (int i = 0; i < banshee.getSeresneed(); i++) {
+                                        Ser omaticaya = new Omaticaya();
+                                        Ser tipani = new Tipani();
+                                        System.out.println("\\\\\\\\\\\\\\\\\\\\\\MERCADO DE SERES://////////////////////:");
+                                        System.out.println("1) Comprar Omaticaya: " + omaticaya.toStringInfo());
+                                        System.out.println("2) Comprar Tipani: " + tipani.toStringInfo());
+                                        do {
+                                            int eleccionseres = Utils.leerEntero("Elija que quiere comprar introduciendo el numero correspondiente: ");
                                             switch (eleccionseres) {
                                                 case 1:
                                                     this.jugadorjuega.comprarSeres(banshee, omaticaya);
                                                     System.out.println(this.jugadorjuega.getNombre() + " ha comprado un " + omaticaya.getNombre());
+                                                    bucleseres = false;
                                                     break;
                                                 case 2:
                                                     this.jugadorjuega.comprarSeres(banshee, tipani);
                                                     System.out.println(this.jugadorjuega.getNombre() + " ha comprado un " + tipani.getNombre());
+                                                    bucleseres = false;
                                                     break;
-                                                case 3:
-                                                    System.out.println(this.jugadorjuega.getNombre() + " no ha comprado ningun ser");
+                                                default:
+                                                    System.out.println("OPCION INVALIDA. VUELVA A INTENTARLO CORRECTAMENTE");
+                                                    bucleseres = true;
                                                     break;
                                             }
-                                        }
-                                        break;
-                                    case 2:
-                                        System.out.println(this.jugadorjuega.getNombre() + " no ha comprado ningun ser");
-                                        break;
-                                }
-                                System.out.println(this.jugadorjuega.getEjercito());
-                                break;
-                            case 2:
-                                this.jugadorjuega.comprarUnidad(thanator);
-                                thanator.setJugador(this.jugadorjuega);
-                                thanator.setPosicion(posicion);
-                                int eleccionserescompra2 = Utils.leerEntero("Desea comprar seres que tripulen esta unidad? Necesita " + thanator.getSeresneed() + " para poder estar operativo \n1) SI \n2) NO");
-                                switch (eleccionserescompra2) {
-                                    case 1:
-                                        int nseres = Utils.leerEntero("Cuantos seres desea comprar que no supere " + thanator.getSeresneed() + "?");
-                                        for (int i = 0; i < nseres; i++) {
-                                            Ser omaticaya = new Omaticaya();
-                                            Ser tipani = new Tipani();
-                                            System.out.println("MERCADO DE SERES:");
-                                            System.out.println("1) Comprar Omaticaya: " + omaticaya.toStringInfo());
-                                            System.out.println("2) Comprar Tipani: " + tipani.toStringInfo());
-                                            System.out.println("3) No comprar nada");
-                                            int eleccionseres = Utils.leerEntero("Elija que quiere compra introduciendo el numero correspondiente: ");
+                                        } while (bucleseres);
+                                    }
+                                    System.out.println(this.jugadorjuega.getEjercito());
+                                    bucleunidades = false;
+                                    break;
+                                case 2:
+                                    this.jugadorjuega.comprarUnidad(thanator);
+                                    thanator.setJugador(this.jugadorjuega);
+                                    thanator.setPosicion(posicion);
+                                    for (int i = 0; i < thanator.getSeresneed(); i++) {
+                                        Ser omaticaya = new Omaticaya();
+                                        Ser tipani = new Tipani();
+                                        System.out.println("\\\\\\\\\\\\\\\\\\\\\\MERCADO DE SERES://////////////////////:");
+                                        System.out.println("1) Comprar Omaticaya: " + omaticaya.toStringInfo());
+                                        System.out.println("2) Comprar Tipani: " + tipani.toStringInfo());
+                                        do {
+                                            int eleccionseres = Utils.leerEntero("Elija que quiere comprar introduciendo el numero correspondiente: ");
                                             switch (eleccionseres) {
                                                 case 1:
                                                     this.jugadorjuega.comprarSeres(thanator, omaticaya);
                                                     System.out.println(this.jugadorjuega.getNombre() + " ha comprado un " + omaticaya.getNombre());
+                                                    bucleseres = false;
                                                     break;
                                                 case 2:
                                                     this.jugadorjuega.comprarSeres(thanator, tipani);
                                                     System.out.println(this.jugadorjuega.getNombre() + " ha comprado un " + tipani.getNombre());
+                                                    bucleseres = false;
                                                     break;
-                                                case 3:
-                                                    System.out.println(this.jugadorjuega.getNombre() + " no ha comprado ningun ser");
+                                                default:
+                                                    System.out.println("OPCION INVALIDA. VUELVA A INTENTARLO CORRECTAMENTE");
+                                                    bucleseres = true;
                                                     break;
                                             }
-                                        }
-                                        break;
-                                    case 2:
-                                        System.out.println(this.jugadorjuega.getNombre() + " no ha comprado ningun ser");
-                                        break;
-                                }
-                                System.out.println(this.jugadorjuega.getEjercito());
-                                break;
+                                        } while (bucleseres);
+                                    }
+                                    System.out.println(this.jugadorjuega.getEjercito());
+                                    bucleunidades = false;
+                                    break;
 
-                            case 3:
-                                this.jugadorjuega.comprarUnidad(titanothere);
-                                titanothere.setJugador(this.jugadorjuega);
-                                titanothere.setPosicion(posicion);
-                                int eleccionserescompra3 = Utils.leerEntero("Desea comprar seres que tripulen esta unidad? Necesita " + titanothere.getSeresneed() + " para poder estar operativo \n1) SI \n2) NO");
-                                switch (eleccionserescompra3) {
-                                    case 1:
-                                        int nseres = Utils.leerEntero("Cuantos seres desea comprar que no supere " + titanothere.getSeresneed() + "?");
-                                        for (int i = 0; i < nseres; i++) {
-                                            Ser omaticaya = new Omaticaya();
-                                            Ser tipani = new Tipani();
-                                            System.out.println("MERCADO DE SERES:");
-                                            System.out.println("1) Comprar Omaticaya: " + omaticaya.toStringInfo());
-                                            System.out.println("2) Comprar Tipani: " + tipani.toStringInfo());
-                                            System.out.println("3) No comprar nada");
-                                            int eleccionseres = Utils.leerEntero("Elija que quiere compra introduciendo el numero correspondiente: ");
+                                case 3:
+                                    this.jugadorjuega.comprarUnidad(titanothere);
+                                    titanothere.setJugador(this.jugadorjuega);
+                                    titanothere.setPosicion(posicion);
+                                    for (int i = 0; i < titanothere.getSeresneed(); i++) {
+                                        Ser omaticaya = new Omaticaya();
+                                        Ser tipani = new Tipani();
+                                        System.out.println("\\\\\\\\\\\\\\\\\\\\\\MERCADO DE SERES://////////////////////:");
+                                        System.out.println("1) Comprar Omaticaya: " + omaticaya.toStringInfo());
+                                        System.out.println("2) Comprar Tipani: " + tipani.toStringInfo());
+                                        do {
+                                            int eleccionseres = Utils.leerEntero("Elija que quiere comprar introduciendo el numero correspondiente: ");
                                             switch (eleccionseres) {
                                                 case 1:
                                                     this.jugadorjuega.comprarSeres(titanothere, omaticaya);
                                                     System.out.println(this.jugadorjuega.getNombre() + " ha comprado un " + omaticaya.getNombre());
+                                                    bucleseres = false;
                                                     break;
                                                 case 2:
                                                     this.jugadorjuega.comprarSeres(titanothere, tipani);
                                                     System.out.println(this.jugadorjuega.getNombre() + " ha comprado un " + tipani.getNombre());
+                                                    bucleseres = false;
                                                     break;
-                                                case 3:
-                                                    System.out.println(this.jugadorjuega.getNombre() + " no ha comprado ningun ser");
+                                                default:
+                                                    System.out.println("OPCION INVALIDA. VUELVA A INTENTARLO CORRECTAMENTE");
+                                                    bucleseres = true;
                                                     break;
                                             }
-                                        }
-                                        break;
-                                    case 2:
-                                        System.out.println(this.jugadorjuega.getNombre() + " no ha comprado ningun ser");
-                                        break;
-                                }
-                                System.out.println(this.jugadorjuega.getEjercito());
-                                break;
+                                        } while (bucleseres);
+                                    }
+                                    System.out.println(this.jugadorjuega.getEjercito());
+                                    bucleunidades = false;
+                                    break;
 
-                            case 4:
-                                System.out.println(this.jugadorjuega.getNombre() + " no ha comprado ninguna unidad");
-                        }
+                                case 4:
+                                    System.out.println(this.jugadorjuega.getNombre() + " no ha comprado ninguna unidad");
+                                    bucleunidades = false;
+                                default:
+                                    System.out.println("OPCION INVALIDA. VUELVA A INTENTARLO CORRECTAMENTE");
+                                    bucleunidades = true;
+                            }
+                        } while (bucleunidades);
                     }
-
                     break;
                 } catch (PuntosdeCompraInsuficientesException pci) {
                     System.out.println("NO TIENE SUFICIENTES PUNTOS PARA COMPRAR ESTA UNIDAD");
