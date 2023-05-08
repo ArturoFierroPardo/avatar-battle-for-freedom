@@ -55,7 +55,7 @@ public class Partida {
         this.jugador2 = jugador2;
         this.escenario = escenario;
         this.mapa = new Unidad[escenario.getXmax()][escenario.getYmax()];
-        this.turnos = 0;
+        this.turnos = 1;
     }
 
     /**
@@ -78,42 +78,40 @@ public class Partida {
     /**
      * Funcion que inicia la partida. Crea un menu que recibe por parametro el
      * jugador que juega en funcion de una funcion de turnos y un escenario.
-     * Enseña el menu al jugador actual y cuando acabe se añade un turno más.
-     * Gracias a un bucle se va repitiendo hasta que alguien gane.
+     * Enseña el menu al jugador 1 o 2 y cuando acabe se añade un turno más,
+     * así, se pasa gracias a un contador los turnos. Gracias a un bucle dowhile
+     * se va repitiendo hasta que alguien gane. La condicion para ganar una
+     * partida es que el enemigo no tenga unidades y que no tenga suficientes
+     * puntos para comprar algo.
      *
      * @throws modelos.excepciones.PuntosdeCompraInsuficientesException
      * @throws modelos.excepciones.FueradeMapaException
      */
     public void comienzaPartida() throws PuntosdeCompraInsuficientesException, FueradeMapaException {
-        Menu menu = new Menu(turnos(), escenario);
-        menu.enseñarMenu();
-        this.turnos++;
-
-        /**
-         * bucle while(boolean i = true) que invoque un objeto menu, lo enseñe y
-         * el jugador elija que quiere hacer pidiendoselo por pantalla y
-         * ejecutar la accion. Ir cambiando turnos cambiando el jugador actual y
-         * turnos++ con un bucle if, hasta que uno sea derrotado entonces i =
-         * false y se acaba la partida. Hacer funcion para ver cuando alguien
-         * gane la partida.
-         */
-    }
-
-    /**
-     * Funcion que pasa los turnos calculando el resto de la variable turnos que
-     * empieza en 0.
-     *
-     * @return
-     */
-    public Jugador turnos() {
-        Jugador jugadorjuega = this.jugador1;
-        if (this.turnos % 2 == 0) {
-            jugadorjuega = this.jugador1;
-        }
-        if (this.turnos % 2 == 1) {
-            jugadorjuega = this.jugador2;
-        }
-        return jugadorjuega;
+        System.out.println(toString());
+        boolean bucle = true;
+        do {
+            if (this.turnos % 2 == 1) {
+                System.out.println("TURNO---------->  " + this.turnos);
+                Menu menu = new Menu(this.jugador1, escenario);
+                menu.enseñarMenu();
+                this.turnos++;
+            }
+            if (this.turnos % 2 == 0) {
+                System.out.println("TURNO---------->  " + this.turnos);
+                Menu menu = new Menu(this.jugador2, escenario);
+                menu.enseñarMenu();
+                this.turnos++;
+            }
+            if (this.jugador1.getEjercito().getUnidades().isEmpty() && this.jugador1.getPuntos() <= 500) {
+                System.out.println("\tEL GANADOR DE LA PARTIDA ES " + this.jugador2);
+                bucle = false;
+            }
+            if (this.jugador2.getEjercito().getUnidades().isEmpty() && this.jugador2.getPuntos() <= 500) {
+                System.out.println("\tEL GANADOR DE LA PARTIDA ES " + this.jugador1);
+                bucle = false;
+            }
+        } while (bucle);
     }
 
     /**
@@ -122,7 +120,8 @@ public class Partida {
      */
     @Override
     public String toString() {
-        return "La partida comienza, lucharán " + this.jugador1 + " contra " + this.jugador2 + " en el escenario " + this.escenario;
+        return "La partida comienza, lucharan " + this.jugador1.getNombre() + " contra " + this.jugador2.getNombre() + " en el escenario " + this.escenario.getNombre() + "\n"
+                + "\nEmpezara en el primer turno " + this.jugador1.getNombre() + "\n";
     }
 
 }

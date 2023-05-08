@@ -63,6 +63,7 @@ public class Menu {
      */
     public void enseñarMenu() throws PuntosdeCompraInsuficientesException, FueradeMapaException {
         boolean bucle = false;
+        System.out.println("Turno de " + this.jugadorjuega.getNombre() + "\n");
         System.out.println("-------------------MENU-------------------\n");
         System.out.println("\t1) Comprar una unidad");
         System.out.println("\t2) Mover una unidad");
@@ -96,6 +97,11 @@ public class Menu {
     }
 
     /**
+     * HAAAACEEEEERRRR: Funcion para que el usuario elija mapa y en el
+     * constructor de partida quitarlo de parametro y hacer this.escenario =
+     * elegirescenario()
+     *
+     * /**
      * Funcion comprarUnidad(). Primero pide cuantas unidades desea comprar el
      * jugador y en funcion de eso el mercado se repetira x veces. Después ve si
      * el jugador es de un equipo o de otro, en funcion de ello se crearan unas

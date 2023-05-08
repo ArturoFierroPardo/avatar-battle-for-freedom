@@ -4,7 +4,7 @@
  */
 package main;
 
-import interfaz.menu.Menu;
+import interfaz.partida.Partida;
 import modelos.equipo.Equipo;
 import modelos.escenario.ArbolMadre;
 import modelos.escenario.Escenario;
@@ -29,10 +29,10 @@ public class Main {
          * Main para comprobar que funcionan cosas manualmente
          */
         Escenario escenario = new ArbolMadre();
-        Jugador jugador = new Jugador("Arturo", Equipo.RDA, escenario);
-
-        Menu menu = new Menu(jugador, escenario);
-        menu.enseñarMenu();
+        Jugador jugador1 = new Jugador("Arturo", Equipo.RDA, escenario);
+        Jugador jugador2 = new Jugador("Pedro", Equipo.Navi, escenario);
+        Partida partida = new Partida(jugador1, jugador2, escenario);
+        partida.comienzaPartida();
 
     }
 
