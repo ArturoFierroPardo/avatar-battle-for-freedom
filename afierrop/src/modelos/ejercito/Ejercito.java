@@ -51,7 +51,7 @@ public class Ejercito {
      */
     @Override
     public String toString() {
-        return "Su ejercito consta de " + this.unidades;
+        return "\nSu ejercito consta de " + this.unidades;
     }
 
 }

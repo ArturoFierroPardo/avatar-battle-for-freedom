@@ -103,12 +103,12 @@ public abstract class Ser {
      * Funcion que imprime toda la informacion del ser
      */
     public String toStringInfo() {
-        return "Nombre: " + this.nombre + "\n"
-                + "Coste: " + this.coste + "\n"
-                + "Cargo: " + this.cargo + "\n"
-                + "Raza: " + this.raza + "\n"
-                + "Vida: " + this.vida + "\n"
-                + "Puntos: " + this.puntosderrota + " \n";
+        return "\tNombre: " + this.nombre + "\n"
+                + "\tCoste: " + this.coste + "\n"
+                + "\tCargo: " + this.cargo + "\n"
+                + "\tRaza: " + this.raza + "\n"
+                + "\tVida: " + this.vida + "\n"
+                + "\tPuntos: " + this.puntosderrota + " \n";
 
     }
 

@@ -227,18 +227,18 @@ public abstract class Unidad {
      * Override de toString, que devuelve un string con toda la información
      */
     public String toStringInfo() {
-        return "Nombre: " + this.nombre + "\n"
-                + "Coste: " + this.coste + "\n"
-                + "Energia de defensa: " + this.energiadefensa + "\n"
-                + "Energia de ataque: " + this.energiataque + "\n"
-                + "Energia de movimiento: " + this.energiamov + "\n"
-                + "Potencia: " + this.potencia + "\n"
-                + "Puntos si se derrota: " + this.puntosderrota + " \n"
-                + "Tripulantes actuales: " + this.tripulantes + "\n"
-                + "Seres necesarios para el funcionamiento: " + this.seresneed + "\n"
-                + "Energia que gasta al moverse: " + this.energiagastadaxmov + "\n"
-                + "Maximas casillas que puede moverse por turno: " + this.maxmov + "\n"
-                + "Rango de ataque: " + this.rangoataque + " casillas\n";
+        return "\tNombre: " + this.nombre + "\n"
+                + "\tCoste: " + this.coste + "\n"
+                + "\tEnergia de defensa: " + this.energiadefensa + "\n"
+                + "\tEnergia de ataque: " + this.energiataque + "\n"
+                + "\tEnergia de movimiento: " + this.energiamov + "\n"
+                + "\tPotencia: " + this.potencia + "\n"
+                + "\tPuntos si se derrota: " + this.puntosderrota + " \n"
+                + "\tTripulantes actuales: " + this.tripulantes + "\n"
+                + "\tSeres necesarios para el funcionamiento: " + this.seresneed + "\n"
+                + "\tEnergia que gasta al moverse: " + this.energiagastadaxmov + "\n"
+                + "\tMaximas casillas que puede moverse por turno: " + this.maxmov + "\n"
+                + "\tRango de ataque: " + this.rangoataque + " casillas\n";
     }
 
     /**

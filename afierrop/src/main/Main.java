@@ -5,7 +5,6 @@
 package main;
 
 import interfaz.menu.Menu;
-import modelos.coordenadas.Coordenadas;
 import modelos.equipo.Equipo;
 import modelos.escenario.ArbolMadre;
 import modelos.escenario.Escenario;
@@ -21,6 +20,8 @@ public class Main {
 
     /**
      * @param args the command line arguments
+     * @throws modelos.excepciones.FueradeMapaException
+     * @throws modelos.excepciones.PuntosdeCompraInsuficientesException
      */
     public static void main(String[] args) throws FueradeMapaException, PuntosdeCompraInsuficientesException {
 
@@ -28,7 +29,6 @@ public class Main {
          * Main para comprobar que funcionan cosas manualmente
          */
         Escenario escenario = new ArbolMadre();
-        Coordenadas coordenada = new Coordenadas(escenario);
         Jugador jugador = new Jugador("Arturo", Equipo.RDA, escenario);
 
         Menu menu = new Menu(jugador, escenario);
