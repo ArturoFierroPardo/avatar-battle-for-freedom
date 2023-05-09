@@ -4,7 +4,6 @@
  */
 package interfaz.menu;
 
-import modelos.coordenadas.Coordenadas;
 import modelos.equipo.Equipo;
 import modelos.escenario.Escenario;
 import modelos.excepciones.FueradeMapaException;
@@ -156,7 +155,6 @@ public class Menu {
                         Unidad at99 = new AT99();
                         Unidad aerospatiale = new Aerospatiale();
                         Unidad mk6 = new MK6();
-                        Coordenadas posicion = new Coordenadas(this.escenario);
                         System.out.println("\n-------------------MERCADO DE UNIDADES-------------------\n");
                         System.out.println("1) Comprar AT99 - Escorpion: \n" + at99.toStringInfo());
                         System.out.println("2) Comprar Aerospatiale SA-2 Samson: \n" + aerospatiale.toStringInfo());
@@ -168,7 +166,6 @@ public class Menu {
                                 case 1:
                                     this.jugadorjuega.comprarUnidad(at99);
                                     at99.setJugador(this.jugadorjuega);
-                                    at99.setPosicion(posicion);
                                     for (int i = 0; i < at99.getSeresneed(); i++) {
                                         Ser comandante = new Comandante();
                                         Ser artillero = new Artillero();
@@ -199,7 +196,6 @@ public class Menu {
                                 case 2:
                                     this.jugadorjuega.comprarUnidad(aerospatiale);
                                     aerospatiale.setJugador(this.jugadorjuega);
-                                    aerospatiale.setPosicion(posicion);
                                     for (int i = 0; i < aerospatiale.getSeresneed(); i++) {
                                         Ser comandante = new Comandante();
                                         Ser artillero = new Artillero();
@@ -233,7 +229,6 @@ public class Menu {
                                 case 3:
                                     this.jugadorjuega.comprarUnidad(mk6);
                                     mk6.setJugador(this.jugadorjuega);
-                                    mk6.setPosicion(posicion);
                                     for (int i = 0; i < mk6.getSeresneed(); i++) {
                                         Ser comandante = new Comandante();
                                         Ser artillero = new Artillero();
@@ -278,7 +273,6 @@ public class Menu {
                         Unidad banshee = new Banshee();
                         Unidad thanator = new Thanator();
                         Unidad titanothere = new Titanothere();
-                        Coordenadas posicion = new Coordenadas(this.escenario);
                         System.out.println("\n-------------------MERCADO DE UNIDADES-------------------\n");
                         System.out.println("\t1) Comprar Banshee de Montaña: \n" + banshee.toStringInfo());
                         System.out.println("\t2) Comprar Thanator: \n" + thanator.toStringInfo());
@@ -290,7 +284,6 @@ public class Menu {
                                 case 1:
                                     this.jugadorjuega.comprarUnidad(banshee);
                                     banshee.setJugador(this.jugadorjuega);
-                                    banshee.setPosicion(posicion);
                                     for (int i = 0; i < banshee.getSeresneed(); i++) {
                                         Ser omaticaya = new Omaticaya();
                                         Ser tipani = new Tipani();
@@ -321,7 +314,6 @@ public class Menu {
                                 case 2:
                                     this.jugadorjuega.comprarUnidad(thanator);
                                     thanator.setJugador(this.jugadorjuega);
-                                    thanator.setPosicion(posicion);
                                     for (int i = 0; i < thanator.getSeresneed(); i++) {
                                         Ser omaticaya = new Omaticaya();
                                         Ser tipani = new Tipani();
@@ -353,7 +345,6 @@ public class Menu {
                                 case 3:
                                     this.jugadorjuega.comprarUnidad(titanothere);
                                     titanothere.setJugador(this.jugadorjuega);
-                                    titanothere.setPosicion(posicion);
                                     for (int i = 0; i < titanothere.getSeresneed(); i++) {
                                         Ser omaticaya = new Omaticaya();
                                         Ser tipani = new Tipani();
@@ -402,26 +393,26 @@ public class Menu {
 
     /**
      * Funcion para restar energia de movimiento a una unidad en funcion de sus
-     * limitaciones. HACEEEER PARA LOS QUE CONSUMEN POR CASILLA MOVIDA.
+     * limitaciones.
      */
     private void restarEnergia(Unidad unidad) {
         if (unidad instanceof AT99) {
-            unidad.setEnergiamov(unidad.getEnergiamov() - (unidad.getEnergiagastadaxmov() * unidad.getMaxmov()));
+            unidad.setEnergiamov(unidad.getEnergiamov() - (unidad.getEnergiagastadaxmov() * (unidad.getPosicon().getCasillasMovidasX() + unidad.getPosicon().getCasillasMovidasY())));
         }
         if (unidad instanceof MK6) {
             unidad.setEnergiamov(unidad.getEnergiamov() - unidad.getEnergiagastadaxmov());
         }
         if (unidad instanceof Aerospatiale) {
-            unidad.setEnergiamov(unidad.getEnergiamov() - (unidad.getEnergiagastadaxmov() * unidad.getMaxmov()));
+            unidad.setEnergiamov(unidad.getEnergiamov() - (unidad.getEnergiagastadaxmov() * (unidad.getPosicon().getCasillasMovidasX() + unidad.getPosicon().getCasillasMovidasY())));
         }
         if (unidad instanceof Banshee) {
             unidad.setEnergiamov(unidad.getEnergiamov() - unidad.getEnergiagastadaxmov());
         }
         if (unidad instanceof Thanator) {
-            unidad.setEnergiamov(unidad.getEnergiamov() - (unidad.getEnergiagastadaxmov() * unidad.getMaxmov()));
+            unidad.setEnergiamov(unidad.getEnergiamov() - (unidad.getEnergiagastadaxmov() * (unidad.getPosicon().getCasillasMovidasX() + unidad.getPosicon().getCasillasMovidasY())));
         }
         if (unidad instanceof Titanothere) {
-            unidad.setEnergiamov(unidad.getEnergiamov() - (unidad.getEnergiagastadaxmov() * unidad.getMaxmov()));
+            unidad.setEnergiamov(unidad.getEnergiamov() - unidad.getEnergiagastadaxmov());
         }
     }
 

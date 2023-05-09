@@ -208,8 +208,8 @@ public abstract class Unidad {
     }
 
     public int getMaxmov() {
-        int maxmov = Integer.parseInt(this.maxmov);
-        return maxmov;
+        int maxmov1 = Integer.parseInt(this.maxmov);
+        return maxmov1;
     }
 
     public int getRangoataque() {

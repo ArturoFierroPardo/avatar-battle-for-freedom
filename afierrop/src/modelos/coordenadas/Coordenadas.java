@@ -32,6 +32,16 @@ public class Coordenadas {
     private Escenario escenario;
 
     /**
+     * Casillas movidas en x
+     */
+    private int casillasmovidasx;
+
+    /**
+     * Casillas movidas en y
+     */
+    private int casillasmovidasy;
+
+    /**
      * Constructor de coordenadas, que recibe la coordenada x e y como se le
      * indique y un escenario en el que se juega para poder ver cual es el
      * limite maximo.
@@ -71,22 +81,47 @@ public class Coordenadas {
      * poder ver su limite maximo, el cual pone a los atributos x e y
      * aleatoriamente en funcion de la unidad que se le pasa por parametro para
      * ponerlo dentro de sus limites para que no se pase más la coordenada en la
-     * que estaba.
+     * que estaba.Se gestiona cuantas casillas se mueve restando la posicion en
+     * x y en y de la anterior coordenada con las de la nueva respectivamente.
      *
      * @param unidad
-     * @param coordenada
      * @param x
      * @param y
      * @param escenario
      * @throws modelos.excepciones.FueradeMapaException
      */
-    public Coordenadas(Unidad unidad, Coordenadas coordenada, Escenario escenario) throws FueradeMapaException {
+    public Coordenadas(Unidad unidad, int x, int y, Escenario escenario) throws FueradeMapaException {
+        int restacasillas;
         this.escenario = escenario;
         Random rand = new Random();
-        this.x = coordenada.getX() + rand.nextInt(unidad.getMaxmov());
-        this.y = coordenada.getY() + rand.nextInt(unidad.getMaxmov());
+        int xaleatoria = rand.nextInt(-1 * unidad.getMaxmov(), unidad.getMaxmov());
+        if (xaleatoria < 0) {
+            restacasillas = -xaleatoria;
+        } else {
+            restacasillas = xaleatoria;
+        }
+        if (restacasillas == unidad.getMaxmov()) {
+            this.y = y;
+        } else {
+            int yaleatoria = rand.nextInt(-1 * (unidad.getMaxmov() - restacasillas), unidad.getMaxmov() - restacasillas);
+            this.y = y + yaleatoria;
+        }
+        this.x = x + xaleatoria;
         checkCoordenadaX(this.x, this.escenario);
         checkCoordenadaY(this.y, this.escenario);
+        if (x > this.x) {
+            this.casillasmovidasx = -1 * (this.x - x);
+        }
+        if (x <= this.x) {
+            this.casillasmovidasx = this.x - x;
+        }
+        if (y > this.y) {
+            this.casillasmovidasy = -1 * (this.y - y);
+        }
+        if (y <= this.y) {
+            this.casillasmovidasy = this.y - y;
+        }
+
     }
 
     /**
@@ -118,6 +153,14 @@ public class Coordenadas {
 
     public int getY() {
         return this.y;
+    }
+
+    public int getCasillasMovidasY() {
+        return this.casillasmovidasy;
+    }
+
+    public int getCasillasMovidasX() {
+        return this.casillasmovidasx;
     }
 
     /**

@@ -114,19 +114,33 @@ public class Jugador {
      * Función de compra de Unidades.Si el jugador tiene los puntos necesarios
      * para la compra de la unidad, se compra y se restan los puntos gastados.Si
      * no, se lanza la excepcion que sera catcheada en el menu para repetirlo
-     * con un bucle.
+     * con un bucle.Al comprar la unidad se añade al mapa de unidades viendo si
+     * hay o no una unidad ya.
      *
      * @param unidad
      * @throws modelos.excepciones.PuntosdeCompraInsuficientesException
+     * @throws modelos.excepciones.FueradeMapaException
      */
-    public void comprarUnidad(Unidad unidad) throws PuntosdeCompraInsuficientesException {
+    public void comprarUnidad(Unidad unidad) throws PuntosdeCompraInsuficientesException, FueradeMapaException {
+        boolean coordenadacorrecta = true;
+        Coordenadas posicion;
         if (this.puntos >= unidad.getCoste()) {
-            this.ejercito.getUnidades().add(unidad);
-            this.puntos = this.puntos - unidad.getCoste();
+            while (coordenadacorrecta) {
+                posicion = new Coordenadas(this.escenario);
+                if (this.mapa[posicion.getX()][posicion.getY()] == null) {
+                    unidad.setPosicion(posicion);
+                    this.ejercito.getUnidades().add(unidad);
+                    this.puntos = this.puntos - unidad.getCoste();
+                    this.mapa[posicion.getX()][posicion.getY()] = unidad;
+                    break;
+                } else {
+                    posicion = new Coordenadas(this.escenario);
+                    coordenadacorrecta = true;
+                }
+            }
         } else {
             throw new PuntosdeCompraInsuficientesException();
         }
-
     }
 
     /**
@@ -152,68 +166,108 @@ public class Jugador {
      * Funcion para mover una unidad a una posicion aleatoria.En el menu se
      * llamara a esta funcion que para cada unidad tendra unos limites de
      * movimiento y se le restara una energia en funcion de las casillas que se
-     * mueve
+     * mueve. Ademas, controla si hay una unidad en el mapa o no, si no hay la
+     * situa, si la hay cambia la coordenada.
      *
      * @param unidad
      * @throws modelos.excepciones.FueradeMapaException
      */
     public void moverUnidad(Unidad unidad) throws FueradeMapaException {
         boolean coordenadacorrecta = true;
-        if (unidad instanceof AT99) {
-            Coordenadas coordenada;
-            while (coordenadacorrecta) {
-                coordenada = new Coordenadas(unidad, unidad.getPosicon(), this.escenario);
-                coordenadacorrecta = checkMapa(coordenada);
-                unidad.setPosicion(coordenada);
-            }
-        }
-        if (unidad instanceof MK6) {
-            Coordenadas coordenada;
-            while (coordenadacorrecta) {
-                coordenada = new Coordenadas(unidad, unidad.getPosicon(), this.escenario);
-                coordenadacorrecta = checkMapa(coordenada);
-                unidad.setPosicion(coordenada);
-            }
-        }
-        if (unidad instanceof Aerospatiale) {
-            Coordenadas coordenada;
-            while (coordenadacorrecta) {
-                coordenada = new Coordenadas(unidad, unidad.getPosicon(), this.escenario);
-                coordenadacorrecta = checkMapa(coordenada);
-                unidad.setPosicion(coordenada);
-            }
-        }
-        if (unidad instanceof Banshee) {
-            Coordenadas coordenada;
-            while (coordenadacorrecta) {
-                coordenada = new Coordenadas(unidad, unidad.getPosicon(), this.escenario);
-                coordenadacorrecta = checkMapa(coordenada);
-                unidad.setPosicion(coordenada);
-            }
-        }
-        if (unidad instanceof Thanator) {
-            Coordenadas coordenada;
-            while (coordenadacorrecta) {
-                coordenada = new Coordenadas(unidad, unidad.getPosicon(), this.escenario);
-                coordenadacorrecta = checkMapa(coordenada);
-                unidad.setPosicion(coordenada);
-            }
-        }
-        if (unidad instanceof Titanothere) {
-            Coordenadas coordenada;
-            while (coordenadacorrecta) {
-                coordenada = new Coordenadas(unidad, unidad.getPosicon(), this.escenario);
-                coordenadacorrecta = checkMapa(coordenada);
-                unidad.setPosicion(coordenada);
-            }
-        }
-    }
+        boolean bucleexception = true;
+        int antiguacoordx = unidad.getPosicon().getX();
+        int antiguacoordy = unidad.getPosicon().getY();
+        while (bucleexception) {
+            try {
 
-    public boolean checkMapa(Coordenadas coordenada) {
-        if (this.mapa[coordenada.getX()][coordenada.getY()] == null) {
-            return true;
-        } else {
-            return false;
+                if (unidad instanceof AT99) {
+                    Coordenadas coordenada;
+                    while (coordenadacorrecta) {
+                        coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
+                        if (this.mapa[coordenada.getX()][coordenada.getY()] == null) {
+                            unidad.setPosicion(coordenada);
+                            this.mapa[coordenada.getX()][coordenada.getY()] = unidad;
+                            coordenadacorrecta = false;
+                        } else {
+                            coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
+                            coordenadacorrecta = true;
+                        }
+                    }
+                }
+                if (unidad instanceof MK6) {
+                    Coordenadas coordenada;
+                    while (coordenadacorrecta) {
+                        coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
+                        if (this.mapa[coordenada.getX()][coordenada.getY()] == null) {
+                            unidad.setPosicion(coordenada);
+                            this.mapa[coordenada.getX()][coordenada.getY()] = unidad;
+                            coordenadacorrecta = false;
+                        } else {
+                            coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
+                            coordenadacorrecta = true;
+                        }
+                    }
+                }
+                if (unidad instanceof Aerospatiale) {
+                    Coordenadas coordenada;
+                    while (coordenadacorrecta) {
+                        coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
+                        if (this.mapa[coordenada.getX()][coordenada.getY()] == null) {
+                            unidad.setPosicion(coordenada);
+                            this.mapa[coordenada.getX()][coordenada.getY()] = unidad;
+                            coordenadacorrecta = false;
+                        } else {
+                            coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
+                            coordenadacorrecta = true;
+                        }
+                    }
+                }
+                if (unidad instanceof Banshee) {
+                    Coordenadas coordenada;
+                    while (coordenadacorrecta) {
+                        coordenada = new Coordenadas(this.escenario);
+                        if (this.mapa[coordenada.getX()][coordenada.getY()] == null) {
+                            unidad.setPosicion(coordenada);
+                            this.mapa[coordenada.getX()][coordenada.getY()] = unidad;
+                            coordenadacorrecta = false;
+                        } else {
+                            coordenada = new Coordenadas(this.escenario);
+                            coordenadacorrecta = true;
+                        }
+                    }
+                }
+                if (unidad instanceof Thanator) {
+                    Coordenadas coordenada;
+                    while (coordenadacorrecta) {
+                        coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
+                        if (this.mapa[coordenada.getX()][coordenada.getY()] == null) {
+                            unidad.setPosicion(coordenada);
+                            this.mapa[coordenada.getX()][coordenada.getY()] = unidad;
+                            coordenadacorrecta = false;
+                        } else {
+                            coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
+                            coordenadacorrecta = true;
+                        }
+                    }
+                }
+                if (unidad instanceof Titanothere) {
+                    Coordenadas coordenada;
+                    while (coordenadacorrecta) {
+                        coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
+                        if (this.mapa[coordenada.getX()][coordenada.getY()] == null) {
+                            unidad.setPosicion(coordenada);
+                            this.mapa[coordenada.getX()][coordenada.getY()] = unidad;
+                            coordenadacorrecta = false;
+                        } else {
+                            coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
+                            coordenadacorrecta = true;
+                        }
+                    }
+                }
+                break;
+            } catch (FueradeMapaException fme) {
+                fme.printStackTrace();
+            }
         }
     }
 
