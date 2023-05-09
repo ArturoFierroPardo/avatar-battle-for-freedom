@@ -12,6 +12,12 @@ import modelos.excepciones.FueradeMapaException;
 import modelos.excepciones.PuntosdeCompraInsuficientesException;
 import modelos.ser.Ser;
 import modelos.unidad.Unidad;
+import modelos.unidad.bestia.Banshee;
+import modelos.unidad.bestia.Thanator;
+import modelos.unidad.bestia.Titanothere;
+import modelos.unidad.maquina.AT99;
+import modelos.unidad.maquina.Aerospatiale;
+import modelos.unidad.maquina.MK6;
 
 /**
  *
@@ -143,8 +149,31 @@ public class Jugador {
      * mueve
      */
     public void moverUnidad(Unidad unidad) throws FueradeMapaException {
-        Coordenadas coordenada = new Coordenadas(this.escenario);
-        unidad.setPosicion(coordenada);
+        if (unidad instanceof AT99) {
+            Coordenadas coordenada = new Coordenadas(unidad, unidad.getPosicon(), this.escenario);
+            unidad.setPosicion(coordenada);
+        }
+        if (unidad instanceof MK6) {
+            Coordenadas coordenada = new Coordenadas(unidad, unidad.getPosicon(), this.escenario);
+            unidad.setPosicion(coordenada);
+        }
+        if (unidad instanceof Aerospatiale) {
+            Coordenadas coordenada = new Coordenadas(unidad, unidad.getPosicon(), this.escenario);
+            unidad.setPosicion(coordenada);
+        }
+        if (unidad instanceof Banshee) {
+            Coordenadas coordenada = new Coordenadas(this.escenario);
+            unidad.setPosicion(coordenada);
+        }
+        if (unidad instanceof Thanator) {
+            Coordenadas coordenada = new Coordenadas(unidad, unidad.getPosicon(), this.escenario);
+            unidad.setPosicion(coordenada);
+        }
+        if (unidad instanceof Titanothere) {
+            Coordenadas coordenada = new Coordenadas(unidad, unidad.getPosicon(), this.escenario);
+            unidad.setPosicion(coordenada);
+        }
+
     }
 
     /**

@@ -70,19 +70,21 @@ public class Coordenadas {
      * Constructor de coordenadas que recibe un escenario por parametro para
      * poder ver su limite maximo, el cual pone a los atributos x e y
      * aleatoriamente en funcion de la unidad que se le pasa por parametro para
-     * ponerlo dentro de sus limites para que no se pase.
+     * ponerlo dentro de sus limites para que no se pase más la coordenada en la
+     * que estaba.
      *
      * @param unidad
+     * @param coordenada
      * @param x
      * @param y
      * @param escenario
      * @throws modelos.excepciones.FueradeMapaException
      */
-    public Coordenadas(Unidad unidad, int x, int y, Escenario escenario) throws FueradeMapaException {
+    public Coordenadas(Unidad unidad, Coordenadas coordenada, Escenario escenario) throws FueradeMapaException {
         this.escenario = escenario;
         Random rand = new Random();
-        this.x = rand.nextInt(unidad.getMaxmov());
-        this.y = rand.nextInt(unidad.getMaxmov());
+        this.x = coordenada.getX() + rand.nextInt(unidad.getMaxmov());
+        this.y = coordenada.getY() + rand.nextInt(unidad.getMaxmov());
         checkCoordenadaX(this.x, this.escenario);
         checkCoordenadaY(this.y, this.escenario);
     }
