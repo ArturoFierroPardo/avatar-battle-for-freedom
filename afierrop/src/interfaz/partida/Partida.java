@@ -9,7 +9,6 @@ import modelos.escenario.Escenario;
 import modelos.excepciones.FueradeMapaException;
 import modelos.excepciones.PuntosdeCompraInsuficientesException;
 import modelos.jugador.Jugador;
-import modelos.unidad.Unidad;
 
 /**
  *
@@ -33,11 +32,6 @@ public class Partida {
     private Escenario escenario;
 
     /**
-     * Mapa en el que se juega. Para guardar donde estan las unidades
-     */
-    private Unidad[][] mapa;
-
-    /**
      * turnos de la partida
      */
     private int turnos;
@@ -54,7 +48,6 @@ public class Partida {
         this.jugador1 = jugador1;
         this.jugador2 = jugador2;
         this.escenario = escenario;
-        this.mapa = new Unidad[escenario.getXmax()][escenario.getYmax()];
         this.turnos = 1;
     }
 

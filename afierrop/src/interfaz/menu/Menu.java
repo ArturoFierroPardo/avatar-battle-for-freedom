@@ -83,10 +83,8 @@ public class Menu {
                             if (this.jugadorjuega.getEjercito().getUnidades().isEmpty()) {
                                 bucle = true;
                                 throw new IndexOutofBounceException();
-
                             }
                             if (this.jugadorjuega.getEjercito().getUnidades().size() >= 0) {
-
                                 bucle = false;
                                 moverUnidad();
                             }

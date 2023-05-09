@@ -51,6 +51,11 @@ public class Jugador {
     private Escenario escenario;
 
     /**
+     * Mapa en el que se juega. Para guardar donde estan las unidades
+     */
+    private Unidad[][] mapa;
+
+    /**
      * Constructor de un jugador el cual recibira por parametros, el nombre de
      * jugador, su equipo (Navi o RDA) y el escenario en el que va a
      * jugar.Además, cuenta con un atributo ejercito que se instancia en null,
@@ -67,6 +72,7 @@ public class Jugador {
         this.puntos = escenario.getPuntoscomienzo();
         this.ejercito = new Ejercito();
         this.escenario = escenario;
+        this.mapa = new Unidad[escenario.getXmax()][escenario.getYmax()];
     }
 
     /**
@@ -143,37 +149,72 @@ public class Jugador {
     }
 
     /**
-     * Funcion para mover una unidad a una posicion aleatoria. En el menu se
+     * Funcion para mover una unidad a una posicion aleatoria.En el menu se
      * llamara a esta funcion que para cada unidad tendra unos limites de
      * movimiento y se le restara una energia en funcion de las casillas que se
      * mueve
+     *
+     * @param unidad
+     * @throws modelos.excepciones.FueradeMapaException
      */
     public void moverUnidad(Unidad unidad) throws FueradeMapaException {
+        boolean coordenadacorrecta = true;
         if (unidad instanceof AT99) {
-            Coordenadas coordenada = new Coordenadas(unidad, unidad.getPosicon(), this.escenario);
-            unidad.setPosicion(coordenada);
+            Coordenadas coordenada;
+            while (coordenadacorrecta) {
+                coordenada = new Coordenadas(unidad, unidad.getPosicon(), this.escenario);
+                coordenadacorrecta = checkMapa(coordenada);
+                unidad.setPosicion(coordenada);
+            }
         }
         if (unidad instanceof MK6) {
-            Coordenadas coordenada = new Coordenadas(unidad, unidad.getPosicon(), this.escenario);
-            unidad.setPosicion(coordenada);
+            Coordenadas coordenada;
+            while (coordenadacorrecta) {
+                coordenada = new Coordenadas(unidad, unidad.getPosicon(), this.escenario);
+                coordenadacorrecta = checkMapa(coordenada);
+                unidad.setPosicion(coordenada);
+            }
         }
         if (unidad instanceof Aerospatiale) {
-            Coordenadas coordenada = new Coordenadas(unidad, unidad.getPosicon(), this.escenario);
-            unidad.setPosicion(coordenada);
+            Coordenadas coordenada;
+            while (coordenadacorrecta) {
+                coordenada = new Coordenadas(unidad, unidad.getPosicon(), this.escenario);
+                coordenadacorrecta = checkMapa(coordenada);
+                unidad.setPosicion(coordenada);
+            }
         }
         if (unidad instanceof Banshee) {
-            Coordenadas coordenada = new Coordenadas(this.escenario);
-            unidad.setPosicion(coordenada);
+            Coordenadas coordenada;
+            while (coordenadacorrecta) {
+                coordenada = new Coordenadas(unidad, unidad.getPosicon(), this.escenario);
+                coordenadacorrecta = checkMapa(coordenada);
+                unidad.setPosicion(coordenada);
+            }
         }
         if (unidad instanceof Thanator) {
-            Coordenadas coordenada = new Coordenadas(unidad, unidad.getPosicon(), this.escenario);
-            unidad.setPosicion(coordenada);
+            Coordenadas coordenada;
+            while (coordenadacorrecta) {
+                coordenada = new Coordenadas(unidad, unidad.getPosicon(), this.escenario);
+                coordenadacorrecta = checkMapa(coordenada);
+                unidad.setPosicion(coordenada);
+            }
         }
         if (unidad instanceof Titanothere) {
-            Coordenadas coordenada = new Coordenadas(unidad, unidad.getPosicon(), this.escenario);
-            unidad.setPosicion(coordenada);
+            Coordenadas coordenada;
+            while (coordenadacorrecta) {
+                coordenada = new Coordenadas(unidad, unidad.getPosicon(), this.escenario);
+                coordenadacorrecta = checkMapa(coordenada);
+                unidad.setPosicion(coordenada);
+            }
         }
+    }
 
+    public boolean checkMapa(Coordenadas coordenada) {
+        if (this.mapa[coordenada.getX()][coordenada.getY()] == null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
