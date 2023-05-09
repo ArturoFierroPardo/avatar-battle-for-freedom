@@ -4,9 +4,11 @@
  */
 package modelos.jugador;
 
+import modelos.coordenadas.Coordenadas;
 import modelos.ejercito.Ejercito;
 import modelos.equipo.Equipo;
 import modelos.escenario.Escenario;
+import modelos.excepciones.FueradeMapaException;
 import modelos.excepciones.PuntosdeCompraInsuficientesException;
 import modelos.ser.Ser;
 import modelos.unidad.Unidad;
@@ -58,6 +60,7 @@ public class Jugador {
         this.equipo = equipo;
         this.puntos = escenario.getPuntoscomienzo();
         this.ejercito = new Ejercito();
+        this.escenario = escenario;
     }
 
     /**
@@ -131,6 +134,17 @@ public class Jugador {
         } else {
             throw new PuntosdeCompraInsuficientesException();
         }
+    }
+
+    /**
+     * Funcion para mover una unidad a una posicion aleatoria. En el menu se
+     * llamara a esta funcion que para cada unidad tendra unos limites de
+     * movimiento y se le restara una energia en funcion de las casillas que se
+     * mueve
+     */
+    public void moverUnidad(Unidad unidad) throws FueradeMapaException {
+        Coordenadas coordenada = new Coordenadas(this.escenario);
+        unidad.setPosicion(coordenada);
     }
 
     /**

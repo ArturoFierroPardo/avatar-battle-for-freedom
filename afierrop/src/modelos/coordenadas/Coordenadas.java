@@ -7,6 +7,7 @@ package modelos.coordenadas;
 import java.util.Random;
 import modelos.escenario.Escenario;
 import modelos.excepciones.FueradeMapaException;
+import modelos.unidad.Unidad;
 
 /**
  *
@@ -43,8 +44,9 @@ public class Coordenadas {
     public Coordenadas(int x, int y, Escenario escenario) throws FueradeMapaException {
         this.x = x;
         this.y = y;
-        checkCoordenadaX(this.x, escenario);
-        checkCoordenadaY(this.y, escenario);
+        this.escenario = escenario;
+        checkCoordenadaX(this.x, this.escenario);
+        checkCoordenadaY(this.y, this.escenario);
     }
 
     /**
@@ -56,11 +58,33 @@ public class Coordenadas {
      * @throws modelos.excepciones.FueradeMapaException
      */
     public Coordenadas(Escenario escenario) throws FueradeMapaException {
+        this.escenario = escenario;
         Random rand = new Random();
-        this.x = rand.nextInt(escenario.getXmax());
-        this.y = rand.nextInt(escenario.getYmax());
-        checkCoordenadaX(this.x, escenario);
-        checkCoordenadaY(this.y, escenario);
+        this.x = rand.nextInt(this.escenario.getXmax());
+        this.y = rand.nextInt(this.escenario.getYmax());
+        checkCoordenadaX(this.x, this.escenario);
+        checkCoordenadaY(this.y, this.escenario);
+    }
+
+    /**
+     * Constructor de coordenadas que recibe un escenario por parametro para
+     * poder ver su limite maximo, el cual pone a los atributos x e y
+     * aleatoriamente en funcion de la unidad que se le pasa por parametro para
+     * ponerlo dentro de sus limites para que no se pase.
+     *
+     * @param unidad
+     * @param x
+     * @param y
+     * @param escenario
+     * @throws modelos.excepciones.FueradeMapaException
+     */
+    public Coordenadas(Unidad unidad, int x, int y, Escenario escenario) throws FueradeMapaException {
+        this.escenario = escenario;
+        Random rand = new Random();
+        this.x = rand.nextInt(unidad.getMaxmov());
+        this.y = rand.nextInt(unidad.getMaxmov());
+        checkCoordenadaX(this.x, this.escenario);
+        checkCoordenadaY(this.y, this.escenario);
     }
 
     /**
@@ -72,13 +96,13 @@ public class Coordenadas {
      */
     public void setX(int x) throws FueradeMapaException {
         this.x = x;
-        checkCoordenadaX(x, escenario);
+        checkCoordenadaX(x, this.escenario);
 
     }
 
     public void setY(int y) throws FueradeMapaException {
         this.y = y;
-        checkCoordenadaY(this.y, escenario);
+        checkCoordenadaY(this.y, this.escenario);
     }
 
     /**

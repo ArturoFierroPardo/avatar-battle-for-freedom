@@ -93,13 +93,13 @@ public class Partida {
         do {
             if (this.turnos % 2 == 1) {
                 System.out.println("TURNO---------->  " + this.turnos);
-                Menu menu = new Menu(this.jugador1, escenario);
+                Menu menu = new Menu(this.jugador1, this.escenario);
                 menu.enseñarMenu();
                 this.turnos++;
             }
             if (this.turnos % 2 == 0) {
                 System.out.println("TURNO---------->  " + this.turnos);
-                Menu menu = new Menu(this.jugador2, escenario);
+                Menu menu = new Menu(this.jugador2, this.escenario);
                 menu.enseñarMenu();
                 this.turnos++;
             }

@@ -207,8 +207,9 @@ public abstract class Unidad {
         return this.energiagastadaxmov;
     }
 
-    public String geMaxmov() {
-        return this.maxmov;
+    public int getMaxmov() {
+        int maxmov = Integer.parseInt(this.maxmov);
+        return maxmov;
     }
 
     public int getRangoataque() {

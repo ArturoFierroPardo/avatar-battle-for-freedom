@@ -8,6 +8,7 @@ import modelos.coordenadas.Coordenadas;
 import modelos.equipo.Equipo;
 import modelos.escenario.Escenario;
 import modelos.excepciones.FueradeMapaException;
+import modelos.excepciones.IndexOutofBounceException;
 import modelos.excepciones.PuntosdeCompraInsuficientesException;
 import modelos.jugador.Jugador;
 import modelos.ser.Ser;
@@ -69,39 +70,56 @@ public class Menu {
         System.out.println("\t2) Mover una unidad");
         System.out.println("\t3) Atacar a una unidad enemiga");
         System.out.println("\t4) Finalizar el turno\n");
-        do {
-            int opcion = Utils.leerEntero("Elija que quiere hacer escribiendo el numero correspondiente: ");
-            switch (opcion) {
-                case 1:
-                    compraUnidad();
-                    bucle = false;
-                    break;
-                case 2:
-                    /*Mover unidad*/
-                    bucle = false;
-                    break;
-                case 3:
-                    /*Atacar a una unidad*/
-                    bucle = false;
-                    break;
-                case 4:
-                    bucle = false;
-                    break;
-                default:
-                    System.out.println("\tOPCION INVALIDA. VUELVA A INTENTARLO CORRECTAMENTE\n");
-                    bucle = true;
-                    break;
+        while (true) {
+            try {
+                do {
+                    int opcion = Utils.leerEntero("Elija que quiere hacer escribiendo el numero correspondiente: ");
+                    switch (opcion) {
+                        case 1:
+                            compraUnidad();
+                            bucle = false;
+                            break;
+                        case 2:
+                            if (this.jugadorjuega.getEjercito().getUnidades().isEmpty()) {
+                                bucle = true;
+                                throw new IndexOutofBounceException();
+
+                            }
+                            if (this.jugadorjuega.getEjercito().getUnidades().size() >= 0) {
+
+                                bucle = false;
+                                moverUnidad();
+                            }
+                            break;
+                        case 3:
+                            /*Atacar a una unidad*/
+                            bucle = false;
+                            break;
+                        case 4:
+                            bucle = false;
+                            break;
+                        default:
+                            System.out.println("\tOPCION INVALIDA. VUELVA A INTENTARLO CORRECTAMENTE\n");
+                            bucle = true;
+                            break;
+
+                    }
+
+                } while (bucle);
+                break;
+            } catch (IndexOutofBounceException iob) {
+                System.out.println("\tOPCION INVALIDA. NO PUEDE MOVER UNIDADES PORQUE NO TIENE. VUELVA A INTENTARLO CORRECTAMENTE\n");
 
             }
-        } while (bucle);
+        }
     }
 
     /**
      * HAAAACEEEEERRRR: Funcion para que el usuario elija mapa y en el
      * constructor de partida quitarlo de parametro y hacer this.escenario =
      * elegirescenario()
-     *
-     * /**
+     */
+    /**
      * Funcion comprarUnidad(). Primero pide cuantas unidades desea comprar el
      * jugador y en funcion de eso el mercado se repetira x veces. Después ve si
      * el jugador es de un equipo o de otro, en funcion de ello se crearan unas
@@ -383,4 +401,85 @@ public class Menu {
             }
         }
     }
+
+    /**
+     * Funcion para restar energia de movimiento a una unidad en funcion de sus
+     * limitaciones. HACEEEER PARA LOS QUE CONSUMEN POR CASILLA MOVIDA.
+     */
+    private void restarEnergia(Unidad unidad) {
+        if (unidad instanceof AT99) {
+            unidad.setEnergiamov(unidad.getEnergiamov() - (unidad.getEnergiagastadaxmov() * unidad.getMaxmov()));
+        }
+        if (unidad instanceof MK6) {
+            unidad.setEnergiamov(unidad.getEnergiamov() - unidad.getEnergiagastadaxmov());
+        }
+        if (unidad instanceof Aerospatiale) {
+            unidad.setEnergiamov(unidad.getEnergiamov() - (unidad.getEnergiagastadaxmov() * unidad.getMaxmov()));
+        }
+        if (unidad instanceof Banshee) {
+            unidad.setEnergiamov(unidad.getEnergiamov() - unidad.getEnergiagastadaxmov());
+        }
+        if (unidad instanceof Thanator) {
+            unidad.setEnergiamov(unidad.getEnergiamov() - (unidad.getEnergiagastadaxmov() * unidad.getMaxmov()));
+        }
+        if (unidad instanceof Titanothere) {
+            unidad.setEnergiamov(unidad.getEnergiamov() - (unidad.getEnergiagastadaxmov() * unidad.getMaxmov()));
+        }
+    }
+
+    private void moverUnidad() throws FueradeMapaException {
+        boolean buclemover = false;
+        System.out.println(this.jugadorjuega.getEjercito());
+        while (true) {
+            try {
+                do {
+                    int eleccionmover = Utils.leerEntero("\nQue unidad de su ejercito desea mover? ") - 1;
+                    if (this.jugadorjuega.getEjercito().getUnidades().isEmpty() || this.jugadorjuega.getEjercito().getUnidades().size() < eleccionmover + 1 || eleccionmover < 0) {
+                        buclemover = true;
+                        throw new IndexOutofBounceException();
+                    }
+                    if (this.jugadorjuega.getEjercito().getUnidades().size() >= eleccionmover) {
+                        if (this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover) instanceof AT99) {
+                            this.jugadorjuega.moverUnidad(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
+                            restarEnergia(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
+                            buclemover = false;
+                        }
+                        if (this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover) instanceof MK6) {
+                            this.jugadorjuega.moverUnidad(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
+                            restarEnergia(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
+                            buclemover = false;
+                        }
+                        if (this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover) instanceof Aerospatiale) {
+                            this.jugadorjuega.moverUnidad(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
+                            restarEnergia(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
+                            buclemover = false;
+                        }
+                        if (this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover) instanceof Banshee) {
+                            this.jugadorjuega.moverUnidad(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
+                            restarEnergia(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
+                            buclemover = false;
+                        }
+                        if (this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover) instanceof Thanator) {
+                            this.jugadorjuega.moverUnidad(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
+                            restarEnergia(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
+                            buclemover = false;
+                        }
+                        if (this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover) instanceof Titanothere) {
+                            this.jugadorjuega.moverUnidad(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
+                            restarEnergia(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
+                            buclemover = false;
+                        }
+                    }
+                    System.out.println("\n" + this.jugadorjuega.getNombre() + " ha movido a la unidad " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover).getNombre() + " a la posicion " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover).getPosicon());
+
+                } while (buclemover);
+                break;
+            } catch (IndexOutofBounceException iob) {
+                System.out.println("\tOPCION INVALIDA. NO TIENE TANTAS UNIDADES. VUELVA A INTENTARLO CORRECTAMENTE\n");
+
+            }
+        }
+
+    }
+
 }
