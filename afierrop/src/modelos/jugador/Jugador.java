@@ -51,11 +51,6 @@ public class Jugador {
     private Escenario escenario;
 
     /**
-     * Mapa en el que se juega. Para guardar donde estan las unidades
-     */
-    private Unidad[][] mapa;
-
-    /**
      * Constructor de un jugador el cual recibira por parametros, el nombre de
      * jugador, su equipo (Navi o RDA) y el escenario en el que va a
      * jugar.Además, cuenta con un atributo ejercito que se instancia en null,
@@ -72,7 +67,6 @@ public class Jugador {
         this.puntos = escenario.getPuntoscomienzo();
         this.ejercito = new Ejercito();
         this.escenario = escenario;
-        this.mapa = new Unidad[escenario.getXmax()][escenario.getYmax()];
     }
 
     /**
@@ -127,11 +121,11 @@ public class Jugador {
         if (this.puntos >= unidad.getCoste()) {
             while (coordenadacorrecta) {
                 posicion = new Coordenadas(this.escenario);
-                if (this.mapa[posicion.getX()][posicion.getY()] == null) {
+                if (this.escenario.checkMapa(unidad, posicion) == false) {
                     unidad.setPosicion(posicion);
+                    this.escenario.checkMapa(unidad, posicion);
                     this.ejercito.getUnidades().add(unidad);
                     this.puntos = this.puntos - unidad.getCoste();
-                    this.mapa[posicion.getX()][posicion.getY()] = unidad;
                     break;
                 } else {
                     posicion = new Coordenadas(this.escenario);
@@ -179,14 +173,13 @@ public class Jugador {
         int antiguacoordy = unidad.getPosicon().getY();
         while (bucleexception) {
             try {
-
                 if (unidad instanceof AT99) {
                     Coordenadas coordenada;
                     while (coordenadacorrecta) {
                         coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
-                        if (this.mapa[coordenada.getX()][coordenada.getY()] == null) {
+                        if (this.escenario.checkMapa(unidad, coordenada)) {
                             unidad.setPosicion(coordenada);
-                            this.mapa[coordenada.getX()][coordenada.getY()] = unidad;
+                            this.escenario.checkMapa(unidad, coordenada);
                             coordenadacorrecta = false;
                         } else {
                             coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
@@ -198,9 +191,9 @@ public class Jugador {
                     Coordenadas coordenada;
                     while (coordenadacorrecta) {
                         coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
-                        if (this.mapa[coordenada.getX()][coordenada.getY()] == null) {
+                        if (this.escenario.checkMapa(unidad, coordenada)) {
                             unidad.setPosicion(coordenada);
-                            this.mapa[coordenada.getX()][coordenada.getY()] = unidad;
+                            this.escenario.checkMapa(unidad, coordenada);
                             coordenadacorrecta = false;
                         } else {
                             coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
@@ -212,9 +205,9 @@ public class Jugador {
                     Coordenadas coordenada;
                     while (coordenadacorrecta) {
                         coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
-                        if (this.mapa[coordenada.getX()][coordenada.getY()] == null) {
+                        if (this.escenario.checkMapa(unidad, coordenada)) {
                             unidad.setPosicion(coordenada);
-                            this.mapa[coordenada.getX()][coordenada.getY()] = unidad;
+                            this.escenario.checkMapa(unidad, coordenada);
                             coordenadacorrecta = false;
                         } else {
                             coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
@@ -226,9 +219,9 @@ public class Jugador {
                     Coordenadas coordenada;
                     while (coordenadacorrecta) {
                         coordenada = new Coordenadas(this.escenario);
-                        if (this.mapa[coordenada.getX()][coordenada.getY()] == null) {
+                        if (this.escenario.checkMapa(unidad, coordenada)) {
                             unidad.setPosicion(coordenada);
-                            this.mapa[coordenada.getX()][coordenada.getY()] = unidad;
+                            this.escenario.checkMapa(unidad, coordenada);
                             coordenadacorrecta = false;
                         } else {
                             coordenada = new Coordenadas(this.escenario);
@@ -240,9 +233,9 @@ public class Jugador {
                     Coordenadas coordenada;
                     while (coordenadacorrecta) {
                         coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
-                        if (this.mapa[coordenada.getX()][coordenada.getY()] == null) {
+                        if (this.escenario.checkMapa(unidad, coordenada)) {
                             unidad.setPosicion(coordenada);
-                            this.mapa[coordenada.getX()][coordenada.getY()] = unidad;
+                            this.escenario.checkMapa(unidad, coordenada);
                             coordenadacorrecta = false;
                         } else {
                             coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
@@ -254,9 +247,9 @@ public class Jugador {
                     Coordenadas coordenada;
                     while (coordenadacorrecta) {
                         coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
-                        if (this.mapa[coordenada.getX()][coordenada.getY()] == null) {
+                        if (this.escenario.checkMapa(unidad, coordenada)) {
                             unidad.setPosicion(coordenada);
-                            this.mapa[coordenada.getX()][coordenada.getY()] = unidad;
+                            this.escenario.checkMapa(unidad, coordenada);
                             coordenadacorrecta = false;
                         } else {
                             coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);

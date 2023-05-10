@@ -76,6 +76,14 @@ public class Coordenadas {
         checkCoordenadaY(this.y, this.escenario);
     }
 
+    public Coordenadas(int x, int y) throws FueradeMapaException {
+        Random rand = new Random();
+        this.x = rand.nextInt(x);
+        this.y = rand.nextInt(y);
+        checkCoordenadaX(this.x, this.escenario);
+        checkCoordenadaY(this.y, this.escenario);
+    }
+
     /**
      * Constructor de coordenadas que recibe un escenario por parametro para
      * poder ver su limite maximo, el cual pone a los atributos x e y

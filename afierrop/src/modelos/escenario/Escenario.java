@@ -4,6 +4,10 @@
  */
 package modelos.escenario;
 
+import modelos.coordenadas.Coordenadas;
+import modelos.excepciones.FueradeMapaException;
+import modelos.unidad.Unidad;
+
 /**
  *
  * @author artur
@@ -31,6 +35,11 @@ public abstract class Escenario {
     private int ymax;
 
     /**
+     * Mapa de unidades
+     */
+    private Unidad mapa[][];
+
+    /**
      * Constructor de escenario, que recibe un nombre, puntos de comienzo, y las
      * dimensiones del escenario.Gracias a sus hijos recibe directamente estos
      * atributos.Esta clase abstracta contiene todos los metodos de escenario
@@ -46,6 +55,14 @@ public abstract class Escenario {
         this.puntoscomienzo = puntoscomienzo;
         this.xmax = xmax;
         this.ymax = ymax;
+        this.mapa = new Unidad[this.xmax][this.ymax];
+    }
+
+    /**
+     * Setters
+     */
+    public void setMapa(Unidad[][] mapa) {
+        this.mapa = mapa;
     }
 
     /**
@@ -67,6 +84,23 @@ public abstract class Escenario {
 
     public int getYmax() {
         return this.ymax;
+    }
+
+    public Unidad[][] getMapa() {
+        return this.mapa;
+    }
+
+    /**
+     * Funcion para comprobar el mapa del escenario por si hay unidades o no
+     */
+    public boolean checkMapa(Unidad unidad, Coordenadas posicion) throws FueradeMapaException {
+        if (this.mapa[posicion.getX()][posicion.getY()] == null) {
+            this.mapa[posicion.getX()][posicion.getY()] = unidad;
+            return false;
+        } else {
+            return true;
+        }
+
     }
 
     /**
