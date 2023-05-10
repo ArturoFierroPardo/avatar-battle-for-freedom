@@ -397,19 +397,19 @@ public class Menu {
      */
     private void restarEnergia(Unidad unidad) {
         if (unidad instanceof AT99) {
-            unidad.setEnergiamov(unidad.getEnergiamov() - (unidad.getEnergiagastadaxmov() * (unidad.getPosicon().getCasillasMovidasX() + unidad.getPosicon().getCasillasMovidasY())));
+            unidad.setEnergiamov(unidad.getEnergiamov() - (unidad.getEnergiagastadaxmov() * (unidad.getPosicion().getCasillasMovidasX() + unidad.getPosicion().getCasillasMovidasY())));
         }
         if (unidad instanceof MK6) {
             unidad.setEnergiamov(unidad.getEnergiamov() - unidad.getEnergiagastadaxmov());
         }
         if (unidad instanceof Aerospatiale) {
-            unidad.setEnergiamov(unidad.getEnergiamov() - (unidad.getEnergiagastadaxmov() * (unidad.getPosicon().getCasillasMovidasX() + unidad.getPosicon().getCasillasMovidasY())));
+            unidad.setEnergiamov(unidad.getEnergiamov() - (unidad.getEnergiagastadaxmov() * (unidad.getPosicion().getCasillasMovidasX() + unidad.getPosicion().getCasillasMovidasY())));
         }
         if (unidad instanceof Banshee) {
             unidad.setEnergiamov(unidad.getEnergiamov() - unidad.getEnergiagastadaxmov());
         }
         if (unidad instanceof Thanator) {
-            unidad.setEnergiamov(unidad.getEnergiamov() - (unidad.getEnergiagastadaxmov() * (unidad.getPosicon().getCasillasMovidasX() + unidad.getPosicon().getCasillasMovidasY())));
+            unidad.setEnergiamov(unidad.getEnergiamov() - (unidad.getEnergiagastadaxmov() * (unidad.getPosicion().getCasillasMovidasX() + unidad.getPosicion().getCasillasMovidasY())));
         }
         if (unidad instanceof Titanothere) {
             unidad.setEnergiamov(unidad.getEnergiamov() - unidad.getEnergiagastadaxmov());
@@ -459,7 +459,7 @@ public class Menu {
                             buclemover = false;
                         }
                     }
-                    System.out.println("\n" + this.jugadorjuega.getNombre() + " ha movido a la unidad " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover).getNombre() + " a la posicion " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover).getPosicon());
+                    System.out.println("\n" + this.jugadorjuega.getNombre() + " ha movido a la unidad " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover).getNombre() + " a la posicion " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover).getPosicion());
 
                 } while (buclemover);
                 break;

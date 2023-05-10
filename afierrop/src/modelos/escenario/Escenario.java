@@ -96,9 +96,9 @@ public abstract class Escenario {
     public boolean checkMapa(Unidad unidad, Coordenadas posicion) throws FueradeMapaException {
         if (this.mapa[posicion.getX()][posicion.getY()] == null) {
             this.mapa[posicion.getX()][posicion.getY()] = unidad;
-            return false;
-        } else {
             return true;
+        } else {
+            return false;
         }
 
     }
@@ -109,6 +109,8 @@ public abstract class Escenario {
      */
     @Override
     public String toString() {
-        return "El escenario es " + this.nombre + " con " + this.puntoscomienzo + " puntos para cada jugador y una dimensión de " + this.xmax + "X" + this.ymax;
+        return "\tNombre: " + this.nombre + "\n"
+                + "\tPuntos iniciales de cada jugador: " + this.puntoscomienzo + "\n"
+                + "\tDimension: " + this.xmax + "X" + this.ymax + "\n";
     }
 }

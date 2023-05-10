@@ -199,7 +199,7 @@ public abstract class Unidad {
         return this.tripulantes;
     }
 
-    public Coordenadas getPosicon() {
+    public Coordenadas getPosicion() {
         return this.posicion;
     }
 

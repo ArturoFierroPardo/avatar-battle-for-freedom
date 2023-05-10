@@ -169,8 +169,8 @@ public class Jugador {
     public void moverUnidad(Unidad unidad) throws FueradeMapaException {
         boolean coordenadacorrecta = true;
         boolean bucleexception = true;
-        int antiguacoordx = unidad.getPosicon().getX();
-        int antiguacoordy = unidad.getPosicon().getY();
+        int antiguacoordx = unidad.getPosicion().getX();
+        int antiguacoordy = unidad.getPosicion().getY();
         while (bucleexception) {
             try {
                 if (unidad instanceof AT99) {
