@@ -8,6 +8,7 @@ import interfaz.menu.Menu;
 import modelos.escenario.Escenario;
 import modelos.excepciones.FueradeMapaException;
 import modelos.excepciones.PuntosdeCompraInsuficientesException;
+import modelos.excepciones.SinEnergiaMovimientoException;
 import modelos.jugador.Jugador;
 
 /**
@@ -69,7 +70,7 @@ public class Partida {
     }
 
     /**
-     * Funcion que inicia la partida. Crea un menu que recibe por parametro el
+     * Funcion que inicia la partida.Crea un menu que recibe por parametro el
      * jugador que juega en funcion de una funcion de turnos y un escenario.
      * Enseña el menu al jugador 1 o 2 y cuando acabe se añade un turno más,
      * así, se pasa gracias a un contador los turnos. Gracias a un bucle dowhile
@@ -79,8 +80,9 @@ public class Partida {
      *
      * @throws modelos.excepciones.PuntosdeCompraInsuficientesException
      * @throws modelos.excepciones.FueradeMapaException
+     * @throws modelos.excepciones.SinEnergiaMovimientoException
      */
-    public void comienzaPartida() throws PuntosdeCompraInsuficientesException, FueradeMapaException {
+    public void comienzaPartida() throws PuntosdeCompraInsuficientesException, FueradeMapaException, SinEnergiaMovimientoException {
         System.out.println(toString());
         boolean bucle = true;
         do {

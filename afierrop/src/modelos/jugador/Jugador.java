@@ -121,9 +121,9 @@ public class Jugador {
         if (this.puntos >= unidad.getCoste()) {
             while (coordenadacorrecta) {
                 posicion = new Coordenadas(this.escenario);
-                if (this.escenario.checkMapa(unidad, posicion) == false) {
+                if (this.escenario.checkMapaAñadir(unidad, posicion) == false) {
                     unidad.setPosicion(posicion);
-                    this.escenario.checkMapa(unidad, posicion);
+                    this.escenario.checkMapaAñadir(unidad, posicion);
                     this.ejercito.getUnidades().add(unidad);
                     this.puntos = this.puntos - unidad.getCoste();
                     break;
@@ -177,9 +177,9 @@ public class Jugador {
                     Coordenadas coordenada;
                     while (coordenadacorrecta) {
                         coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
-                        if (this.escenario.checkMapa(unidad, coordenada)) {
+                        if (this.escenario.checkMapaAñadir(unidad, coordenada)) {
                             unidad.setPosicion(coordenada);
-                            this.escenario.checkMapa(unidad, coordenada);
+                            this.escenario.checkMapaAñadir(unidad, coordenada);
                             coordenadacorrecta = false;
                         } else {
                             coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
@@ -191,9 +191,9 @@ public class Jugador {
                     Coordenadas coordenada;
                     while (coordenadacorrecta) {
                         coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
-                        if (this.escenario.checkMapa(unidad, coordenada)) {
+                        if (this.escenario.checkMapaAñadir(unidad, coordenada)) {
                             unidad.setPosicion(coordenada);
-                            this.escenario.checkMapa(unidad, coordenada);
+                            this.escenario.checkMapaAñadir(unidad, coordenada);
                             coordenadacorrecta = false;
                         } else {
                             coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
@@ -205,9 +205,9 @@ public class Jugador {
                     Coordenadas coordenada;
                     while (coordenadacorrecta) {
                         coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
-                        if (this.escenario.checkMapa(unidad, coordenada)) {
+                        if (this.escenario.checkMapaAñadir(unidad, coordenada)) {
                             unidad.setPosicion(coordenada);
-                            this.escenario.checkMapa(unidad, coordenada);
+                            this.escenario.checkMapaAñadir(unidad, coordenada);
                             coordenadacorrecta = false;
                         } else {
                             coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
@@ -219,9 +219,9 @@ public class Jugador {
                     Coordenadas coordenada;
                     while (coordenadacorrecta) {
                         coordenada = new Coordenadas(this.escenario);
-                        if (this.escenario.checkMapa(unidad, coordenada)) {
+                        if (this.escenario.checkMapaAñadir(unidad, coordenada)) {
                             unidad.setPosicion(coordenada);
-                            this.escenario.checkMapa(unidad, coordenada);
+                            this.escenario.checkMapaAñadir(unidad, coordenada);
                             coordenadacorrecta = false;
                         } else {
                             coordenada = new Coordenadas(this.escenario);
@@ -233,9 +233,9 @@ public class Jugador {
                     Coordenadas coordenada;
                     while (coordenadacorrecta) {
                         coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
-                        if (this.escenario.checkMapa(unidad, coordenada)) {
+                        if (this.escenario.checkMapaAñadir(unidad, coordenada)) {
                             unidad.setPosicion(coordenada);
-                            this.escenario.checkMapa(unidad, coordenada);
+                            this.escenario.checkMapaAñadir(unidad, coordenada);
                             coordenadacorrecta = false;
                         } else {
                             coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
@@ -247,9 +247,9 @@ public class Jugador {
                     Coordenadas coordenada;
                     while (coordenadacorrecta) {
                         coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
-                        if (this.escenario.checkMapa(unidad, coordenada)) {
+                        if (this.escenario.checkMapaAñadir(unidad, coordenada)) {
                             unidad.setPosicion(coordenada);
-                            this.escenario.checkMapa(unidad, coordenada);
+                            this.escenario.checkMapaAñadir(unidad, coordenada);
                             coordenadacorrecta = false;
                         } else {
                             coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
@@ -259,7 +259,26 @@ public class Jugador {
                 }
                 break;
             } catch (FueradeMapaException fme) {
-                fme.printStackTrace();
+
+            }
+        }
+    }
+
+    /**
+     * Funcion para recibir daño restando las energias de defensa de una unidad
+     * y la de los seres
+     *
+     * @param unidad
+     * @param posicion
+     * @throws modelos.excepciones.FueradeMapaException
+     */
+    public void recibirdaño(Unidad unidad, Coordenadas posicion) throws FueradeMapaException {
+        if (unidad.getPotencia() <= this.escenario.getunidadMapa(posicion).getEnergiadefensa()) {
+            this.escenario.getunidadMapa(posicion).setEnergiadefensa(this.escenario.getunidadMapa(posicion).getEnergiadefensa() - unidad.getPotencia());
+        } else {
+            int dañoigual = (unidad.getPotencia() - this.escenario.getunidadMapa(posicion).getEnergiadefensa()) / this.escenario.getunidadMapa(posicion).getTripulantes().size();
+            for (Ser ser : this.escenario.getunidadMapa(posicion).getTripulantes()) {
+                ser.setVida(ser.getVida() - dañoigual);
             }
         }
     }

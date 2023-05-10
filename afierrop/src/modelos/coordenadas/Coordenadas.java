@@ -55,8 +55,6 @@ public class Coordenadas {
         this.x = x;
         this.y = y;
         this.escenario = escenario;
-        checkCoordenadaX(this.x, this.escenario);
-        checkCoordenadaY(this.y, this.escenario);
     }
 
     /**

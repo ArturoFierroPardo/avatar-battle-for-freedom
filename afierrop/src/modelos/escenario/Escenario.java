@@ -90,12 +90,31 @@ public abstract class Escenario {
         return this.mapa;
     }
 
+    public Unidad getunidadMapa(Coordenadas coordenada) {
+        int posx = coordenada.getX();
+        int posy = coordenada.getY();
+        return this.mapa[posx][posy];
+    }
+
     /**
-     * Funcion para comprobar el mapa del escenario por si hay unidades o no
+     * Funcion para comprobar el mapa del escenario por si hay unidades o no y
+     * añadirlo
      */
-    public boolean checkMapa(Unidad unidad, Coordenadas posicion) throws FueradeMapaException {
+    public boolean checkMapaAñadir(Unidad unidad, Coordenadas posicion) throws FueradeMapaException {
         if (this.mapa[posicion.getX()][posicion.getY()] == null) {
             this.mapa[posicion.getX()][posicion.getY()] = unidad;
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    /**
+     * Funcion para comprobar que hay una unidad en el mapa
+     */
+    public boolean checkMapa(Coordenadas posicion) throws FueradeMapaException {
+        if (this.mapa[posicion.getX()][posicion.getY()] == null) {
             return true;
         } else {
             return false;

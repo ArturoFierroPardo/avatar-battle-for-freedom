@@ -12,6 +12,7 @@ import modelos.escenario.Escenario;
 import modelos.escenario.Jardines;
 import modelos.excepciones.FueradeMapaException;
 import modelos.excepciones.PuntosdeCompraInsuficientesException;
+import modelos.excepciones.SinEnergiaMovimientoException;
 import modelos.jugador.Jugador;
 import utils.Utils;
 
@@ -26,7 +27,7 @@ public class Main {
      * @throws modelos.excepciones.FueradeMapaException
      * @throws modelos.excepciones.PuntosdeCompraInsuficientesException
      */
-    public static void main(String[] args) throws FueradeMapaException, PuntosdeCompraInsuficientesException {
+    public static void main(String[] args) throws FueradeMapaException, PuntosdeCompraInsuficientesException, SinEnergiaMovimientoException {
         /**
          * Main para empezar el juego. Además selecciona un escenario el cual se
          * le pide al usuario.
@@ -67,6 +68,14 @@ public class Main {
         Jugador jugador2 = new Jugador("Pedro", Equipo.Navi, escenario);
         Partida partida = new Partida(jugador1, jugador2, escenario);
         partida.comienzaPartida();
+        /**
+         * HACER EXCEPCION DE ENERGIA DE ATAQUE Y FUNCION RESTARLA, ENERGIA DE
+         * DEFENSA, VIDA Y VIGILAR EL MOVER UNIDAD PARA PONER BIEN LOS LIMITES
+         * DE MOVIMIENTO EN LA COORDENADA QUE SE GENERA DESDE LA POSICION EN LA
+         * QUE ESTA. PODER FINALIZAR TURNO SI CATCHEA EXCEPCION. Y PONER MAS
+         * EXCEPCIONES EN MENU POR SI QUIERE HACER COSAS QUE NO PUEDE. CONDICION
+         * DE GANADOR
+         */
 
     }
 
