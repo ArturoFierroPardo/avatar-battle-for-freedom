@@ -58,6 +58,29 @@ public class Coordenadas {
     }
 
     /**
+     * Constructor de coordenada que en funcion de la unidad que se le pasa, los
+     * parametros y el escenario, construye una coordenada que se genera desde
+     * la posicon nueva en la que esta.
+     */
+    public Coordenadas(Unidad unidad, int x, int y, Escenario escenario, int z) {
+        this.x = unidad.getPosicion().getX() + x;
+        this.y = unidad.getPosicion().getY() + y;
+        this.escenario = escenario;
+        if (this.x > this.escenario.getXmax()) {
+            this.x = this.escenario.getXmax();
+        }
+        if (this.x < 0) {
+            this.x = 0;
+        }
+        if (this.y > this.escenario.getYmax()) {
+            this.y = this.escenario.getYmax();
+        }
+        if (this.y < 0) {
+            this.y = 0;
+        }
+    }
+
+    /**
      * Constructor de coordenadas que recibe un escenario por parametro para
      * poder ver su limite maximo, el cual pone a los atributos x e y
      * aleatoriamente en funcion del escenario para que no se pase.
@@ -74,6 +97,10 @@ public class Coordenadas {
         checkCoordenadaY(this.y, this.escenario);
     }
 
+    /**
+     * Constructor de coordenada que genera aleatorios en funcion de los
+     * parametros que reciba
+     */
     public Coordenadas(int x, int y) throws FueradeMapaException {
         Random rand = new Random();
         this.x = rand.nextInt(x);
@@ -113,6 +140,24 @@ public class Coordenadas {
             this.y = y + yaleatoria;
         }
         this.x = x + xaleatoria;
+        if (this.x < 0) {
+            this.x = 0;
+        }
+        if (this.x > escenario.getXmax()) {
+            this.x = escenario.getXmax();
+        }
+        if (this.x < 0) {
+            this.x = 0;
+        }
+        if (this.x > escenario.getXmax()) {
+            this.x = escenario.getXmax();
+        }
+        if (this.y < 0) {
+            this.y = 0;
+        }
+        if (this.y > escenario.getYmax()) {
+            this.y = escenario.getYmax();
+        }
         checkCoordenadaX(this.x, this.escenario);
         checkCoordenadaY(this.y, this.escenario);
         if (x > this.x) {

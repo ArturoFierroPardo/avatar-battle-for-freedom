@@ -90,6 +90,12 @@ public abstract class Escenario {
         return this.mapa;
     }
 
+    /**
+     * Getter que coge la posicon en el mapa de unidades
+     *
+     * @param coordenada
+     * @return
+     */
     public Unidad getunidadMapa(Coordenadas coordenada) {
         int posx = coordenada.getX();
         int posy = coordenada.getY();
@@ -98,7 +104,12 @@ public abstract class Escenario {
 
     /**
      * Funcion para comprobar el mapa del escenario por si hay unidades o no y
-     * añadirlo
+     * añadirlas
+     *
+     * @param unidad
+     * @param posicion
+     * @return
+     * @throws modelos.excepciones.FueradeMapaException
      */
     public boolean checkMapaAñadir(Unidad unidad, Coordenadas posicion) throws FueradeMapaException {
         if (this.mapa[posicion.getX()][posicion.getY()] == null) {
@@ -112,8 +123,14 @@ public abstract class Escenario {
 
     /**
      * Funcion para comprobar que hay una unidad en el mapa
+     *
+     * @param unidad
+     * @param posicion
+     * @param escenario
+     * @return
+     * @throws modelos.excepciones.FueradeMapaException
      */
-    public boolean checkMapa(Coordenadas posicion) throws FueradeMapaException {
+    public boolean checkMapa(Unidad unidad, Coordenadas posicion, Escenario escenario) throws FueradeMapaException {
         if (this.mapa[posicion.getX()][posicion.getY()] == null) {
             return true;
         } else {

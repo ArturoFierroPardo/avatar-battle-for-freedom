@@ -512,7 +512,7 @@ public class Menu {
     /**
      * Funcion atacar unidad, ataca siguiendo el rango de ataque de cada unidad
      * generando en su rango una coordenada aleatoria y comprobando si hay una
-     * unidad o no ahí
+     * unidad o no ahí.
      *
      * @throws modelos.excepciones.IndexOutofBounceException
      * @throws modelos.excepciones.FueradeMapaException
@@ -520,6 +520,7 @@ public class Menu {
     public void atacarUnidad() throws IndexOutofBounceException, FueradeMapaException {
         boolean bucleatacar = true;
         boolean nounidad = true;
+        int ataquex2 = 0;
         System.out.println(this.jugadorjuega.getEjercito());
         while (true) {
             try {
@@ -532,98 +533,170 @@ public class Menu {
                     if (this.jugadorjuega.getEjercito().getUnidades().size() >= eleccionatacar) {
                         if (this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) instanceof AT99) {
                             if (nounidad) {
-                                Coordenadas posicioninvestigar = new Coordenadas(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getPosicion().getX(), this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getPosicion().getY(), this.escenario);
-                                if (!(this.escenario.checkMapa(posicioninvestigar))) {
-                                    this.jugadorjuega.recibirdaño(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar);
-                                    System.out.println(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) + " ha atacado a una unidad en la posicion " + posicioninvestigar);
-                                    bucleatacar = false;
+                                int ataquex = Utils.leerEntero("\nDonde desea atacar en el eje X desde su posicion? Dentro de su rango de ataque que es: " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque());
+                                if (ataquex < 0) {
+                                    ataquex2 = -ataquex;
                                 } else {
-                                    bucleatacar = false;
-                                    nounidad = false;
-                                    System.out.println("NO HABIA NINGUNA UNIDAD EN EL RANGO DE ATAQUE");
-
+                                    ataquex2 = ataquex;
                                 }
+                                int ataquey = Utils.leerEntero("\nDonde desea atacar en el eje Y desde su posicion? Dentro de su rango de ataque que es: " + (this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() - ataquex2));
+                                if (ataquex <= this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() && ataquey <= this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() - ataquex2) {
+                                    Coordenadas posicioninvestigar = new Coordenadas(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), ataquex, ataquey, this.escenario, 1);
+                                    if (!(this.escenario.checkMapa(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar, this.escenario))) {
+                                        this.jugadorjuega.recibirdaño(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar);
+                                        System.out.println(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) + " ha atacado a una unidad en la posicion " + posicioninvestigar);
+                                        bucleatacar = false;
+                                    } else {
+                                        bucleatacar = false;
+                                        nounidad = false;
+                                        System.out.println("NO HABIA NINGUNA UNIDAD EN EL RANGO DE ATAQUE");
 
+                                    }
+                                } else {
+                                    nounidad = true;
+                                    System.out.println("RESPETE EL RANGO DE ATAQUE DE LA UNIDAD. VUELVA A INTENTARLO");
+                                    System.out.println("SU RANGO DE ATAQUE ES: " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque());
+                                }
                             }
                         }
                         if (this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) instanceof MK6) {
                             if (nounidad) {
-                                Coordenadas posicioninvestigar = new Coordenadas(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getPosicion().getX(), this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getPosicion().getY(), this.escenario);
-                                if (!(this.escenario.checkMapa(posicioninvestigar))) {
-                                    this.jugadorjuega.recibirdaño(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar);
-                                    System.out.println(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) + " ha atacado a una unidad en la posicion " + posicioninvestigar);
-                                    bucleatacar = false;
+                                int ataquex = Utils.leerEntero("\nDonde desea atacar en el eje X desde su posicion? Dentro de su rango de ataque que es: " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque());
+                                if (ataquex < 0) {
+                                    ataquex2 = -ataquex;
                                 } else {
-                                    bucleatacar = false;
-                                    nounidad = false;
-                                    System.out.println("NO HABIA NINGUNA UNIDAD EN EL RANGO DE ATAQUE");
-
+                                    ataquex2 = ataquex;
                                 }
+                                int ataquey = Utils.leerEntero("\nDonde desea atacar en el eje Y desde su posicion? Dentro de su rango de ataque que es: " + (this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() - ataquex2));
+                                if (ataquex <= this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() && ataquey <= this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() - ataquex2) {
+                                    Coordenadas posicioninvestigar = new Coordenadas(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), ataquex, ataquey, this.escenario, 1);
+                                    if (!(this.escenario.checkMapa(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar, this.escenario))) {
+                                        this.jugadorjuega.recibirdaño(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar);
+                                        System.out.println(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) + " ha atacado a una unidad en la posicion " + posicioninvestigar);
+                                        bucleatacar = false;
+                                    } else {
+                                        bucleatacar = false;
+                                        nounidad = false;
+                                        System.out.println("NO HABIA NINGUNA UNIDAD EN EL RANGO DE ATAQUE");
 
+                                    }
+                                } else {
+                                    nounidad = true;
+                                    System.out.println("RESPETE EL RANGO DE ATAQUE DE LA UNIDAD. VUELVA A INTENTARLO");
+                                    System.out.println("SU RANGO DE ATAQUE ES: " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque());
+                                }
                             }
                         }
                         if (this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) instanceof Aerospatiale) {
                             if (nounidad) {
-                                Coordenadas posicioninvestigar = new Coordenadas(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getPosicion().getX(), this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getPosicion().getY(), this.escenario);
-                                if (!(this.escenario.checkMapa(posicioninvestigar))) {
-                                    this.jugadorjuega.recibirdaño(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar);
-                                    System.out.println(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) + " ha atacado a una unidad en la posicion " + posicioninvestigar);
-                                    bucleatacar = false;
+                                int ataquex = Utils.leerEntero("\nDonde desea atacar en el eje X desde su posicion? Dentro de su rango de ataque que es: " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque());
+                                if (ataquex < 0) {
+                                    ataquex2 = -ataquex;
                                 } else {
-                                    bucleatacar = false;
-                                    nounidad = false;
-                                    System.out.println("NO HABIA NINGUNA UNIDAD EN EL RANGO DE ATAQUE");
-
+                                    ataquex2 = ataquex;
                                 }
+                                int ataquey = Utils.leerEntero("\nDonde desea atacar en el eje Y desde su posicion? Dentro de su rango de ataque que es: " + (this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() - ataquex2));
+                                if (ataquex <= this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() && ataquey <= this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() - ataquex2) {
+                                    Coordenadas posicioninvestigar = new Coordenadas(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), ataquex, ataquey, this.escenario, 1);
+                                    if (!(this.escenario.checkMapa(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar, this.escenario))) {
+                                        this.jugadorjuega.recibirdaño(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar);
+                                        System.out.println(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) + " ha atacado a una unidad en la posicion " + posicioninvestigar);
+                                        bucleatacar = false;
+                                    } else {
+                                        bucleatacar = false;
+                                        nounidad = false;
+                                        System.out.println("NO HABIA NINGUNA UNIDAD EN EL RANGO DE ATAQUE");
 
+                                    }
+                                } else {
+                                    nounidad = true;
+                                    System.out.println("RESPETE EL RANGO DE ATAQUE DE LA UNIDAD. VUELVA A INTENTARLO");
+                                    System.out.println("SU RANGO DE ATAQUE ES: " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque());
+                                }
                             }
                         }
                         if (this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) instanceof Banshee) {
                             if (nounidad) {
-                                Coordenadas posicioninvestigar = new Coordenadas(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getPosicion().getX(), this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getPosicion().getY(), this.escenario);
-                                if (!(this.escenario.checkMapa(posicioninvestigar))) {
-                                    this.jugadorjuega.recibirdaño(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar);
-                                    System.out.println(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) + " ha atacado a una unidad en la posicion " + posicioninvestigar);
-                                    bucleatacar = false;
+                                int ataquex = Utils.leerEntero("\nDonde desea atacar en el eje X desde su posicion? Dentro de su rango de ataque que es: " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque());
+                                if (ataquex < 0) {
+                                    ataquex2 = -ataquex;
                                 } else {
-                                    bucleatacar = false;
-                                    nounidad = false;
-                                    System.out.println("NO HABIA NINGUNA UNIDAD EN EL RANGO DE ATAQUE");
-
+                                    ataquex2 = ataquex;
                                 }
+                                int ataquey = Utils.leerEntero("\nDonde desea atacar en el eje Y desde su posicion? Dentro de su rango de ataque que es: " + (this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() - ataquex2));
+                                if (ataquex <= this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() && ataquey <= this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() - ataquex2) {
+                                    Coordenadas posicioninvestigar = new Coordenadas(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), ataquex, ataquey, this.escenario, 1);
+                                    if (!(this.escenario.checkMapa(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar, this.escenario))) {
+                                        this.jugadorjuega.recibirdaño(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar);
+                                        System.out.println(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) + " ha atacado a una unidad en la posicion " + posicioninvestigar);
+                                        bucleatacar = false;
+                                    } else {
+                                        bucleatacar = false;
+                                        nounidad = false;
+                                        System.out.println("NO HABIA NINGUNA UNIDAD EN EL RANGO DE ATAQUE");
 
+                                    }
+                                } else {
+                                    nounidad = true;
+                                    System.out.println("RESPETE EL RANGO DE ATAQUE DE LA UNIDAD. VUELVA A INTENTARLO");
+                                    System.out.println("SU RANGO DE ATAQUE ES: " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque());
+                                }
                             }
                         }
                         if (this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) instanceof Thanator) {
                             if (nounidad) {
-                                Coordenadas posicioninvestigar = new Coordenadas(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getPosicion().getX(), this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getPosicion().getY(), this.escenario);
-                                if (!(this.escenario.checkMapa(posicioninvestigar))) {
-                                    this.jugadorjuega.recibirdaño(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar);
-                                    System.out.println(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) + " ha atacado a una unidad en la posicion " + posicioninvestigar);
-                                    bucleatacar = false;
+                                int ataquex = Utils.leerEntero("\nDonde desea atacar en el eje X desde su posicion? Dentro de su rango de ataque que es: " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque());
+                                if (ataquex < 0) {
+                                    ataquex2 = -ataquex;
                                 } else {
-                                    bucleatacar = false;
-                                    nounidad = false;
-                                    System.out.println("NO HABIA NINGUNA UNIDAD EN EL RANGO DE ATAQUE");
-
+                                    ataquex2 = ataquex;
                                 }
+                                int ataquey = Utils.leerEntero("\nDonde desea atacar en el eje Y desde su posicion? Dentro de su rango de ataque que es: " + (this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() - ataquex2));
+                                if (ataquex <= this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() && ataquey <= this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() - ataquex2) {
+                                    Coordenadas posicioninvestigar = new Coordenadas(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), ataquex, ataquey, this.escenario, 1);
+                                    if (!(this.escenario.checkMapa(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar, this.escenario))) {
+                                        this.jugadorjuega.recibirdaño(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar);
+                                        System.out.println(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) + " ha atacado a una unidad en la posicion " + posicioninvestigar);
+                                        bucleatacar = false;
+                                    } else {
+                                        bucleatacar = false;
+                                        nounidad = false;
+                                        System.out.println("NO HABIA NINGUNA UNIDAD EN EL RANGO DE ATAQUE");
 
+                                    }
+                                } else {
+                                    nounidad = true;
+                                    System.out.println("RESPETE EL RANGO DE ATAQUE DE LA UNIDAD. VUELVA A INTENTARLO");
+                                    System.out.println("SU RANGO DE ATAQUE ES: " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque());
+                                }
                             }
                         }
                         if (this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) instanceof Titanothere) {
                             if (nounidad) {
-                                Coordenadas posicioninvestigar = new Coordenadas(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getPosicion().getX(), this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getPosicion().getY(), this.escenario);
-                                if (!(this.escenario.checkMapa(posicioninvestigar))) {
-                                    this.jugadorjuega.recibirdaño(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar);
-                                    System.out.println(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) + " ha atacado a una unidad en la posicion " + posicioninvestigar);
-                                    bucleatacar = false;
+                                int ataquex = Utils.leerEntero("\nDonde desea atacar en el eje X desde su posicion? Dentro de su rango de ataque que es: " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque());
+                                if (ataquex < 0) {
+                                    ataquex2 = -ataquex;
                                 } else {
-                                    bucleatacar = false;
-                                    nounidad = false;
-                                    System.out.println("NO HABIA NINGUNA UNIDAD EN EL RANGO DE ATAQUE");
-
+                                    ataquex2 = ataquex;
                                 }
+                                int ataquey = Utils.leerEntero("\nDonde desea atacar en el eje Y desde su posicion? Dentro de su rango de ataque que es: " + (this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() - ataquex2));
+                                if (ataquex <= this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() && ataquey <= this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() - ataquex2) {
+                                    Coordenadas posicioninvestigar = new Coordenadas(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), ataquex, ataquey, this.escenario, 1);
+                                    if (!(this.escenario.checkMapa(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar, this.escenario))) {
+                                        this.jugadorjuega.recibirdaño(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar);
+                                        System.out.println(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) + " ha atacado a una unidad en la posicion " + posicioninvestigar);
+                                        bucleatacar = false;
+                                    } else {
+                                        bucleatacar = false;
+                                        nounidad = false;
+                                        System.out.println("NO HABIA NINGUNA UNIDAD EN EL RANGO DE ATAQUE");
 
+                                    }
+                                } else {
+                                    nounidad = true;
+                                    System.out.println("RESPETE EL RANGO DE ATAQUE DE LA UNIDAD. VUELVA A INTENTARLO");
+                                    System.out.println("SU RANGO DE ATAQUE ES: " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque());
+                                }
                             }
                         }
                     }

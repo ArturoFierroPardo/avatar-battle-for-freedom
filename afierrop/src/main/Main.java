@@ -56,6 +56,7 @@ public class Main {
                     break;
                 case 3:
                     escenario = arbolmadre;
+                    bucle = false;
                     break;
                 default:
                     System.out.println("\tOPCION INVALIDA. VUELVA A INTENTARLO CORRECTAMENTE\n");
@@ -70,11 +71,9 @@ public class Main {
         partida.comienzaPartida();
         /**
          * HACER EXCEPCION DE ENERGIA DE ATAQUE Y FUNCION RESTARLA, ENERGIA DE
-         * DEFENSA, VIDA Y VIGILAR EL MOVER UNIDAD PARA PONER BIEN LOS LIMITES
-         * DE MOVIMIENTO EN LA COORDENADA QUE SE GENERA DESDE LA POSICION EN LA
-         * QUE ESTA. PODER FINALIZAR TURNO SI CATCHEA EXCEPCION. Y PONER MAS
-         * EXCEPCIONES EN MENU POR SI QUIERE HACER COSAS QUE NO PUEDE. CONDICION
-         * DE GANADOR
+         * DEFENSA, VIDA. PODER FINALIZAR TURNO SI CATCHEA EXCEPCION. Y PONER
+         * MAS EXCEPCIONES EN MENU POR SI QUIERE HACER COSAS QUE NO PUEDE.
+         * CONDICION DE GANADOR. NO ATACAR SI NO TIENES UNIDADES
          */
 
     }
