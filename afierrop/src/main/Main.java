@@ -12,7 +12,9 @@ import modelos.escenario.Escenario;
 import modelos.escenario.Jardines;
 import modelos.excepciones.FueradeMapaException;
 import modelos.excepciones.PuntosdeCompraInsuficientesException;
+import modelos.excepciones.SinEnergiaAtaqueException;
 import modelos.excepciones.SinEnergiaMovimientoException;
+import modelos.excepciones.SinTripulantesSuficientesException;
 import modelos.jugador.Jugador;
 import utils.Utils;
 
@@ -26,8 +28,10 @@ public class Main {
      * @param args the command line arguments
      * @throws modelos.excepciones.FueradeMapaException
      * @throws modelos.excepciones.PuntosdeCompraInsuficientesException
+     * @throws modelos.excepciones.SinEnergiaMovimientoException
+     * @throws modelos.excepciones.SinEnergiaAtaqueException
      */
-    public static void main(String[] args) throws FueradeMapaException, PuntosdeCompraInsuficientesException, SinEnergiaMovimientoException {
+    public static void main(String[] args) throws FueradeMapaException, PuntosdeCompraInsuficientesException, SinEnergiaMovimientoException, SinEnergiaAtaqueException, SinTripulantesSuficientesException {
         /**
          * Main para empezar el juego. Además selecciona un escenario el cual se
          * le pide al usuario.
@@ -69,12 +73,6 @@ public class Main {
         Jugador jugador2 = new Jugador("Pedro", Equipo.Navi, escenario);
         Partida partida = new Partida(jugador1, jugador2, escenario);
         partida.comienzaPartida();
-        /**
-         * HACER EXCEPCION DE ENERGIA DE ATAQUE Y FUNCION RESTARLA, ENERGIA DE
-         * DEFENSA, VIDA. PODER FINALIZAR TURNO SI CATCHEA EXCEPCION. Y PONER
-         * MAS EXCEPCIONES EN MENU POR SI QUIERE HACER COSAS QUE NO PUEDE.
-         * CONDICION DE GANADOR. NO ATACAR SI NO TIENES UNIDADES
-         */
 
     }
 

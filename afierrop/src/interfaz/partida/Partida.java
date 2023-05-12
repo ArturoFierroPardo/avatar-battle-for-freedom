@@ -8,7 +8,9 @@ import interfaz.menu.Menu;
 import modelos.escenario.Escenario;
 import modelos.excepciones.FueradeMapaException;
 import modelos.excepciones.PuntosdeCompraInsuficientesException;
+import modelos.excepciones.SinEnergiaAtaqueException;
 import modelos.excepciones.SinEnergiaMovimientoException;
+import modelos.excepciones.SinTripulantesSuficientesException;
 import modelos.jugador.Jugador;
 
 /**
@@ -71,18 +73,20 @@ public class Partida {
 
     /**
      * Funcion que inicia la partida.Crea un menu que recibe por parametro el
-     * jugador que juega en funcion de una funcion de turnos y un escenario.
-     * Enseña el menu al jugador 1 o 2 y cuando acabe se añade un turno más,
-     * así, se pasa gracias a un contador los turnos. Gracias a un bucle dowhile
-     * se va repitiendo hasta que alguien gane. La condicion para ganar una
-     * partida es que el enemigo no tenga unidades y que no tenga suficientes
-     * puntos para comprar algo.
+     * jugador que juega en funcion de una funcion de turnos y un
+     * escenario.Enseña el menu al jugador 1 o 2 y cuando acabe se añade un
+     * turno más, así, se pasa gracias a un contador los turnos.Gracias a un
+     * bucle dowhile se va repitiendo hasta que alguien gane. La condicion para
+     * ganar una partida es que el enemigo no tenga unidades y que no tenga
+     * suficientes puntos para comprar algo.
      *
      * @throws modelos.excepciones.PuntosdeCompraInsuficientesException
      * @throws modelos.excepciones.FueradeMapaException
      * @throws modelos.excepciones.SinEnergiaMovimientoException
+     * @throws modelos.excepciones.SinEnergiaAtaqueException
+     * @throws modelos.excepciones.SinTripulantesSuficientesException
      */
-    public void comienzaPartida() throws PuntosdeCompraInsuficientesException, FueradeMapaException, SinEnergiaMovimientoException {
+    public void comienzaPartida() throws PuntosdeCompraInsuficientesException, FueradeMapaException, SinEnergiaMovimientoException, SinEnergiaAtaqueException, SinTripulantesSuficientesException {
         System.out.println(toString());
         boolean bucle = true;
         do {
@@ -98,12 +102,12 @@ public class Partida {
                 menu.enseñarMenu();
                 this.turnos++;
             }
-            if (this.jugador1.getEjercito().getUnidades().isEmpty() && this.jugador1.getPuntos() <= 500) {
-                System.out.println("\tEL GANADOR DE LA PARTIDA ES " + this.jugador2);
+            if (this.jugador1.getEjercito().getUnidades().isEmpty() && this.turnos > 5) {
+                System.out.println("\tEL GANADOR DE LA PARTIDA ES " + this.jugador2.getNombre());
                 bucle = false;
             }
-            if (this.jugador2.getEjercito().getUnidades().isEmpty() && this.jugador2.getPuntos() <= 500) {
-                System.out.println("\tEL GANADOR DE LA PARTIDA ES " + this.jugador1);
+            if (this.jugador2.getEjercito().getUnidades().isEmpty() && this.turnos > 5) {
+                System.out.println("\tEL GANADOR DE LA PARTIDA ES " + this.jugador1.getNombre());
                 bucle = false;
             }
         } while (bucle);

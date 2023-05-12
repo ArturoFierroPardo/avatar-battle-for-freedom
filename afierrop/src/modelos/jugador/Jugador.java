@@ -276,9 +276,18 @@ public class Jugador {
         if (unidad.getPotencia() <= this.escenario.getunidadMapa(posicion).getEnergiadefensa()) {
             this.escenario.getunidadMapa(posicion).setEnergiadefensa(this.escenario.getunidadMapa(posicion).getEnergiadefensa() - unidad.getPotencia());
         } else {
+            this.escenario.getunidadMapa(posicion).setEnergiadefensa(0);
             int dañoigual = (unidad.getPotencia() - this.escenario.getunidadMapa(posicion).getEnergiadefensa()) / this.escenario.getunidadMapa(posicion).getTripulantes().size();
             for (Ser ser : this.escenario.getunidadMapa(posicion).getTripulantes()) {
                 ser.setVida(ser.getVida() - dañoigual);
+                if (ser.getVida() <= 0) {
+                    this.escenario.getunidadMapa(posicion).getTripulantes().remove(ser);
+                    this.puntos = this.puntos + ser.getPuntosderrota();
+                }
+            }
+            if (this.escenario.getunidadMapa(posicion).getTripulantes().isEmpty() && this.escenario.getunidadMapa(posicion).getEnergiadefensa() <= 0) {
+                this.puntos = this.puntos + this.escenario.getunidadMapa(posicion).getPuntosderrota();
+                this.ejercito.getUnidades().remove(this.escenario.getunidadMapa(posicion));
             }
         }
     }
