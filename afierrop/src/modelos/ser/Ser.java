@@ -4,11 +4,13 @@
  */
 package modelos.ser;
 
+import java.io.Serializable;
+
 /**
  *
  * @author artur
  */
-public abstract class Ser {
+public abstract class Ser implements Serializable {
 
     /**
      * Cuanto cuesta el ser

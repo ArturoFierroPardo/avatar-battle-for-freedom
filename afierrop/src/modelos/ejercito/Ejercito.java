@@ -4,6 +4,7 @@
  */
 package modelos.ejercito;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import modelos.unidad.Unidad;
 
@@ -11,7 +12,7 @@ import modelos.unidad.Unidad;
  *
  * @author artur
  */
-public class Ejercito {
+public class Ejercito implements Serializable {
 
     /**
      * Lista de las unidades que tiene el ejercito

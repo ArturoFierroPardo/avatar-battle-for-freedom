@@ -5,6 +5,9 @@
 package interfaz.partida;
 
 import interfaz.menu.Menu;
+import static io.Io.guardarPartida;
+import java.io.FileNotFoundException;
+import java.io.Serializable;
 import modelos.escenario.Escenario;
 import modelos.excepciones.FueradeMapaException;
 import modelos.excepciones.PuntosdeCompraInsuficientesException;
@@ -17,7 +20,7 @@ import modelos.jugador.Jugador;
  *
  * @author artur
  */
-public class Partida {
+public class Partida implements Serializable {
 
     /**
      * Primer jugador
@@ -86,7 +89,7 @@ public class Partida {
      * @throws modelos.excepciones.SinEnergiaAtaqueException
      * @throws modelos.excepciones.SinTripulantesSuficientesException
      */
-    public void comienzaPartida() throws PuntosdeCompraInsuficientesException, FueradeMapaException, SinEnergiaMovimientoException, SinEnergiaAtaqueException, SinTripulantesSuficientesException {
+    public void comienzaPartida() throws PuntosdeCompraInsuficientesException, FueradeMapaException, SinEnergiaMovimientoException, SinEnergiaAtaqueException, SinTripulantesSuficientesException, FileNotFoundException {
         System.out.println(toString());
         boolean bucle = true;
         do {
@@ -108,6 +111,13 @@ public class Partida {
             }
             if (this.jugador2.getEjercito().getUnidades().isEmpty() && this.turnos > 5) {
                 System.out.println("\tEL GANADOR DE LA PARTIDA ES " + this.jugador1.getNombre());
+                bucle = false;
+            }
+            if (this.jugador1.getAcabarPartida() == true && this.jugador2.getAcabarPartida() == true) {
+                this.jugador1.setAcabarPartida(false);
+                this.jugador2.setAcabarPartida(false);
+                guardarPartida(this);
+                System.out.println("LA PARTIDA SE HA GUARDADO Y HA SIDO FINALIZADA");
                 bucle = false;
             }
         } while (bucle);

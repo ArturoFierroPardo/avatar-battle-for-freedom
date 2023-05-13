@@ -4,6 +4,7 @@
  */
 package modelos.unidad;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import modelos.coordenadas.Coordenadas;
 import modelos.jugador.Jugador;
@@ -13,7 +14,7 @@ import modelos.ser.Ser;
  *
  * @author artur
  */
-public abstract class Unidad {
+public abstract class Unidad implements Serializable {
 
     /**
      * Nombre de la unidad

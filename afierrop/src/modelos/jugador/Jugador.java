@@ -4,6 +4,7 @@
  */
 package modelos.jugador;
 
+import java.io.Serializable;
 import modelos.coordenadas.Coordenadas;
 import modelos.ejercito.Ejercito;
 import modelos.equipo.Equipo;
@@ -23,7 +24,7 @@ import modelos.unidad.maquina.MK6;
  *
  * @author artur
  */
-public class Jugador {
+public class Jugador implements Serializable {
 
     /**
      * Nombre del jugador
@@ -51,6 +52,11 @@ public class Jugador {
     private Escenario escenario;
 
     /**
+     * Atributo para acabar la partida
+     */
+    private boolean acabarpartida;
+
+    /**
      * Constructor de un jugador el cual recibira por parametros, el nombre de
      * jugador, su equipo (Navi o RDA) y el escenario en el que va a
      * jugar.Además, cuenta con un atributo ejercito que se instancia en null,
@@ -67,6 +73,7 @@ public class Jugador {
         this.puntos = escenario.getPuntoscomienzo();
         this.ejercito = new Ejercito();
         this.escenario = escenario;
+        this.acabarpartida = false;
     }
 
     /**
@@ -81,6 +88,10 @@ public class Jugador {
 
     public void setPuntos(int puntos) {
         this.puntos = puntos;
+    }
+
+    public void setAcabarPartida(boolean acabarpartida) {
+        this.acabarpartida = acabarpartida;
     }
 
     /**
@@ -102,6 +113,10 @@ public class Jugador {
 
     public Ejercito getEjercito() {
         return this.ejercito;
+    }
+
+    public boolean getAcabarPartida() {
+        return this.acabarpartida;
     }
 
     /**

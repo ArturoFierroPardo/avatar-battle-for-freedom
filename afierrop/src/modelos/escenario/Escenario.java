@@ -4,6 +4,7 @@
  */
 package modelos.escenario;
 
+import java.io.Serializable;
 import modelos.coordenadas.Coordenadas;
 import modelos.excepciones.FueradeMapaException;
 import modelos.unidad.Unidad;
@@ -12,7 +13,7 @@ import modelos.unidad.Unidad;
  *
  * @author artur
  */
-public abstract class Escenario {
+public abstract class Escenario implements Serializable {
 
     /**
      * Nombre del escenario

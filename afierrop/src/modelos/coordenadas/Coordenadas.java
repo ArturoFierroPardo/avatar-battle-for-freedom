@@ -4,6 +4,7 @@
  */
 package modelos.coordenadas;
 
+import java.io.Serializable;
 import java.util.Random;
 import modelos.escenario.Escenario;
 import modelos.excepciones.FueradeMapaException;
@@ -13,7 +14,7 @@ import modelos.unidad.Unidad;
  *
  * @author artur
  */
-public class Coordenadas {
+public class Coordenadas implements Serializable {
 
     /**
      * Coordenada en eje X

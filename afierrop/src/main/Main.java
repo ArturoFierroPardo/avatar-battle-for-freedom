@@ -5,6 +5,8 @@
 package main;
 
 import interfaz.partida.Partida;
+import static io.Io.cargarPartida;
+import java.io.FileNotFoundException;
 import modelos.equipo.Equipo;
 import modelos.escenario.ArbolAlmas;
 import modelos.escenario.ArbolMadre;
@@ -31,49 +33,59 @@ public class Main {
      * @throws modelos.excepciones.SinEnergiaMovimientoException
      * @throws modelos.excepciones.SinEnergiaAtaqueException
      */
-    public static void main(String[] args) throws FueradeMapaException, PuntosdeCompraInsuficientesException, SinEnergiaMovimientoException, SinEnergiaAtaqueException, SinTripulantesSuficientesException {
+    public static void main(String[] args) throws FueradeMapaException, PuntosdeCompraInsuficientesException, SinEnergiaMovimientoException, SinEnergiaAtaqueException, SinTripulantesSuficientesException, FileNotFoundException, ClassNotFoundException {
         /**
          * Main para empezar el juego. Además selecciona un escenario el cual se
          * le pide al usuario.
          */
-
         System.out.println("\tAVATAR BATTLE FOR FREEDOM\n");
-        Escenario escenario = null;
-        boolean bucle = true;
-        Escenario arbolalmas = new ArbolAlmas();
-        Escenario jardines = new Jardines();
-        Escenario arbolmadre = new ArbolMadre();
-        System.out.println("\n-------------------ESCENARIOS-------------------\n");
-        System.out.println("1) Arbol de las Almas:\n" + arbolalmas.toString());
-        System.out.println("2) Jardines Colgantes:\n" + jardines.toString());
-        System.out.println("3) Arbol Madre:\n" + arbolmadre.toString());
-        do {
-            int eleccionesc = Utils.leerEntero("Elija en que escenario quiere disputar la batalla introduciendo el numero correspondiente ");
-            switch (eleccionesc) {
-                case 1:
-                    escenario = arbolalmas;
-                    bucle = false;
-                    break;
-                case 2:
-                    escenario = jardines;
-                    bucle = false;
-                    break;
-                case 3:
-                    escenario = arbolmadre;
-                    bucle = false;
-                    break;
-                default:
-                    System.out.println("\tOPCION INVALIDA. VUELVA A INTENTARLO CORRECTAMENTE\n");
-                    bucle = true;
-                    break;
-            }
-        } while (bucle);
+        System.out.println("\n-------------------SELECCION DE PARTIDA-------------------\n");
+        System.out.println("1) Cargar Partida Anterior\n");
+        System.out.println("2) Nueva Partida\n");
+        int eleccionpartida = Utils.leerEntero("Quieres cargar la  partida anterior o empezar una nueva?");
+        switch (eleccionpartida) {
+            case 1:
+                cargarPartida().comienzaPartida();
+                break;
+            case 2:
+                Escenario escenario = null;
+                boolean bucle = true;
+                Escenario arbolalmas = new ArbolAlmas();
+                Escenario jardines = new Jardines();
+                Escenario arbolmadre = new ArbolMadre();
+                System.out.println("\n-------------------ESCENARIOS-------------------\n");
+                System.out.println("1) Arbol de las Almas:\n" + arbolalmas.toString());
+                System.out.println("2) Jardines Colgantes:\n" + jardines.toString());
+                System.out.println("3) Arbol Madre:\n" + arbolmadre.toString());
+                do {
+                    int eleccionesc = Utils.leerEntero("Elija en que escenario quiere disputar la batalla introduciendo el numero correspondiente ");
+                    switch (eleccionesc) {
+                        case 1:
+                            escenario = arbolalmas;
+                            bucle = false;
+                            break;
+                        case 2:
+                            escenario = jardines;
+                            bucle = false;
+                            break;
+                        case 3:
+                            escenario = arbolmadre;
+                            bucle = false;
+                            break;
+                        default:
+                            System.out.println("\tOPCION INVALIDA. VUELVA A INTENTARLO CORRECTAMENTE\n");
+                            bucle = true;
+                            break;
+                    }
+                } while (bucle);
 
-        Jugador jugador1 = new Jugador("Arturo", Equipo.RDA, escenario);
-        Jugador jugador2 = new Jugador("Pedro", Equipo.Navi, escenario);
-        Partida partida = new Partida(jugador1, jugador2, escenario);
-        partida.comienzaPartida();
+                Jugador jugador1 = new Jugador("Arturo", Equipo.RDA, escenario);
+                Jugador jugador2 = new Jugador("Pedro", Equipo.Navi, escenario);
+                Partida partida = new Partida(jugador1, jugador2, escenario);
+                partida.comienzaPartida();
+                break;
 
+        }
     }
 
 }
