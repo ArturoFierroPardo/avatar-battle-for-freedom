@@ -430,6 +430,10 @@ public class Menu {
         }
     }
 
+    /**
+     * Funcion para restar energia de ataque en funcion de cada tipo de unidad y
+     * comprueba las excepciones:
+     */
     private void restarEnergiaAtaque(Unidad unidad) throws SinEnergiaAtaqueException {
         if (unidad instanceof AT99) {
             if (unidad.getEnergiataque() >= unidad.getPotencia()) {

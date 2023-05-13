@@ -24,6 +24,16 @@ import modelos.excepciones.SinTripulantesSuficientesException;
  */
 public class Io {
 
+    /**
+     * Funcion guardar partida, que crea un fichero con una ruta y unos objetos
+     * que guardan elmobjeto de salia que en este caso es partida que contiene
+     * todos los demas objetos.Habia que poner todas las clases como
+     * Serializables para poder pasarlo.Una vez escrito todo comprobamos
+     * excepciones y comprobamos que el fichero y todo cierra
+     *
+     * @param partida
+     * @throws java.io.FileNotFoundException
+     */
     public static void guardarPartida(Partida partida) throws FileNotFoundException {
         File fichero = new File("C:\\Users\\artur\\Desktop\\afierrop\\fichero.txt");
         FileOutputStream fos = null;
@@ -53,6 +63,21 @@ public class Io {
 
     }
 
+    /**
+     * Funcion cargar partida, crea un fichero que es en donde se guardo la
+     * anterior y con unos objetos de para sacar datos de ficheros los vamos
+     * leyendo y cambiandole la clase a lo que sacamos del fichero a partida
+     * creamos una partida nueva en funcion de los datos sacados del
+     * fichero.Comprovamos excepciones y que todo se ha cerrado.
+     *
+     * @return
+     * @throws java.lang.ClassNotFoundException
+     * @throws modelos.excepciones.PuntosdeCompraInsuficientesException
+     * @throws modelos.excepciones.FueradeMapaException
+     * @throws modelos.excepciones.SinEnergiaMovimientoException
+     * @throws modelos.excepciones.SinEnergiaAtaqueException
+     * @throws modelos.excepciones.SinTripulantesSuficientesException
+     */
     public static Partida cargarPartida() throws ClassNotFoundException, PuntosdeCompraInsuficientesException, FueradeMapaException, SinEnergiaMovimientoException, SinEnergiaAtaqueException, SinTripulantesSuficientesException {
         File fichero = new File("C:\\Users\\artur\\Desktop\\afierrop\\fichero.txt");
         FileInputStream fis = null;

@@ -99,11 +99,25 @@ public class Partida implements Serializable {
                 menu.enseñarMenu();
                 this.turnos++;
             }
+            if (this.jugador1.getAcabarPartida() == true) {
+                this.jugador1.setAcabarPartida(false);
+                this.jugador2.setAcabarPartida(false);
+                guardarPartida(this);
+                System.out.println("LA PARTIDA SE HA GUARDADO Y FINALIZADO");
+                bucle = false;
+            }
             if (this.turnos % 2 == 0) {
                 System.out.println("TURNO---------->  " + this.turnos);
                 Menu menu = new Menu(this.jugador2, this.escenario);
                 menu.enseñarMenu();
                 this.turnos++;
+            }
+            if (this.jugador2.getAcabarPartida() == true) {
+                this.jugador1.setAcabarPartida(false);
+                this.jugador2.setAcabarPartida(false);
+                guardarPartida(this);
+                System.out.println("LA PARTIDA SE HA GUARDADO Y FINALIZADO");
+                bucle = false;
             }
             if (this.jugador1.getEjercito().getUnidades().isEmpty() && this.turnos > 5) {
                 System.out.println("\tEL GANADOR DE LA PARTIDA ES " + this.jugador2.getNombre());
@@ -113,13 +127,11 @@ public class Partida implements Serializable {
                 System.out.println("\tEL GANADOR DE LA PARTIDA ES " + this.jugador1.getNombre());
                 bucle = false;
             }
-            if (this.jugador1.getAcabarPartida() == true && this.jugador2.getAcabarPartida() == true) {
-                this.jugador1.setAcabarPartida(false);
-                this.jugador2.setAcabarPartida(false);
-                guardarPartida(this);
-                System.out.println("LA PARTIDA SE HA GUARDADO Y HA SIDO FINALIZADA");
+            if (this.jugador1.getEjercito().getUnidades().isEmpty() && this.jugador2.getEjercito().getUnidades().isEmpty() && this.turnos > 5) {
+                System.out.println("\tEMPATE");
                 bucle = false;
             }
+
         } while (bucle);
     }
 

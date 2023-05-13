@@ -75,7 +75,9 @@ public abstract class Unidad implements Serializable {
     private int energiagastadaxmov;
 
     /**
-     * Maximas casillas que se puede mover en un turno
+     * Maximas casillas que se puede mover en un turno. Es un String porque
+     * Banshee se puede mover a infinitas casillas, no obstante en funciones de
+     * moverse lo convertimos en un int con un Parse int
      */
     private String maxmov;
 
