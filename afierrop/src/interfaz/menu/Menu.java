@@ -57,14 +57,17 @@ public class Menu {
     }
 
     /**
-     * * Funcion enseñarMenu() que al llamarse enseña por pantala las distintas
+     * Funcion enseñarMenu() que al llamarse enseña por pantala las distintas
      * opciones que tiene el jugador.Dependiendo de cual escoja se llamara a una
      * funcion especifica o si es la 4 directamente se cambiara de turno gracias
-     * a una funcion en partida. Con un bucle dowhile se registra y se repita si
+     * a una funcion en partida.Con un bucle dowhile se registra y se repita si
      * el usuario ha introducido la opcion mal.
      *
      * @throws modelos.excepciones.PuntosdeCompraInsuficientesException
      * @throws modelos.excepciones.FueradeMapaException
+     * @throws modelos.excepciones.SinEnergiaMovimientoException
+     * @throws modelos.excepciones.SinEnergiaAtaqueException
+     * @throws modelos.excepciones.SinTripulantesSuficientesException
      */
     public void enseñarMenu() throws PuntosdeCompraInsuficientesException, FueradeMapaException, SinEnergiaMovimientoException, SinEnergiaAtaqueException, SinTripulantesSuficientesException {
         boolean bucle = false;
@@ -74,7 +77,7 @@ public class Menu {
         System.out.println("\t2) Mover una unidad");
         System.out.println("\t3) Atacar a una unidad enemiga");
         System.out.println("\t4) Finalizar el turno");
-        System.out.println("\t5) Finalizar y guardar partida (LOS DOS JUGADORES HAN DE SELECCIONAR ESTA OPCION)\n");
+        System.out.println("\t5) Finalizar y guardar partida\n");
         while (true) {
             try {
                 do {
@@ -432,7 +435,7 @@ public class Menu {
 
     /**
      * Funcion para restar energia de ataque en funcion de cada tipo de unidad y
-     * comprueba las excepciones:
+     * comprueba las excepciones
      */
     private void restarEnergiaAtaque(Unidad unidad) throws SinEnergiaAtaqueException {
         if (unidad instanceof AT99) {
@@ -481,7 +484,7 @@ public class Menu {
 
     /**
      * Funcion para restar energia de movimiento a una unidad en funcion de sus
-     * limitaciones.
+     * limitaciones
      */
     private void restarEnergia(Unidad unidad) throws SinEnergiaMovimientoException {
         if (unidad instanceof AT99) {
@@ -614,17 +617,19 @@ public class Menu {
     /**
      * Funcion atacar unidad, ataca siguiendo el rango de ataque de cada unidad
      * generando en su rango una coordenada aleatoria y comprobando si hay una
-     * unidad o no ahí.
+     * unidad o no ahí. Resta energia de ataque a la unidad y a la enemiga la de
+     * defensa. Puede haber fuego amigo.
      *
      * @throws modelos.excepciones.IndexOutofBounceException
      * @throws modelos.excepciones.FueradeMapaException
      * @throws modelos.excepciones.SinEnergiaAtaqueException
+     * @throws modelos.excepciones.SinTripulantesSuficientesException
      */
     public void atacarUnidad() throws IndexOutofBounceException, FueradeMapaException, SinEnergiaAtaqueException, SinTripulantesSuficientesException {
         boolean bucleatacar = true;
         boolean nounidad = true;
-        int ataquex2 = 0;
-        int ataquey2 = 0;
+        int ataquex2;
+        int ataquey2;
         System.out.println(this.jugadorjuega.getEjercito());
         while (true) {
             try {
@@ -664,6 +669,7 @@ public class Menu {
                                         restarEnergiaAtaque(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar));
                                         System.out.println(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) + " ha atacado a una unidad en la posicion " + posicioninvestigar);
                                         bucleatacar = false;
+                                        System.out.println("HA ACERTADO Y DISPARADO CON ÉXITO");
                                     } else {
                                         bucleatacar = false;
                                         nounidad = false;
@@ -698,6 +704,7 @@ public class Menu {
                                         restarEnergiaAtaque(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar));
                                         System.out.println(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) + " ha atacado a una unidad en la posicion " + posicioninvestigar);
                                         bucleatacar = false;
+                                        System.out.println("HA ACERTADO Y DISPARADO CON ÉXITO");
                                     } else {
                                         bucleatacar = false;
                                         nounidad = false;
@@ -732,6 +739,7 @@ public class Menu {
                                         restarEnergiaAtaque(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar));
                                         System.out.println(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) + " ha atacado a una unidad en la posicion " + posicioninvestigar);
                                         bucleatacar = false;
+                                        System.out.println("HA ACERTADO Y DISPARADO CON ÉXITO");
                                     } else {
                                         bucleatacar = false;
                                         nounidad = false;
@@ -766,6 +774,7 @@ public class Menu {
                                         restarEnergiaAtaque(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar));
                                         System.out.println(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) + " ha atacado a una unidad en la posicion " + posicioninvestigar);
                                         bucleatacar = false;
+                                        System.out.println("HA ACERTADO Y DISPARADO CON ÉXITO");
                                     } else {
                                         bucleatacar = false;
                                         nounidad = false;
@@ -800,6 +809,7 @@ public class Menu {
                                         restarEnergiaAtaque(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar));
                                         System.out.println(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) + " ha atacado a una unidad en la posicion " + posicioninvestigar);
                                         bucleatacar = false;
+                                        System.out.println("HA ACERTADO Y DISPARADO CON ÉXITO");
                                     } else {
                                         bucleatacar = false;
                                         nounidad = false;
@@ -834,6 +844,7 @@ public class Menu {
                                         restarEnergiaAtaque(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar));
                                         System.out.println(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) + " ha atacado a una unidad en la posicion " + posicioninvestigar);
                                         bucleatacar = false;
+                                        System.out.println("HA ACERTADO Y DISPARADO CON ÉXITO");
                                     } else {
                                         bucleatacar = false;
                                         nounidad = false;

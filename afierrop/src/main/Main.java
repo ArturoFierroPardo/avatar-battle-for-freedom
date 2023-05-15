@@ -5,8 +5,9 @@
 package main;
 
 import interfaz.partida.Partida;
-import static io.Io.cargarPartida;
+import io.Io;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import modelos.equipo.Equipo;
 import modelos.escenario.ArbolAlmas;
 import modelos.escenario.ArbolMadre;
@@ -27,6 +28,10 @@ import utils.Utils;
 public class Main {
 
     /**
+     * Main para empezar el juego. Además selecciona un escenario el cual se le
+     * pide al usuario. Y si quiere empezar una partida nueva o cargar la
+     * anterior.
+     *
      * @param args the command line arguments
      * @throws modelos.excepciones.FueradeMapaException
      * @throws modelos.excepciones.PuntosdeCompraInsuficientesException
@@ -37,22 +42,48 @@ public class Main {
      * @throws java.lang.ClassNotFoundException
      */
     public static void main(String[] args) throws FueradeMapaException, PuntosdeCompraInsuficientesException, SinEnergiaMovimientoException, SinEnergiaAtaqueException, SinTripulantesSuficientesException, FileNotFoundException, ClassNotFoundException {
-        /**
-         * Main para empezar el juego. Además selecciona un escenario el cual se
-         * le pide al usuario. Y si quiere empezar una partida nueva o cargar la
-         * anterior.
-         */
+        Io io = new Io();
+        ArrayList<Partida> listapartidas = io.cargarArchivo();
+        boolean buclecarga = true;
         boolean buclepart = true;
         System.out.println("\tAVATAR BATTLE FOR FREEDOM\n");
-        System.out.println("\n-------------------SELECCION DE PARTIDA-------------------\n");
-        System.out.println("1) Cargar Partida Anterior\n");
-        System.out.println("2) Nueva Partida\n");
         do {
-            int eleccionpartida = Utils.leerEntero("Quieres cargar la  partida anterior o empezar una nueva?");
+            System.out.println("\n-------------------SELECCION DE PARTIDA-------------------\n");
+            System.out.println("1) Cargar Partida Anterior\n");
+            System.out.println("2) Nueva Partida\n");
+            int eleccionpartida = Utils.leerEntero("Quieres cargar otra partida o empezar una nueva? ");
             switch (eleccionpartida) {
                 case 1:
-                    cargarPartida().comienzaPartida();
-                    buclepart = false;
+                    while (buclecarga) {
+                        if (!(listapartidas.isEmpty())) {
+                            System.out.println("\nPARTIDAS GUARDADAS: ");
+                            for (int i = 0; i < listapartidas.size(); i++) {
+                                int j = 1 + i;
+                                System.out.println("\t" + j + ") Partida " + j + " en " + listapartidas.get(i).getEscenario().getNombre() + " en el turno " + listapartidas.get(i).getTurnos() + "\n");
+                            }
+                            int opcion = Utils.leerEntero("Introduzca el numero de la partida: (Pulse 0 para volver atras)") - 1;
+                            if (opcion == -1) {
+                                System.out.println("\nNo ha querido cargar ninguna partida anterior");
+                                buclecarga = false;
+                            } else if (opcion >= 0 && opcion < listapartidas.size()) {
+                                Partida partida = listapartidas.get(opcion);
+                                listapartidas.remove(partida);
+                                partida.comienzaPartida();
+                                if (!(partida.getTerminada())) {
+                                    listapartidas.add(partida);
+                                }
+                                buclecarga = false;
+                                buclepart = false;
+                            } else {
+                                System.out.println("\tOPCION INVALIDA. VUELVA A INTENTARLO CORRECTAMENTE\n");
+                                buclecarga = true;
+                            }
+                        } else {
+                            System.out.println("\tOPCION INVALIDA. NO TIENE PARTIDAS GUARDADAS ANTERIORMENTE. SELECCIONE NUEVA PARTIDA.\n");
+                            buclecarga = true;
+                        }
+                    }
+                    buclecarga = true;
                     break;
                 case 2:
                     Escenario escenario = null;
@@ -87,9 +118,10 @@ public class Main {
                     } while (bucle);
 
                     Jugador jugador1 = new Jugador("Arturo", Equipo.RDA, escenario);
-                    Jugador jugador2 = new Jugador("Pedro", Equipo.Navi, escenario);
+                    Jugador jugador2 = new Jugador("Pedro", Equipo.NAVI, escenario);
                     Partida partida = new Partida(jugador1, jugador2, escenario);
                     partida.comienzaPartida();
+                    listapartidas.add(partida);
                     buclepart = false;
                     break;
                 default:
@@ -98,7 +130,9 @@ public class Main {
                     break;
 
             }
+
         } while (buclepart);
+        io.guardarArchivo(listapartidas);
     }
 
 }

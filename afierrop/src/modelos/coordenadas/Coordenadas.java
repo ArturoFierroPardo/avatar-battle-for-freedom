@@ -62,6 +62,12 @@ public class Coordenadas implements Serializable {
      * Constructor de coordenada que en funcion de la unidad que se le pasa, los
      * parametros y el escenario, construye una coordenada que se genera desde
      * la posicon nueva en la que esta.
+     *
+     * @param unidad
+     * @param x
+     * @param y
+     * @param escenario
+     * @param z
      */
     public Coordenadas(Unidad unidad, int x, int y, Escenario escenario, int z) {
         this.x = unidad.getPosicion().getX() + x;
@@ -100,7 +106,10 @@ public class Coordenadas implements Serializable {
 
     /**
      * Constructor de coordenada que genera aleatorios en funcion de los
-     * parametros que reciba
+     * parametros que reciba como maximos a elegir
+     *
+     * @param x
+     * @param y
      */
     public Coordenadas(int x, int y) throws FueradeMapaException {
         Random rand = new Random();
@@ -115,7 +124,7 @@ public class Coordenadas implements Serializable {
      * poder ver su limite maximo, el cual pone a los atributos x e y
      * aleatoriamente en funcion de la unidad que se le pasa por parametro para
      * ponerlo dentro de sus limites para que no se pase más la coordenada en la
-     * que estaba.Se gestiona cuantas casillas se mueve restando la posicion en
+     * que estaba. Se gestiona cuantas casillas se mueve restando la posicion en
      * x y en y de la anterior coordenada con las de la nueva respectivamente.
      *
      * @param unidad

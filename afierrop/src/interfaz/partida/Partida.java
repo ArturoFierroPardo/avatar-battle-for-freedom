@@ -5,7 +5,7 @@
 package interfaz.partida;
 
 import interfaz.menu.Menu;
-import static io.Io.guardarPartida;
+import io.Io;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
 import modelos.escenario.Escenario;
@@ -42,6 +42,8 @@ public class Partida implements Serializable {
      */
     private int turnos;
 
+    private boolean terminada;
+
     /**
      * Constructor de partida en el que se pasa por parametros dos jugadores que
      * jugaran uno contra el otro y un escenario en el que jugar.
@@ -55,6 +57,7 @@ public class Partida implements Serializable {
         this.jugador2 = jugador2;
         this.escenario = escenario;
         this.turnos = 1;
+        this.terminada = false;
     }
 
     /**
@@ -74,22 +77,36 @@ public class Partida implements Serializable {
         return this.turnos;
     }
 
+    public boolean getTerminada() {
+        return this.terminada;
+    }
+
+    public Escenario getEscenario() {
+        return this.escenario;
+    }
+
     /**
      * Funcion que inicia la partida.Crea un menu que recibe por parametro el
      * jugador que juega en funcion de una funcion de turnos y un
      * escenario.Enseña el menu al jugador 1 o 2 y cuando acabe se añade un
      * turno más, así, se pasa gracias a un contador los turnos.Gracias a un
-     * bucle dowhile se va repitiendo hasta que alguien gane. La condicion para
-     * ganar una partida es que el enemigo no tenga unidades y que no tenga
-     * suficientes puntos para comprar algo.
+     * bucle dowhile se va repitiendo hasta que alguien gane.La condicion para
+     * ganar una partida es que el enemigo no tenga unidades y que hayan pasado
+     * 5 turnos como maximo. Si uno de los dos jugadores decide guardra partida
+     * o acabar se cierra y se gurada. Deben hacerlo los dos jugadores, aunque
+     * si lo hace el jugador 1 solo, saldra el turno del jugador 2 y aunque
+     * decida comprar, mover o atacar, no se guardara. EN cambio, si solo lo
+     * hace el jugador 2 se cierra directamente.
      *
      * @throws modelos.excepciones.PuntosdeCompraInsuficientesException
      * @throws modelos.excepciones.FueradeMapaException
      * @throws modelos.excepciones.SinEnergiaMovimientoException
      * @throws modelos.excepciones.SinEnergiaAtaqueException
      * @throws modelos.excepciones.SinTripulantesSuficientesException
+     * @throws java.io.FileNotFoundException
      */
     public void comienzaPartida() throws PuntosdeCompraInsuficientesException, FueradeMapaException, SinEnergiaMovimientoException, SinEnergiaAtaqueException, SinTripulantesSuficientesException, FileNotFoundException {
+        Io io = new Io();
         System.out.println(toString());
         boolean bucle = true;
         do {
@@ -102,9 +119,10 @@ public class Partida implements Serializable {
             if (this.jugador1.getAcabarPartida() == true) {
                 this.jugador1.setAcabarPartida(false);
                 this.jugador2.setAcabarPartida(false);
-                guardarPartida(this);
+                this.turnos--;
                 System.out.println("LA PARTIDA SE HA GUARDADO Y FINALIZADO");
                 bucle = false;
+                break;
             }
             if (this.turnos % 2 == 0) {
                 System.out.println("TURNO---------->  " + this.turnos);
@@ -115,21 +133,28 @@ public class Partida implements Serializable {
             if (this.jugador2.getAcabarPartida() == true) {
                 this.jugador1.setAcabarPartida(false);
                 this.jugador2.setAcabarPartida(false);
-                guardarPartida(this);
+                this.turnos--;
                 System.out.println("LA PARTIDA SE HA GUARDADO Y FINALIZADO");
                 bucle = false;
+                break;
             }
             if (this.jugador1.getEjercito().getUnidades().isEmpty() && this.turnos > 5) {
+                this.terminada = true;
                 System.out.println("\tEL GANADOR DE LA PARTIDA ES " + this.jugador2.getNombre());
                 bucle = false;
+                break;
             }
             if (this.jugador2.getEjercito().getUnidades().isEmpty() && this.turnos > 5) {
+                this.terminada = true;
                 System.out.println("\tEL GANADOR DE LA PARTIDA ES " + this.jugador1.getNombre());
                 bucle = false;
+                break;
             }
             if (this.jugador1.getEjercito().getUnidades().isEmpty() && this.jugador2.getEjercito().getUnidades().isEmpty() && this.turnos > 5) {
+                this.terminada = true;
                 System.out.println("\tEMPATE");
                 bucle = false;
+                break;
             }
 
         } while (bucle);
@@ -141,8 +166,7 @@ public class Partida implements Serializable {
      */
     @Override
     public String toString() {
-        return "La partida comienza, lucharan " + this.jugador1.getNombre() + " contra " + this.jugador2.getNombre() + " en el escenario " + this.escenario.getNombre() + "\n"
-                + "\nEmpezara en el primer turno " + this.jugador1.getNombre() + "\n";
+        return "La partida comienza en el escenario " + this.escenario.getNombre() + ".\nLuchara " + this.jugador1.getNombre() + " del equipo " + this.jugador1.getEquipo() + " contra " + this.jugador2.getNombre() + " del equipo " + this.jugador2.getEquipo() + "\n";
     }
 
 }

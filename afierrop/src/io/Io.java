@@ -5,24 +5,34 @@
 package io;
 
 import interfaz.partida.Partida;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import modelos.excepciones.FueradeMapaException;
-import modelos.excepciones.PuntosdeCompraInsuficientesException;
-import modelos.excepciones.SinEnergiaAtaqueException;
-import modelos.excepciones.SinEnergiaMovimientoException;
-import modelos.excepciones.SinTripulantesSuficientesException;
+import java.util.ArrayList;
 
 /**
  *
  * @author artur
  */
 public class Io {
+
+    private static String archivo = "partidas.dat";
+    private ArrayList<Partida> partidas;
+
+    public Io() {
+        this.partidas = new ArrayList<Partida>();
+    }
+
+    public ArrayList<Partida> getPartidas() {
+        return this.partidas;
+    }
+
+    public void guardarPartida(Partida partida) {
+        this.partidas.add(partida);
+    }
 
     /**
      * Funcion guardar partida, que crea un fichero con una ruta y unos objetos
@@ -34,14 +44,14 @@ public class Io {
      * @param partida
      * @throws java.io.FileNotFoundException
      */
-    public static void guardarPartida(Partida partida) throws FileNotFoundException {
-        File fichero = new File("C:\\Users\\artur\\Desktop\\afierrop\\fichero.txt");
+    public void guardarArchivo(ArrayList<Partida> partidaslist) throws FileNotFoundException {
         FileOutputStream fos = null;
         ObjectOutputStream oos = null;
         try {
-            fos = new FileOutputStream(fichero);
+            fos = new FileOutputStream(archivo);
             oos = new ObjectOutputStream(fos);
-            oos.writeObject(partida);
+            oos.writeObject(partidaslist);
+
         } catch (IOException ex) {
             System.out.println("Error al guardar partida");
         } finally {
@@ -68,45 +78,16 @@ public class Io {
      * anterior y con unos objetos de para sacar datos de ficheros los vamos
      * leyendo y cambiandole la clase a lo que sacamos del fichero a partida
      * creamos una partida nueva en funcion de los datos sacados del
-     * fichero.Comprovamos excepciones y que todo se ha cerrado.
+     * fichero.Comprobamos excepciones y que todo se ha cerrado.
      *
      * @return
-     * @throws java.lang.ClassNotFoundException
-     * @throws modelos.excepciones.PuntosdeCompraInsuficientesException
-     * @throws modelos.excepciones.FueradeMapaException
-     * @throws modelos.excepciones.SinEnergiaMovimientoException
-     * @throws modelos.excepciones.SinEnergiaAtaqueException
-     * @throws modelos.excepciones.SinTripulantesSuficientesException
      */
-    public static Partida cargarPartida() throws ClassNotFoundException, PuntosdeCompraInsuficientesException, FueradeMapaException, SinEnergiaMovimientoException, SinEnergiaAtaqueException, SinTripulantesSuficientesException {
-        File fichero = new File("C:\\Users\\artur\\Desktop\\afierrop\\fichero.txt");
-        FileInputStream fis = null;
-        ObjectInputStream ois = null;
-        Partida partida = null;
-        try {
-            fis = new FileInputStream(fichero);
-            ois = new ObjectInputStream(fis);
-            partida = (Partida) ois.readObject();
-
-        } catch (IOException ex) {
-            System.out.println("Error al cargar partida");
-        } finally {
-            if (ois != null) {
-                try {
-                    ois.close();
-                } catch (IOException ex) {
-                    System.out.println("Error al cerrar el fichero");
-                }
-            }
-            if (fis != null) {
-                try {
-                    fis.close();
-                } catch (IOException ex) {
-                    System.out.println("Error al cerrar el fichero");
-                }
-            }
+    public ArrayList<Partida> cargarArchivo() {
+        try (ObjectInputStream is = new ObjectInputStream(new FileInputStream(archivo))) {
+            this.partidas = (ArrayList<Partida>) is.readObject();
+        } catch (IOException io) {
+        } catch (ClassNotFoundException ex) {
         }
-        return partida;
+        return this.partidas;
     }
-
 }

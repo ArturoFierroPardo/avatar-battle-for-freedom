@@ -61,6 +61,8 @@ public abstract class Escenario implements Serializable {
 
     /**
      * Setters
+     *
+     * @param mapa
      */
     public void setMapa(Unidad[][] mapa) {
         this.mapa = mapa;

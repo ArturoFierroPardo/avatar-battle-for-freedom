@@ -228,7 +228,9 @@ public abstract class Unidad implements Serializable {
     }
 
     /**
-     * Override de toString, que devuelve un string con toda la información
+     * toString que devuelve un string con toda la información
+     *
+     * @return
      */
     public String toStringInfo() {
         return "\tNombre: " + this.nombre + "\n"

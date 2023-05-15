@@ -22,6 +22,7 @@ public abstract class Bestia extends Unidad {
      * se le asigna, asignados con sus hijos.Datos sin especificar:
      *
      * @param nombre
+     * @param jugador
      * @param coste
      * @param energiadefensa
      * @param energiataque

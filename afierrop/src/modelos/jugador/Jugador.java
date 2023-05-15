@@ -81,6 +81,7 @@ public class Jugador implements Serializable {
      *
      * @param ejercito
      * @param puntos
+     * @param acabarpartida
      */
     public void setEjercito(Ejercito ejercito) {
         this.ejercito = ejercito;
@@ -303,6 +304,7 @@ public class Jugador implements Serializable {
             if (this.escenario.getunidadMapa(posicion).getTripulantes().isEmpty() && this.escenario.getunidadMapa(posicion).getEnergiadefensa() <= 0) {
                 this.puntos = this.puntos + this.escenario.getunidadMapa(posicion).getPuntosderrota();
                 this.ejercito.getUnidades().remove(this.escenario.getunidadMapa(posicion));
+                this.escenario.getMapa()[this.escenario.getunidadMapa(posicion).getPosicion().getX()][this.escenario.getunidadMapa(posicion).getPosicion().getY()] = null;
             }
         }
     }

@@ -9,5 +9,12 @@ package modelos.excepciones;
  * @author artur
  */
 public class SinEnergiaAtaqueException extends Exception {
+    /**
+     * Excepcion para poder comprobar que la unidad tiene energia de ataque
+     * suficiente para realizar un ataque, se lanza en recibir daño, restar
+     * energia y atacar unidad. Si salta, con un bucle se comprueba y se va
+     * repitiendo hasta que pueda. Si no se puede con nada, como en todas las
+     * funciones se puede cancelar el ataque para no estar en bucle.
+     */
 
 }
