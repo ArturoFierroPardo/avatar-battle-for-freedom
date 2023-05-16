@@ -11,14 +11,10 @@ import modelos.equipo.Equipo;
 import modelos.escenario.Escenario;
 import modelos.excepciones.FueradeMapaException;
 import modelos.excepciones.PuntosdeCompraInsuficientesException;
+import modelos.excepciones.SinEnergiaAtaqueException;
+import modelos.excepciones.SinEnergiaMovimientoException;
 import modelos.ser.Ser;
 import modelos.unidad.Unidad;
-import modelos.unidad.bestia.Banshee;
-import modelos.unidad.bestia.Thanator;
-import modelos.unidad.bestia.Titanothere;
-import modelos.unidad.maquina.AT99;
-import modelos.unidad.maquina.Aerospatiale;
-import modelos.unidad.maquina.MK6;
 
 /**
  *
@@ -154,10 +150,10 @@ public class Jugador implements Serializable {
     }
 
     /**
-     * Función de compra de seres.Si el jugador tiene los puntos necesarios para
-     * la compra de el ser, se compra y se restan los puntos gastados.Si no, se
-     * lanza la excepcion que sera catcheada en el menu para repetirlo con un
-     * bucle.
+     * Función de compra de seres. Si el jugador tiene los puntos necesarios
+     * para la compra de el ser, se compra y se restan los puntos gastados.Si
+     * no, se lanza la excepcion que sera catcheada en el menu para repetirlo
+     * con un bucle.
      *
      * @param unidad
      * @param ser
@@ -173,122 +169,63 @@ public class Jugador implements Serializable {
     }
 
     /**
-     * Funcion para mover una unidad a una posicion aleatoria.En el menu se
-     * llamara a esta funcion que para cada unidad tendra unos limites de
-     * movimiento y se le restara una energia en funcion de las casillas que se
-     * mueve. Ademas, controla si hay una unidad en el mapa o no, si no hay la
-     * situa, si la hay cambia la coordenada.
+     * Funcion moverunidad, que llama a la funcion moverunidad de unidad ya que
+     * es distinta para algunas unidades y no general. Pide la unidad que hay
+     * que mover por parametro
      *
      * @param unidad
      * @throws modelos.excepciones.FueradeMapaException
      */
     public void moverUnidad(Unidad unidad) throws FueradeMapaException {
-        boolean coordenadacorrecta = true;
-        boolean bucleexception = true;
-        int antiguacoordx = unidad.getPosicion().getX();
-        int antiguacoordy = unidad.getPosicion().getY();
-        while (bucleexception) {
-            try {
-                if (unidad instanceof AT99) {
-                    Coordenadas coordenada;
-                    while (coordenadacorrecta) {
-                        coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
-                        if (this.escenario.checkMapaAñadir(unidad, coordenada)) {
-                            unidad.setPosicion(coordenada);
-                            this.escenario.checkMapaAñadir(unidad, coordenada);
-                            coordenadacorrecta = false;
-                        } else {
-                            coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
-                            coordenadacorrecta = true;
-                        }
-                    }
-                }
-                if (unidad instanceof MK6) {
-                    Coordenadas coordenada;
-                    while (coordenadacorrecta) {
-                        coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
-                        if (this.escenario.checkMapaAñadir(unidad, coordenada)) {
-                            unidad.setPosicion(coordenada);
-                            this.escenario.checkMapaAñadir(unidad, coordenada);
-                            coordenadacorrecta = false;
-                        } else {
-                            coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
-                            coordenadacorrecta = true;
-                        }
-                    }
-                }
-                if (unidad instanceof Aerospatiale) {
-                    Coordenadas coordenada;
-                    while (coordenadacorrecta) {
-                        coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
-                        if (this.escenario.checkMapaAñadir(unidad, coordenada)) {
-                            unidad.setPosicion(coordenada);
-                            this.escenario.checkMapaAñadir(unidad, coordenada);
-                            coordenadacorrecta = false;
-                        } else {
-                            coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
-                            coordenadacorrecta = true;
-                        }
-                    }
-                }
-                if (unidad instanceof Banshee) {
-                    Coordenadas coordenada;
-                    while (coordenadacorrecta) {
-                        coordenada = new Coordenadas(this.escenario);
-                        if (this.escenario.checkMapaAñadir(unidad, coordenada)) {
-                            unidad.setPosicion(coordenada);
-                            this.escenario.checkMapaAñadir(unidad, coordenada);
-                            coordenadacorrecta = false;
-                        } else {
-                            coordenada = new Coordenadas(this.escenario);
-                            coordenadacorrecta = true;
-                        }
-                    }
-                }
-                if (unidad instanceof Thanator) {
-                    Coordenadas coordenada;
-                    while (coordenadacorrecta) {
-                        coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
-                        if (this.escenario.checkMapaAñadir(unidad, coordenada)) {
-                            unidad.setPosicion(coordenada);
-                            this.escenario.checkMapaAñadir(unidad, coordenada);
-                            coordenadacorrecta = false;
-                        } else {
-                            coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
-                            coordenadacorrecta = true;
-                        }
-                    }
-                }
-                if (unidad instanceof Titanothere) {
-                    Coordenadas coordenada;
-                    while (coordenadacorrecta) {
-                        coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
-                        if (this.escenario.checkMapaAñadir(unidad, coordenada)) {
-                            unidad.setPosicion(coordenada);
-                            this.escenario.checkMapaAñadir(unidad, coordenada);
-                            coordenadacorrecta = false;
-                        } else {
-                            coordenada = new Coordenadas(unidad, antiguacoordx, antiguacoordy, this.escenario);
-                            coordenadacorrecta = true;
-                        }
-                    }
-                }
-                break;
-            } catch (FueradeMapaException fme) {
+        unidad.moverUnidad(this.escenario);
+    }
 
-            }
-        }
+    /**
+     * Funcion para restar energia de movimiento a una unidad en funcion de sus
+     * limitaciones, llamando a la funcion restar energia de unidad.
+     *
+     * @param unidad
+     * @throws modelos.excepciones.SinEnergiaMovimientoException
+     */
+    public void restarEnergia(Unidad unidad) throws SinEnergiaMovimientoException {
+        unidad.restarEnergia();
+    }
+
+    /**
+     * Funcion atacar unidad, que llama a la funcion atacarunidad de unidad ya
+     * que es distinta para algunas unidades y no general. Pide por parametro
+     * una unidad que es la que va a atacar.
+     *
+     * @param unidad
+     * @throws modelos.excepciones.FueradeMapaException
+     * @throws modelos.excepciones.SinEnergiaAtaqueException
+     */
+    public void atacarUnidad(Unidad unidad) throws FueradeMapaException, SinEnergiaAtaqueException {
+        unidad.atacarUnidad(this, this.escenario);
+    }
+
+    /**
+     * Funcion para restar energia de ataque en funcion de cada tipo de unidad,
+     * llamando a la funcion restarenergiataque en unidad y comprueba las
+     * excepciones
+     *
+     * @param unidad
+     * @throws modelos.excepciones.SinEnergiaAtaqueException
+     */
+    public void restarEnergiaAtaque(Unidad unidad) throws SinEnergiaAtaqueException {
+        unidad.restarEnergiaAtaque();
     }
 
     /**
      * Funcion para recibir daño restando las energias de defensa de una unidad
-     * y la de los seres
+     * y la de los seres. Se castea en unidad. Pide por parametro la unidad que
+     * ataca y la posicion en donde esta la unidad a la que se ataca
      *
      * @param unidad
      * @param posicion
      * @throws modelos.excepciones.FueradeMapaException
      */
-    public void recibirdaño(Unidad unidad, Coordenadas posicion) throws FueradeMapaException {
+    public String recibirdaño(Unidad unidad, Coordenadas posicion) throws FueradeMapaException {
         if (unidad.getPotencia() <= this.escenario.getunidadMapa(posicion).getEnergiadefensa()) {
             this.escenario.getunidadMapa(posicion).setEnergiadefensa(this.escenario.getunidadMapa(posicion).getEnergiadefensa() - unidad.getPotencia());
         } else {
@@ -307,6 +244,7 @@ public class Jugador implements Serializable {
                 this.escenario.getMapa()[this.escenario.getunidadMapa(posicion).getPosicion().getX()][this.escenario.getunidadMapa(posicion).getPosicion().getY()] = null;
             }
         }
+        return "La unidad " + this.escenario.getunidadMapa(posicion) + " ha sido dañada. Su defensa ha sido reducida a " + this.escenario.getunidadMapa(posicion).getEnergiadefensa();
     }
 
     /**

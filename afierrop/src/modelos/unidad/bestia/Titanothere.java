@@ -5,6 +5,7 @@
 package modelos.unidad.bestia;
 
 import java.util.ArrayList;
+import modelos.excepciones.SinEnergiaMovimientoException;
 import modelos.ser.Ser;
 
 /**
@@ -25,6 +26,21 @@ public class Titanothere extends Bestia {
      */
     public Titanothere() {
         super("Titanothere Cabezamartillo", null, 1000, 11000, 11000, 4500, 300, 250, new ArrayList<Ser>(), null, 25, "2", 1, 1);
+    }
+
+    /**
+     * Override de la funcion restar energia.Esta resta energia de diferente
+     * manera a la general.
+     *
+     * @throws modelos.excepciones.SinEnergiaMovimientoException
+     */
+    @Override
+    public void restarEnergia() throws SinEnergiaMovimientoException {
+        if (this.getEnergiamov() >= this.getEnergiagastadaxmov() * (this.getPosicion().getCasillasMovidasX() + this.getPosicion().getCasillasMovidasY())) {
+            this.setEnergiamov(this.getEnergiamov() - this.getEnergiagastadaxmov());
+        } else {
+            throw new SinEnergiaMovimientoException();
+        }
     }
 
 }

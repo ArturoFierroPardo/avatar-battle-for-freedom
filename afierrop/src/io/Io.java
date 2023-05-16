@@ -19,29 +19,50 @@ import java.util.ArrayList;
  */
 public class Io {
 
+    /**
+     * Archivo donde se guarda todo
+     */
     private static String archivo = "partidas.dat";
+
+    /**
+     * Lista de partidas guardadas en el archivo
+     */
     private ArrayList<Partida> partidas;
 
+    /**
+     * Constructor de IO para usar las funciones, solo tiene un arraylist de
+     * partidas como atributo
+     */
     public Io() {
         this.partidas = new ArrayList<Partida>();
     }
 
+    /**
+     * Getters
+     *
+     * @return
+     */
     public ArrayList<Partida> getPartidas() {
         return this.partidas;
     }
 
+    /**
+     * Funcion guardarpartida, mete la partida que se le pasa por parametro en
+     * el constructor de IO
+     *
+     * @param partida
+     */
     public void guardarPartida(Partida partida) {
         this.partidas.add(partida);
     }
 
     /**
-     * Funcion guardar partida, que crea un fichero con una ruta y unos objetos
-     * que guardan elmobjeto de salia que en este caso es partida que contiene
-     * todos los demas objetos.Habia que poner todas las clases como
-     * Serializables para poder pasarlo.Una vez escrito todo comprobamos
-     * excepciones y comprobamos que el fichero y todo cierra
+     * Funcion guardar en archivo, que mete en un fichero predeterminado un
+     * ArrayList de partidas.Habia que poner todas las clases como Serializables
+     * para poder pasarlo.Una vez escrito todo comprobamos excepciones y
+     * comprobamos que el fichero y todo cierra.
      *
-     * @param partida
+     * @param partidaslist
      * @throws java.io.FileNotFoundException
      */
     public void guardarArchivo(ArrayList<Partida> partidaslist) throws FileNotFoundException {
@@ -74,19 +95,36 @@ public class Io {
     }
 
     /**
-     * Funcion cargar partida, crea un fichero que es en donde se guardo la
-     * anterior y con unos objetos de para sacar datos de ficheros los vamos
-     * leyendo y cambiandole la clase a lo que sacamos del fichero a partida
-     * creamos una partida nueva en funcion de los datos sacados del
-     * fichero.Comprobamos excepciones y que todo se ha cerrado.
+     * Funcion cargar archivo, en un fichero predeterminado que es en donde se
+     * guardo la anterior sacamos el arraylist de partidas y lo returneamos.
+     * Comprobamos excepciones y que todo se ha cerrado.
      *
      * @return
      */
     public ArrayList<Partida> cargarArchivo() {
-        try (ObjectInputStream is = new ObjectInputStream(new FileInputStream(archivo))) {
+        FileInputStream fis = null;
+        ObjectInputStream is = null;
+        try {
+            fis = new FileInputStream(archivo);
+            is = new ObjectInputStream(fis);
             this.partidas = (ArrayList<Partida>) is.readObject();
         } catch (IOException io) {
         } catch (ClassNotFoundException ex) {
+        } finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException ex) {
+                    System.out.println("Error al cerrar el fichero");
+                }
+            }
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException ex) {
+                    System.out.println("Error al cerrar el fichero");
+                }
+            }
         }
         return this.partidas;
     }

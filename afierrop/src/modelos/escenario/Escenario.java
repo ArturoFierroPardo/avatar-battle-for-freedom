@@ -125,7 +125,8 @@ public abstract class Escenario implements Serializable {
     }
 
     /**
-     * Funcion para comprobar que hay una unidad en el mapa
+     * Funcion para comprobar que hay una unidad en el mapa, devuelve true si no
+     * hay , si hay un false.
      *
      * @param unidad
      * @param posicion

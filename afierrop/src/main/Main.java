@@ -27,10 +27,26 @@ import utils.Utils;
  */
 public class Main {
 
+    //COMPROBAR QUE HACE DAÑO, SUBIENDO LOS PUNTOS DEL MAPA 1 Y EL RANGO DE ATAQUE DE ALGUNA UNIDAD. tAMBIEN REVISAR SI ME PASO DE ATAQUE A FUERA DE MAPA NO SALTA BUCLE.
     /**
      * Main para empezar el juego. Además selecciona un escenario el cual se le
-     * pide al usuario. Y si quiere empezar una partida nueva o cargar la
-     * anterior.
+     * pide al usuario. Y si quiere empezar una partida nueva o cargar alguna
+     * anterior. Se construye el IO, y se añade a un arraylist partidas, todo lo
+     * que haya en el archivo. Si decide cargar la partida anterior, de la nueva
+     * lista de partidas creadas se sacan todas a elegir, puede pulsa rel 0 para
+     * volver atras. Si elige alguna partida anterior, antes de comenzar se
+     * elimina del arraylist, se inicia y una vez acabe se vuelve a guardar con
+     * los nuevos datos de la partida. Si la partida tiene ganador que es un
+     * atributo booleano de partida se elimina directamente del array list. Si
+     * decide hacer nueva partida, una vez acabe la funcion comenzar partida, se
+     * guarda en el array. Al acabar todo antes de cerra el main se guarda en el
+     * archivo el nuevo arraylist, así siempre se guardaran todas. Si no
+     * iniciasemos el arraylist al princpio, cada vez que hacemos run, al tener
+     * un constructor nuevo por programa, solo se añadiria la anterior en el
+     * archivo, es por ello que gracia a que añadimos a un arraylist todas las
+     * partidas anteriores y la nueva, se va stackeando en ese arraylist y luego
+     * se carga en el archivo. Todas las clases tiene implementadas la
+     * serializacion para poder usar los archivos bien.
      *
      * @param args the command line arguments
      * @throws modelos.excepciones.FueradeMapaException
@@ -63,7 +79,7 @@ public class Main {
                             }
                             int opcion = Utils.leerEntero("Introduzca el numero de la partida: (Pulse 0 para volver atras)") - 1;
                             if (opcion == -1) {
-                                System.out.println("\nNo ha querido cargar ninguna partida anterior");
+                                System.out.println("\nNo ha querido cargar ninguna partida anterior. Volviendo al menu de seleccion de partida.");
                                 buclecarga = false;
                             } else if (opcion >= 0 && opcion < listapartidas.size()) {
                                 Partida partida = listapartidas.get(opcion);
@@ -80,7 +96,7 @@ public class Main {
                             }
                         } else {
                             System.out.println("\tOPCION INVALIDA. NO TIENE PARTIDAS GUARDADAS ANTERIORMENTE. SELECCIONE NUEVA PARTIDA.\n");
-                            buclecarga = true;
+                            buclecarga = false;
                         }
                     }
                     buclecarga = true;
@@ -116,7 +132,6 @@ public class Main {
                                 break;
                         }
                     } while (bucle);
-
                     Jugador jugador1 = new Jugador("Arturo", Equipo.RDA, escenario);
                     Jugador jugador2 = new Jugador("Pedro", Equipo.NAVI, escenario);
                     Partida partida = new Partida(jugador1, jugador2, escenario);

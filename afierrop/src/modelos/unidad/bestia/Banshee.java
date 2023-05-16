@@ -5,6 +5,10 @@
 package modelos.unidad.bestia;
 
 import java.util.ArrayList;
+import modelos.coordenadas.Coordenadas;
+import modelos.escenario.Escenario;
+import modelos.excepciones.FueradeMapaException;
+import modelos.excepciones.SinEnergiaMovimientoException;
 import modelos.ser.Ser;
 
 /**
@@ -24,6 +28,51 @@ public class Banshee extends Bestia {
      */
     public Banshee() {
         super("Banshee de Montaña", null, 2000, 3500, 8000, 3500, 300, 1000, new ArrayList<Ser>(), null, 10, "Casilla aleatoria", 3, 2);
+    }
+
+    /**
+     * Override de la funcion restar energia. Esta resta energia de diferente
+     * manera a la general, para banshee.
+     *
+     * @throws modelos.excepciones.SinEnergiaMovimientoException
+     */
+    @Override
+    public void restarEnergia() throws SinEnergiaMovimientoException {
+        if (this.getEnergiamov() >= this.getEnergiagastadaxmov() * (this.getPosicion().getCasillasMovidasX() + this.getPosicion().getCasillasMovidasY())) {
+            this.setEnergiamov(this.getEnergiamov() - this.getEnergiagastadaxmov());
+        } else {
+            throw new SinEnergiaMovimientoException();
+        }
+    }
+
+    /**
+     * Override de la funcion moverunidad.Esta mueve la unidad banshee de
+     * diferente manera a la general.
+     *
+     * @param escenario
+     */
+    @Override
+    public void moverUnidad(Escenario escenario) {
+        boolean coordenadacorrecta = true;
+        boolean bucleexception = true;
+        while (bucleexception) {
+            try {
+                Coordenadas coordenada;
+                while (coordenadacorrecta) {
+                    coordenada = new Coordenadas(escenario);
+                    if (escenario.checkMapaAñadir(this, coordenada)) {
+                        this.setPosicion(coordenada);
+                        escenario.checkMapaAñadir(this, coordenada);
+                        coordenadacorrecta = false;
+                    } else {
+                        coordenada = new Coordenadas(escenario);
+                        coordenadacorrecta = true;
+                    }
+                }
+                break;
+            } catch (FueradeMapaException fme) {
+            }
+        }
     }
 
 }

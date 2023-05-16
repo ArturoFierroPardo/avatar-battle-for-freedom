@@ -62,6 +62,43 @@ public class Utils {
     }
 
     /**
+     * Función para leer una cadena de caracteres, hay que introducir un string
+     * y devuelve otro string. Este sin enseñar nada por pantalla
+     */
+    public static String leerCadena() {
+
+        BufferedReader consola = new BufferedReader(new InputStreamReader(System.in));
+        /**
+         * InputStreamReader es una clase que lee de la entrada estándar de la
+         * consola(System.in) datos de texto (por poner Reader). Si pusiesemos
+         * OutputStream saca datos. OutputStreamWriter genera caracteres. *
+         */
+        String linea = "";
+        /**
+         * Hay que inicializar la variable por si el string esta vacío*
+         */
+
+        try {
+            linea = consola.readLine();
+            /**
+             * Creamos la variable linea que es un string(creada arriba), para
+             * que a la variable consola que la leemos con readLine() la
+             * guardemos en esa variable. La metemos en un try porque puede
+             * haber excepciones que dan a error, por ello ejecutamos el catch
+             * por si sale una excepcion.*
+             */
+        } catch (IOException ex) {
+            System.out.println("Error de lectura por entrada estandar");
+            /**
+             * El programa ejecutara el try y si hay error, lo que haya en el
+             * catch.*
+             */
+        }
+
+        return linea;
+    }
+
+    /**
      * Función para leer un entero, hay que introducir un string y devuelve un
      * int.
      *

@@ -4,7 +4,6 @@
  */
 package interfaz.menu;
 
-import modelos.coordenadas.Coordenadas;
 import modelos.equipo.Equipo;
 import modelos.escenario.Escenario;
 import modelos.excepciones.FueradeMapaException;
@@ -108,6 +107,7 @@ public class Menu {
                             }
                             break;
                         case 4:
+                            System.out.println(this.jugadorjuega.getNombre() + " ha pasado de turno \n");
                             bucle = false;
                             break;
                         case 5:
@@ -434,109 +434,16 @@ public class Menu {
     }
 
     /**
-     * Funcion para restar energia de ataque en funcion de cada tipo de unidad y
-     * comprueba las excepciones
-     */
-    private void restarEnergiaAtaque(Unidad unidad) throws SinEnergiaAtaqueException {
-        if (unidad instanceof AT99) {
-            if (unidad.getEnergiataque() >= unidad.getPotencia()) {
-                unidad.setEnergiataque(unidad.getEnergiataque() - unidad.getPotencia());
-            } else {
-                throw new SinEnergiaAtaqueException();
-            }
-        }
-        if (unidad instanceof MK6) {
-            if (unidad.getEnergiataque() >= unidad.getPotencia()) {
-                unidad.setEnergiataque(unidad.getEnergiataque() - unidad.getPotencia());
-            } else {
-                throw new SinEnergiaAtaqueException();
-            }
-        }
-        if (unidad instanceof Aerospatiale) {
-            if (unidad.getEnergiataque() >= unidad.getPotencia()) {
-                unidad.setEnergiataque(unidad.getEnergiataque() - unidad.getPotencia());
-            } else {
-                throw new SinEnergiaAtaqueException();
-            }
-        }
-        if (unidad instanceof Banshee) {
-            if (unidad.getEnergiataque() >= unidad.getPotencia()) {
-                unidad.setEnergiataque(unidad.getEnergiataque() - unidad.getPotencia());
-            } else {
-                throw new SinEnergiaAtaqueException();
-            }
-        }
-        if (unidad instanceof Thanator) {
-            if (unidad.getEnergiataque() >= unidad.getPotencia()) {
-                unidad.setEnergiataque(unidad.getEnergiataque() - unidad.getPotencia());
-            } else {
-                throw new SinEnergiaAtaqueException();
-            }
-        }
-        if (unidad instanceof Titanothere) {
-            if (unidad.getEnergiataque() >= unidad.getPotencia()) {
-                unidad.setEnergiataque(unidad.getEnergiataque() - unidad.getPotencia());
-            } else {
-                throw new SinEnergiaAtaqueException();
-            }
-        }
-    }
-
-    /**
-     * Funcion para restar energia de movimiento a una unidad en funcion de sus
-     * limitaciones
-     */
-    private void restarEnergia(Unidad unidad) throws SinEnergiaMovimientoException {
-        if (unidad instanceof AT99) {
-            if (unidad.getEnergiamov() >= unidad.getEnergiagastadaxmov() * (unidad.getPosicion().getCasillasMovidasX() + unidad.getPosicion().getCasillasMovidasY())) {
-                unidad.setEnergiamov(unidad.getEnergiamov() - (unidad.getEnergiagastadaxmov() * (unidad.getPosicion().getCasillasMovidasX() + unidad.getPosicion().getCasillasMovidasY())));
-            } else {
-                throw new SinEnergiaMovimientoException();
-            }
-        }
-        if (unidad instanceof MK6) {
-            if (unidad.getEnergiamov() >= unidad.getEnergiagastadaxmov() * (unidad.getPosicion().getCasillasMovidasX() + unidad.getPosicion().getCasillasMovidasY())) {
-                unidad.setEnergiamov(unidad.getEnergiamov() - unidad.getEnergiagastadaxmov());
-            } else {
-                throw new SinEnergiaMovimientoException();
-            }
-        }
-        if (unidad instanceof Aerospatiale) {
-            if (unidad.getEnergiamov() >= unidad.getEnergiagastadaxmov() * (unidad.getPosicion().getCasillasMovidasX() + unidad.getPosicion().getCasillasMovidasY())) {
-                unidad.setEnergiamov(unidad.getEnergiamov() - (unidad.getEnergiagastadaxmov() * (unidad.getPosicion().getCasillasMovidasX() + unidad.getPosicion().getCasillasMovidasY())));
-            } else {
-                throw new SinEnergiaMovimientoException();
-            }
-        }
-        if (unidad instanceof Banshee) {
-            if (unidad.getEnergiamov() >= unidad.getEnergiagastadaxmov() * (unidad.getPosicion().getCasillasMovidasX() + unidad.getPosicion().getCasillasMovidasY())) {
-                unidad.setEnergiamov(unidad.getEnergiamov() - unidad.getEnergiagastadaxmov());
-            } else {
-                throw new SinEnergiaMovimientoException();
-            }
-        }
-        if (unidad instanceof Thanator) {
-            if (unidad.getEnergiamov() >= unidad.getEnergiagastadaxmov() * (unidad.getPosicion().getCasillasMovidasX() + unidad.getPosicion().getCasillasMovidasY())) {
-                unidad.setEnergiamov(unidad.getEnergiamov() - (unidad.getEnergiagastadaxmov() * (unidad.getPosicion().getCasillasMovidasX() + unidad.getPosicion().getCasillasMovidasY())));
-            } else {
-                throw new SinEnergiaMovimientoException();
-            }
-        }
-        if (unidad instanceof Titanothere) {
-            if (unidad.getEnergiamov() >= unidad.getEnergiagastadaxmov() * (unidad.getPosicion().getCasillasMovidasX() + unidad.getPosicion().getCasillasMovidasY())) {
-                unidad.setEnergiamov(unidad.getEnergiamov() - unidad.getEnergiagastadaxmov());
-            } else {
-                throw new SinEnergiaMovimientoException();
-            }
-        }
-    }
-
-    /**
      * Funcion mover unidad que mueve la unidad chequeando si hay o no una
-     * unidad en la nueva posicion de movimiento y restandole la energia de mov
-     * indicada
+     * unidad en la nueva posicion de movimiento gracias a la llamada de la
+     * funcion moverunidad de jugador que llama a la de unidad y restandole la
+     * energia de mov indicada de la clase unidad.
+     *
+     * @throws modelos.excepciones.FueradeMapaException
+     * @throws modelos.excepciones.SinEnergiaMovimientoException
+     * @throws modelos.excepciones.SinTripulantesSuficientesException
      */
-    private void moverUnidad() throws FueradeMapaException, SinEnergiaMovimientoException, SinTripulantesSuficientesException {
+    public void moverUnidad() throws FueradeMapaException, SinEnergiaMovimientoException, SinTripulantesSuficientesException {
         boolean buclemover = false;
         System.out.println(this.jugadorjuega.getEjercito());
         while (true) {
@@ -555,56 +462,17 @@ public class Menu {
                         if (this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover).getTripulantes().size() < this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover).getSeresneed()) {
                             buclemover = true;
                             throw new SinTripulantesSuficientesException();
-                        }
-                        if (this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover) instanceof AT99) {
+                        } else {
+                            this.jugadorjuega.restarEnergia(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
                             this.jugadorjuega.moverUnidad(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
-                            restarEnergia(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
+                            System.out.println(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover).getNombre() + " se ha movida a " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover).getPosicion());
                             buclemover = false;
-                            System.out.println("\n" + this.jugadorjuega.getNombre() + " ha movido a la unidad " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover).getNombre() + " a la posicion " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover).getPosicion());
-
-                        }
-                        if (this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover) instanceof MK6) {
-                            this.jugadorjuega.moverUnidad(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
-                            restarEnergia(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
-                            buclemover = false;
-                            System.out.println("\n" + this.jugadorjuega.getNombre() + " ha movido a la unidad " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover).getNombre() + " a la posicion " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover).getPosicion());
-
-                        }
-                        if (this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover) instanceof Aerospatiale) {
-                            this.jugadorjuega.moverUnidad(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
-                            restarEnergia(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
-                            buclemover = false;
-                            System.out.println("\n" + this.jugadorjuega.getNombre() + " ha movido a la unidad " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover).getNombre() + " a la posicion " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover).getPosicion());
-
-                        }
-                        if (this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover) instanceof Banshee) {
-                            this.jugadorjuega.moverUnidad(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
-                            restarEnergia(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
-                            buclemover = false;
-                            System.out.println("\n" + this.jugadorjuega.getNombre() + " ha movido a la unidad " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover).getNombre() + " a la posicion " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover).getPosicion());
-
-                        }
-                        if (this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover) instanceof Thanator) {
-                            this.jugadorjuega.moverUnidad(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
-                            restarEnergia(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
-                            buclemover = false;
-                            System.out.println("\n" + this.jugadorjuega.getNombre() + " ha movido a la unidad " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover).getNombre() + " a la posicion " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover).getPosicion());
-
-                        }
-                        if (this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover) instanceof Titanothere) {
-                            this.jugadorjuega.moverUnidad(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
-                            restarEnergia(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
-                            buclemover = false;
-                            System.out.println("\n" + this.jugadorjuega.getNombre() + " ha movido a la unidad " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover).getNombre() + " a la posicion " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover).getPosicion());
-
                         }
                     }
-
                 } while (buclemover);
                 break;
             } catch (IndexOutofBounceException iob) {
                 System.out.println("\tOPCION INVALIDA. NO TIENE TANTAS UNIDADES. VUELVA A INTENTARLO CORRECTAMENTE\n");
-
             } catch (SinEnergiaMovimientoException sem) {
                 System.out.println("\tOPCION INVALIDA. SU UNIDAD NO TIENE ENERGIA PARA MOVERSE\n");
                 break;
@@ -615,10 +483,9 @@ public class Menu {
     }
 
     /**
-     * Funcion atacar unidad, ataca siguiendo el rango de ataque de cada unidad
-     * generando en su rango una coordenada aleatoria y comprobando si hay una
-     * unidad o no ahí. Resta energia de ataque a la unidad y a la enemiga la de
-     * defensa. Puede haber fuego amigo.
+     * Funcion atacar unidad, ataca llamando a la funcion atacar de jugador, que
+     * llama a la de unidad. Resta energia de ataque a la unidad y a la enemiga
+     * la de defensa en la clase jugador y unidad. Puede haber fuego amigo.
      *
      * @throws modelos.excepciones.IndexOutofBounceException
      * @throws modelos.excepciones.FueradeMapaException
@@ -627,9 +494,6 @@ public class Menu {
      */
     public void atacarUnidad() throws IndexOutofBounceException, FueradeMapaException, SinEnergiaAtaqueException, SinTripulantesSuficientesException {
         boolean bucleatacar = true;
-        boolean nounidad = true;
-        int ataquex2;
-        int ataquey2;
         System.out.println(this.jugadorjuega.getEjercito());
         while (true) {
             try {
@@ -647,216 +511,10 @@ public class Menu {
                         if (this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getTripulantes().size() < this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getSeresneed()) {
                             bucleatacar = true;
                             throw new SinTripulantesSuficientesException();
-                        }
-                        if (this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) instanceof AT99) {
-                            while (nounidad) {
-                                int ataquex = Utils.leerEntero("\nDonde desea atacar en el eje X desde su posicion? Dentro de su rango de ataque que es: " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque());
-                                if (ataquex < 0) {
-                                    ataquex2 = -ataquex;
-                                } else {
-                                    ataquex2 = ataquex;
-                                }
-                                int ataquey = Utils.leerEntero("\nDonde desea atacar en el eje Y desde su posicion? Dentro de su rango de ataque que es: " + (this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() - ataquex2));
-                                if (ataquey < 0) {
-                                    ataquey2 = -ataquey;
-                                } else {
-                                    ataquey2 = ataquey;
-                                }
-                                if (ataquex2 <= this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() && ataquey2 <= this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() - ataquex2) {
-                                    Coordenadas posicioninvestigar = new Coordenadas(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), ataquex, ataquey, this.escenario, 1);
-                                    if (!(this.escenario.checkMapa(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar, this.escenario))) {
-                                        this.jugadorjuega.recibirdaño(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar);
-                                        restarEnergiaAtaque(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar));
-                                        System.out.println(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) + " ha atacado a una unidad en la posicion " + posicioninvestigar);
-                                        bucleatacar = false;
-                                        System.out.println("HA ACERTADO Y DISPARADO CON ÉXITO");
-                                    } else {
-                                        bucleatacar = false;
-                                        nounidad = false;
-                                        System.out.println("NO HABIA NINGUNA UNIDAD EN EL RANGO DE ATAQUE");
-
-                                    }
-                                } else {
-                                    nounidad = true;
-                                    System.out.println("RESPETE EL RANGO DE ATAQUE DE LA UNIDAD. VUELVA A INTENTARLO");
-                                    System.out.println("SU RANGO DE ATAQUE ES: " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque());
-                                }
-                            }
-                        }
-                        if (this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) instanceof MK6) {
-                            while (nounidad) {
-                                int ataquex = Utils.leerEntero("\nDonde desea atacar en el eje X desde su posicion? Dentro de su rango de ataque que es: " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque());
-                                if (ataquex < 0) {
-                                    ataquex2 = -ataquex;
-                                } else {
-                                    ataquex2 = ataquex;
-                                }
-                                int ataquey = Utils.leerEntero("\nDonde desea atacar en el eje Y desde su posicion? Dentro de su rango de ataque que es: " + (this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() - ataquex2));
-                                if (ataquey < 0) {
-                                    ataquey2 = -ataquey;
-                                } else {
-                                    ataquey2 = ataquey;
-                                }
-                                if (ataquex <= this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() && ataquey <= this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() - ataquex2) {
-                                    Coordenadas posicioninvestigar = new Coordenadas(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), ataquex, ataquey, this.escenario, 1);
-                                    if (!(this.escenario.checkMapa(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar, this.escenario))) {
-                                        this.jugadorjuega.recibirdaño(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar);
-                                        restarEnergiaAtaque(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar));
-                                        System.out.println(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) + " ha atacado a una unidad en la posicion " + posicioninvestigar);
-                                        bucleatacar = false;
-                                        System.out.println("HA ACERTADO Y DISPARADO CON ÉXITO");
-                                    } else {
-                                        bucleatacar = false;
-                                        nounidad = false;
-                                        System.out.println("NO HABIA NINGUNA UNIDAD EN EL RANGO DE ATAQUE");
-
-                                    }
-                                } else {
-                                    nounidad = true;
-                                    System.out.println("RESPETE EL RANGO DE ATAQUE DE LA UNIDAD. VUELVA A INTENTARLO");
-                                    System.out.println("SU RANGO DE ATAQUE ES: " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque());
-                                }
-                            }
-                        }
-                        if (this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) instanceof Aerospatiale) {
-                            while (nounidad) {
-                                int ataquex = Utils.leerEntero("\nDonde desea atacar en el eje X desde su posicion? Dentro de su rango de ataque que es: " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque());
-                                if (ataquex < 0) {
-                                    ataquex2 = -ataquex;
-                                } else {
-                                    ataquex2 = ataquex;
-                                }
-                                int ataquey = Utils.leerEntero("\nDonde desea atacar en el eje Y desde su posicion? Dentro de su rango de ataque que es: " + (this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() - ataquex2));
-                                if (ataquey < 0) {
-                                    ataquey2 = -ataquey;
-                                } else {
-                                    ataquey2 = ataquey;
-                                }
-                                if (ataquex <= this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() && ataquey <= this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() - ataquex2) {
-                                    Coordenadas posicioninvestigar = new Coordenadas(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), ataquex, ataquey, this.escenario, 1);
-                                    if (!(this.escenario.checkMapa(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar, this.escenario))) {
-                                        this.jugadorjuega.recibirdaño(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar);
-                                        restarEnergiaAtaque(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar));
-                                        System.out.println(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) + " ha atacado a una unidad en la posicion " + posicioninvestigar);
-                                        bucleatacar = false;
-                                        System.out.println("HA ACERTADO Y DISPARADO CON ÉXITO");
-                                    } else {
-                                        bucleatacar = false;
-                                        nounidad = false;
-                                        System.out.println("NO HABIA NINGUNA UNIDAD EN EL RANGO DE ATAQUE");
-
-                                    }
-                                } else {
-                                    nounidad = true;
-                                    System.out.println("RESPETE EL RANGO DE ATAQUE DE LA UNIDAD. VUELVA A INTENTARLO");
-                                    System.out.println("SU RANGO DE ATAQUE ES: " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque());
-                                }
-                            }
-                        }
-                        if (this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) instanceof Banshee) {
-                            while (nounidad) {
-                                int ataquex = Utils.leerEntero("\nDonde desea atacar en el eje X desde su posicion? Dentro de su rango de ataque que es: " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque());
-                                if (ataquex < 0) {
-                                    ataquex2 = -ataquex;
-                                } else {
-                                    ataquex2 = ataquex;
-                                }
-                                int ataquey = Utils.leerEntero("\nDonde desea atacar en el eje Y desde su posicion? Dentro de su rango de ataque que es: " + (this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() - ataquex2));
-                                if (ataquey < 0) {
-                                    ataquey2 = -ataquey;
-                                } else {
-                                    ataquey2 = ataquey;
-                                }
-                                if (ataquex <= this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() && ataquey <= this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() - ataquex2) {
-                                    Coordenadas posicioninvestigar = new Coordenadas(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), ataquex, ataquey, this.escenario, 1);
-                                    if (!(this.escenario.checkMapa(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar, this.escenario))) {
-                                        this.jugadorjuega.recibirdaño(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar);
-                                        restarEnergiaAtaque(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar));
-                                        System.out.println(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) + " ha atacado a una unidad en la posicion " + posicioninvestigar);
-                                        bucleatacar = false;
-                                        System.out.println("HA ACERTADO Y DISPARADO CON ÉXITO");
-                                    } else {
-                                        bucleatacar = false;
-                                        nounidad = false;
-                                        System.out.println("NO HABIA NINGUNA UNIDAD EN EL RANGO DE ATAQUE");
-
-                                    }
-                                } else {
-                                    nounidad = true;
-                                    System.out.println("RESPETE EL RANGO DE ATAQUE DE LA UNIDAD. VUELVA A INTENTARLO");
-                                    System.out.println("SU RANGO DE ATAQUE ES: " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque());
-                                }
-                            }
-                        }
-                        if (this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) instanceof Thanator) {
-                            while (nounidad) {
-                                int ataquex = Utils.leerEntero("\nDonde desea atacar en el eje X desde su posicion? Dentro de su rango de ataque que es: " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque());
-                                if (ataquex < 0) {
-                                    ataquex2 = -ataquex;
-                                } else {
-                                    ataquex2 = ataquex;
-                                }
-                                int ataquey = Utils.leerEntero("\nDonde desea atacar en el eje Y desde su posicion? Dentro de su rango de ataque que es: " + (this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() - ataquex2));
-                                if (ataquey < 0) {
-                                    ataquey2 = -ataquey;
-                                } else {
-                                    ataquey2 = ataquey;
-                                }
-                                if (ataquex <= this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() && ataquey <= this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() - ataquex2) {
-                                    Coordenadas posicioninvestigar = new Coordenadas(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), ataquex, ataquey, this.escenario, 1);
-                                    if (!(this.escenario.checkMapa(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar, this.escenario))) {
-                                        this.jugadorjuega.recibirdaño(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar);
-                                        restarEnergiaAtaque(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar));
-                                        System.out.println(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) + " ha atacado a una unidad en la posicion " + posicioninvestigar);
-                                        bucleatacar = false;
-                                        System.out.println("HA ACERTADO Y DISPARADO CON ÉXITO");
-                                    } else {
-                                        bucleatacar = false;
-                                        nounidad = false;
-                                        System.out.println("NO HABIA NINGUNA UNIDAD EN EL RANGO DE ATAQUE");
-
-                                    }
-                                } else {
-                                    nounidad = true;
-                                    System.out.println("RESPETE EL RANGO DE ATAQUE DE LA UNIDAD. VUELVA A INTENTARLO");
-                                    System.out.println("SU RANGO DE ATAQUE ES: " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque());
-                                }
-                            }
-                        }
-                        if (this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) instanceof Titanothere) {
-                            while (nounidad) {
-                                int ataquex = Utils.leerEntero("\nDonde desea atacar en el eje X desde su posicion? Dentro de su rango de ataque que es: " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque());
-                                if (ataquex < 0) {
-                                    ataquex2 = -ataquex;
-                                } else {
-                                    ataquex2 = ataquex;
-                                }
-                                int ataquey = Utils.leerEntero("\nDonde desea atacar en el eje Y desde su posicion? Dentro de su rango de ataque que es: " + (this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() - ataquex2));
-                                if (ataquey < 0) {
-                                    ataquey2 = -ataquey;
-                                } else {
-                                    ataquey2 = ataquey;
-                                }
-                                if (ataquex <= this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() && ataquey <= this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque() - ataquex2) {
-                                    Coordenadas posicioninvestigar = new Coordenadas(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), ataquex, ataquey, this.escenario, 1);
-                                    if (!(this.escenario.checkMapa(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar, this.escenario))) {
-                                        this.jugadorjuega.recibirdaño(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar), posicioninvestigar);
-                                        restarEnergiaAtaque(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar));
-                                        System.out.println(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar) + " ha atacado a una unidad en la posicion " + posicioninvestigar);
-                                        bucleatacar = false;
-                                        System.out.println("HA ACERTADO Y DISPARADO CON ÉXITO");
-                                    } else {
-                                        bucleatacar = false;
-                                        nounidad = false;
-                                        System.out.println("NO HABIA NINGUNA UNIDAD EN EL RANGO DE ATAQUE");
-
-                                    }
-                                } else {
-                                    nounidad = true;
-                                    System.out.println("RESPETE EL RANGO DE ATAQUE DE LA UNIDAD. VUELVA A INTENTARLO");
-                                    System.out.println("SU RANGO DE ATAQUE ES: " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar).getRangoataque());
-                                }
-                            }
+                        } else {
+                            this.jugadorjuega.restarEnergiaAtaque(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar));
+                            this.jugadorjuega.atacarUnidad(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar));
+                            bucleatacar = false;
                         }
                     }
                 } while (bucleatacar);

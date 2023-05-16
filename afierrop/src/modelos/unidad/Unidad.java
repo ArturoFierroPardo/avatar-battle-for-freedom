@@ -7,8 +7,13 @@ package modelos.unidad;
 import java.io.Serializable;
 import java.util.ArrayList;
 import modelos.coordenadas.Coordenadas;
+import modelos.escenario.Escenario;
+import modelos.excepciones.FueradeMapaException;
+import modelos.excepciones.SinEnergiaAtaqueException;
+import modelos.excepciones.SinEnergiaMovimientoException;
 import modelos.jugador.Jugador;
 import modelos.ser.Ser;
+import utils.Utils;
 
 /**
  *
@@ -166,7 +171,13 @@ public abstract class Unidad implements Serializable {
     }
 
     /**
-     * Getters
+     * Getters.
+     *
+     *
+     * Para maxmov se pasa a int ya que maxmov es un String puesto ya que
+     * banshee no tiene rango de movimiento y se la he puesto como un string que
+     * pone movimiento aleatorio, así le puedo poner ese atributo
+     *
      *
      * @return
      */
@@ -225,6 +236,136 @@ public abstract class Unidad implements Serializable {
 
     public Jugador getJugador() {
         return this.jugador;
+    }
+
+    /**
+     * Funcion para restar energia de ataque en funcion de cada tipo de unidad y
+     * lanza las excepciones
+     *
+     * @throws modelos.excepciones.SinEnergiaAtaqueException
+     */
+    public void restarEnergiaAtaque() throws SinEnergiaAtaqueException {
+        if (this.getEnergiataque() >= this.getPotencia()) {
+            this.setEnergiataque(this.getEnergiataque() - this.getPotencia());
+        } else {
+            throw new SinEnergiaAtaqueException();
+        }
+    }
+
+    /**
+     * Funcion para restar energia de movimiento en funcion de cada tipo de
+     * unidad y lanza las excepciones. Se hace override, ya que bansee,
+     * titanothere y mk6 son las unicas unidades que consumen energia de
+     * movimiento de manera estatica en vez de en funcion de las casilllas que
+     * se mueven.
+     *
+     * @throws modelos.excepciones.SinEnergiaMovimientoException
+     */
+    public void restarEnergia() throws SinEnergiaMovimientoException {
+        if (this.getEnergiamov() >= this.getEnergiagastadaxmov() * (this.getPosicion().getCasillasMovidasX() + this.getPosicion().getCasillasMovidasY())) {
+            this.setEnergiamov(this.getEnergiamov() - (this.getEnergiagastadaxmov() * (this.getPosicion().getCasillasMovidasX() + this.getPosicion().getCasillasMovidasY())));
+        } else {
+            throw new SinEnergiaMovimientoException();
+        }
+    }
+
+    /**
+     * La funcion moverunidad, genera unas coordenadas aleatorias dentro del
+     * rango de movimiento sumadas a la antigua coordenada de la unidad y
+     * chequea si puede moverse o no, si puede se mueve, y si no genera otra
+     * hasta poder.Se controlan todas las excepciones. Esta funcion es
+     * Overrideada ya que banshee utiliza unas coordenadas diferentes a las de
+     * las demas unidades ya que no tiene rango de movimiento más que el propio
+     * escenario.
+     *
+     * @param escenario
+     * @throws modelos.excepciones.FueradeMapaException
+     */
+    public void moverUnidad(Escenario escenario) throws FueradeMapaException {
+        boolean coordenadacorrecta = true;
+        boolean bucleexception = true;
+        int antiguacoordx = this.getPosicion().getX();
+        int antiguacoordy = this.getPosicion().getY();
+        while (bucleexception) {
+            try {
+                Coordenadas coordenada;
+                while (coordenadacorrecta) {
+                    coordenada = new Coordenadas(this, antiguacoordx, antiguacoordy, escenario);
+                    if (escenario.checkMapaAñadir(this, coordenada)) {
+                        this.setPosicion(coordenada);
+                        escenario.checkMapaAñadir(this, coordenada);
+                        coordenadacorrecta = false;
+                    } else {
+                        coordenada = new Coordenadas(this, antiguacoordx, antiguacoordy, escenario);
+                        coordenadacorrecta = true;
+                    }
+                }
+                break;
+            } catch (FueradeMapaException fme) {
+            }
+        }
+    }
+
+    /**
+     * Funcion atacar unidad que controla donde desea atacar el jugador
+     * solictando las nuevas coordenadas en x y en y y chequeando que estan
+     * dentro del rango de la unidad, si no se repite en bucle recordando el
+     * rango de ataque de la unidad.Si esta dentro del rango de ataque, se crea
+     * una coordenada con las posiciones antiguas de la unidad sumadas a donde
+     * quiere atacar y chequea que hay una unidad ahi o no.Si hay una unidad se
+     * llama a la funcion recibir daño que esta en jugador y hace daño a la
+     * unidad establecida como la atacada, y sale del bucle.Si no habia ninguna
+     * unidad, sale del bucle y avisa de que no ha daod a ningun enemigo el
+     * disparo. Se controlan todas las excepciones posibles.
+     *
+     * @param jugador
+     * @param escenario
+     * @throws modelos.excepciones.FueradeMapaException
+     * @throws modelos.excepciones.SinEnergiaAtaqueException
+     */
+    public void atacarUnidad(Jugador jugador, Escenario escenario) throws FueradeMapaException, SinEnergiaAtaqueException {
+        boolean nounidad = true;
+        int ataquex2;
+        int ataquey2;
+        while (nounidad) {
+            int ataquex = Utils.leerEntero("\nDonde desea atacar en el eje X desde su posicion? Dentro de su rango de ataque que es: " + this.getRangoataque());
+            if (ataquex < 0) {
+                ataquex2 = -ataquex;
+            } else {
+                ataquex2 = ataquex;
+            }
+            int ataquey = Utils.leerEntero("\nDonde desea atacar en el eje Y desde su posicion? Dentro de su rango de ataque que es: " + (this.getRangoataque() - ataquex2));
+            if (ataquey < 0) {
+                ataquey2 = -ataquey;
+            } else {
+                ataquey2 = ataquey;
+            }
+            if (ataquex2 <= this.getRangoataque() && ataquey2 <= this.getRangoataque() - ataquex2) {
+                if (ataquex + this.getPosicion().getX() > escenario.getXmax()) {
+                    ataquex = escenario.getXmax();
+                }
+                if (ataquey + this.getPosicion().getY() > escenario.getYmax()) {
+                    ataquey = escenario.getYmax();
+                }
+                Coordenadas posicioninvestigar = new Coordenadas(this, ataquex, ataquey, escenario, 1);
+
+                if (!(escenario.checkMapa(this, posicioninvestigar, escenario))) {
+                    jugador.recibirdaño(this, posicioninvestigar);
+                    System.out.println("\n" + this.getNombre() + " ha atacado a una unidad en la posicion " + posicioninvestigar);
+                    System.out.println("HA ACERTADO Y DISPARADO CON EXITO\n");
+                    nounidad = false;
+                } else {
+                    nounidad = false;
+                    System.out.println("\nNO HABIA NINGUNA UNIDAD EN EL RANGO DE ATAQUE\n");
+
+                }
+                nounidad = false;
+            } else {
+                nounidad = true;
+                System.out.println("RESPETE EL RANGO DE ATAQUE DE LA UNIDAD. VUELVA A INTENTARLO");
+                System.out.println("SU RANGO DE ATAQUE ES: " + this.getRangoataque());
+            }
+        }
     }
 
     /**
