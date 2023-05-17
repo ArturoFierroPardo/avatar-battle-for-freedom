@@ -225,7 +225,7 @@ public class Jugador implements Serializable {
      * @param posicion
      * @throws modelos.excepciones.FueradeMapaException
      */
-    public String recibirdaño(Unidad unidad, Coordenadas posicion) throws FueradeMapaException {
+    public void recibirdaño(Unidad unidad, Coordenadas posicion) throws FueradeMapaException {
         if (unidad.getPotencia() <= this.escenario.getunidadMapa(posicion).getEnergiadefensa()) {
             this.escenario.getunidadMapa(posicion).setEnergiadefensa(this.escenario.getunidadMapa(posicion).getEnergiadefensa() - unidad.getPotencia());
         } else {
@@ -234,17 +234,17 @@ public class Jugador implements Serializable {
             for (Ser ser : this.escenario.getunidadMapa(posicion).getTripulantes()) {
                 ser.setVida(ser.getVida() - dañoigual);
                 if (ser.getVida() <= 0) {
-                    this.escenario.getunidadMapa(posicion).getTripulantes().remove(ser);
                     this.puntos = this.puntos + ser.getPuntosderrota();
+                    this.escenario.getunidadMapa(posicion).getTripulantes().remove(ser);
+                }
+                if (this.escenario.getunidadMapa(posicion).getTripulantes().isEmpty()) {
+                    this.puntos = this.puntos + this.escenario.getunidadMapa(posicion).getPuntosderrota();
+                    this.escenario.getunidadMapa(posicion).getJugador().getEjercito().getUnidades().remove(this.escenario.getunidadMapa(posicion));
+                    this.escenario.getMapa()[this.escenario.getunidadMapa(posicion).getPosicion().getX()][this.escenario.getunidadMapa(posicion).getPosicion().getY()] = null;
+                    break;
                 }
             }
-            if (this.escenario.getunidadMapa(posicion).getTripulantes().isEmpty() && this.escenario.getunidadMapa(posicion).getEnergiadefensa() <= 0) {
-                this.puntos = this.puntos + this.escenario.getunidadMapa(posicion).getPuntosderrota();
-                this.ejercito.getUnidades().remove(this.escenario.getunidadMapa(posicion));
-                this.escenario.getMapa()[this.escenario.getunidadMapa(posicion).getPosicion().getX()][this.escenario.getunidadMapa(posicion).getPosicion().getY()] = null;
-            }
         }
-        return "La unidad " + this.escenario.getunidadMapa(posicion) + " ha sido dañada. Su defensa ha sido reducida a " + this.escenario.getunidadMapa(posicion).getEnergiadefensa();
     }
 
     /**

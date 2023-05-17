@@ -70,17 +70,10 @@ public class Coordenadas implements Serializable {
      * @param z
      */
     public Coordenadas(Unidad unidad, int x, int y, Escenario escenario, int z) {
-        this.x = unidad.getPosicion().getX() + x;
-        this.y = unidad.getPosicion().getY() + y;
-        this.escenario = escenario;
-        if (this.x > this.escenario.getXmax()) {
-            this.x = this.escenario.getXmax();
-        }
+        this.x = x + unidad.getPosicion().getX();
+        this.y = y + unidad.getPosicion().getY();
         if (this.x < 0) {
             this.x = 0;
-        }
-        if (this.y > this.escenario.getYmax()) {
-            this.y = this.escenario.getYmax();
         }
         if (this.y < 0) {
             this.y = 0;
@@ -110,6 +103,7 @@ public class Coordenadas implements Serializable {
      *
      * @param x
      * @param y
+     * @throws modelos.excepciones.FueradeMapaException
      */
     public Coordenadas(int x, int y) throws FueradeMapaException {
         Random rand = new Random();
@@ -147,27 +141,24 @@ public class Coordenadas implements Serializable {
             this.y = y;
         } else {
             int yaleatoria = rand.nextInt(-1 * (unidad.getMaxmov() - restacasillas), unidad.getMaxmov() - restacasillas);
-            this.y = y + yaleatoria;
+            if (y + yaleatoria > escenario.getYmax()) {
+                this.y = y;
+            } else {
+                this.y = y + yaleatoria;
+            }
         }
-        this.x = x + xaleatoria;
+        if (x + xaleatoria > escenario.getXmax()) {
+            this.x = x;
+        } else {
+            this.x = x + xaleatoria;
+        }
         if (this.x < 0) {
             this.x = 0;
-        }
-        if (this.x > escenario.getXmax()) {
-            this.x = escenario.getXmax();
-        }
-        if (this.x < 0) {
-            this.x = 0;
-        }
-        if (this.x > escenario.getXmax()) {
-            this.x = escenario.getXmax();
         }
         if (this.y < 0) {
             this.y = 0;
         }
-        if (this.y > escenario.getYmax()) {
-            this.y = escenario.getYmax();
-        }
+
         checkCoordenadaX(this.x, this.escenario);
         checkCoordenadaY(this.y, this.escenario);
         if (x > this.x) {

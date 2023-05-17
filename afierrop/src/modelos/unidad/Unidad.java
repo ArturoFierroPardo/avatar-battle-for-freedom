@@ -276,7 +276,7 @@ public abstract class Unidad implements Serializable {
      * hasta poder.Se controlan todas las excepciones. Esta funcion es
      * Overrideada ya que banshee utiliza unas coordenadas diferentes a las de
      * las demas unidades ya que no tiene rango de movimiento más que el propio
-     * escenario.
+     * escenario. Comprueba que no se vaya del mapa.
      *
      * @param escenario
      * @throws modelos.excepciones.FueradeMapaException
@@ -316,7 +316,9 @@ public abstract class Unidad implements Serializable {
      * llama a la funcion recibir daño que esta en jugador y hace daño a la
      * unidad establecida como la atacada, y sale del bucle.Si no habia ninguna
      * unidad, sale del bucle y avisa de que no ha daod a ningun enemigo el
-     * disparo. Se controlan todas las excepciones posibles.
+     * disparo. Se controlan todas las excepciones posibles. Tambien comprueba
+     * que el rango de ataque esta dentro del mapa, si no le pide que vuelva a
+     * intentarlo.
      *
      * @param jugador
      * @param escenario
@@ -325,10 +327,11 @@ public abstract class Unidad implements Serializable {
      */
     public void atacarUnidad(Jugador jugador, Escenario escenario) throws FueradeMapaException, SinEnergiaAtaqueException {
         boolean nounidad = true;
-        int ataquex2;
-        int ataquey2;
+        int ataquex2 = 0;
+        int ataquey2 = 0;
         while (nounidad) {
             int ataquex = Utils.leerEntero("\nDonde desea atacar en el eje X desde su posicion? Dentro de su rango de ataque que es: " + this.getRangoataque());
+
             if (ataquex < 0) {
                 ataquex2 = -ataquex;
             } else {
@@ -340,23 +343,42 @@ public abstract class Unidad implements Serializable {
             } else {
                 ataquey2 = ataquey;
             }
-            if (ataquex2 <= this.getRangoataque() && ataquey2 <= this.getRangoataque() - ataquex2) {
-                if (ataquex + this.getPosicion().getX() > escenario.getXmax()) {
-                    ataquex = escenario.getXmax();
-                }
-                if (ataquey + this.getPosicion().getY() > escenario.getYmax()) {
-                    ataquey = escenario.getYmax();
-                }
+            if (ataquex + this.posicion.getX() > escenario.getXmax()) {
+                ataquex2 = this.posicion.getX() + ataquex;
+                System.out.println("NO PUEDE ATACAR FUERA DEL MAPA. VUELVA A INTENTARLO");
+                nounidad = true;
+            }
+            if (ataquex + this.posicion.getX() < 0) {
+                ataquex2 = this.posicion.getX() + ataquex;
+                System.out.println("NO PUEDE ATACAR FUERA DEL MAPA. VUELVA A INTENTARLO");
+                nounidad = true;
+            }
+            if (ataquey + this.posicion.getY() > escenario.getYmax()) {
+                ataquey2 = this.posicion.getY() + ataquey;
+                System.out.println("NO PUEDE ATACAR FUERA DEL MAPA. VUELVA A INTENTARLO");
+                nounidad = true;
+            }
+            if (ataquey + this.posicion.getY() < 0) {
+                ataquey2 = this.posicion.getY() + ataquey;
+                System.out.println("NO PUEDE ATACAR FUERA DEL MAPA. VUELVA A INTENTARLO");
+                nounidad = true;
+            }
+            if (ataquex2 <= this.getRangoataque() && ataquey2 <= this.getRangoataque() - ataquex2 && ataquex2 >= 0 && ataquey2 >= 0) {
                 Coordenadas posicioninvestigar = new Coordenadas(this, ataquex, ataquey, escenario, 1);
-
                 if (!(escenario.checkMapa(this, posicioninvestigar, escenario))) {
+                    Unidad unidadahi = escenario.getunidadMapa(posicioninvestigar);
                     jugador.recibirdaño(this, posicioninvestigar);
-                    System.out.println("\n" + this.getNombre() + " ha atacado a una unidad en la posicion " + posicioninvestigar);
-                    System.out.println("HA ACERTADO Y DISPARADO CON EXITO\n");
-                    nounidad = false;
+                    if (escenario.checkMapa(this, posicioninvestigar, escenario)) {
+                        System.out.println("\nHA ACABADO CON LA UNIDAD QUE HABIA EN LA POSICION " + posicioninvestigar + " SE TRATABA DE UN " + unidadahi.getNombre() + "\n");
+                        nounidad = false;
+                    } else {
+                        System.out.println("\nHA ACERTADO Y DISPARADO CON EXITO\n");
+                        System.out.println("Hay una unidad " + unidadahi.getNombre() + " en la posicion " + posicioninvestigar + " que ha sido atacada por " + this.getNombre() + " en la posicion " + this.getPosicion() + ". Le quedan " + unidadahi.getEnergiadefensa() + " puntos de energia de defensa y " + unidadahi.getTripulantes() + " tripulantes\n");
+                        nounidad = false;
+                    }
                 } else {
                     nounidad = false;
-                    System.out.println("\nNO HABIA NINGUNA UNIDAD EN EL RANGO DE ATAQUE\n");
+                    System.out.println("\nNO HABIA NINGUNA UNIDAD EN EL RANGO DE ATAQUE\n" + posicioninvestigar);
 
                 }
                 nounidad = false;
@@ -365,6 +387,7 @@ public abstract class Unidad implements Serializable {
                 System.out.println("RESPETE EL RANGO DE ATAQUE DE LA UNIDAD. VUELVA A INTENTARLO");
                 System.out.println("SU RANGO DE ATAQUE ES: " + this.getRangoataque());
             }
+
         }
     }
 

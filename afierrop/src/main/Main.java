@@ -27,7 +27,8 @@ import utils.Utils;
  */
 public class Main {
 
-    //COMPROBAR QUE HACE DAÑO, SUBIENDO LOS PUNTOS DEL MAPA 1 Y EL RANGO DE ATAQUE DE ALGUNA UNIDAD. tAMBIEN REVISAR SI ME PASO DE ATAQUE A FUERA DE MAPA NO SALTA BUCLE.
+    //REVISAR SI ME PASO DE ATAQUE A FUERA DE MAPA NO SALTA BUCLE, SALTA, ARREGLARLO, HAY UNA PARTIDA YA GUARDADA PARA PROBAR.
+    // RECORDAR QUE ARBOLALMAS PONER CON 50000 PUNTOS EN VEZ DE 5000 Y EL RANGO DE ATAQUE DE AT99 PONER A 100 EN VEZ DE 10 PARA PROBAR.
     /**
      * Main para empezar el juego. Además selecciona un escenario el cual se le
      * pide al usuario. Y si quiere empezar una partida nueva o cargar alguna
