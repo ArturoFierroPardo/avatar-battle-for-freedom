@@ -5,6 +5,8 @@
 package modelos.jugador;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Objects;
 import modelos.coordenadas.Coordenadas;
 import modelos.ejercito.Ejercito;
 import modelos.equipo.Equipo;
@@ -137,6 +139,7 @@ public class Jugador implements Serializable {
                     unidad.setPosicion(posicion);
                     this.escenario.checkMapaAñadir(unidad, posicion);
                     this.ejercito.getUnidades().add(unidad);
+                    Collections.sort(this.ejercito.getUnidades(), new Unidad.comparadorEDEF());
                     this.puntos = this.puntos - unidad.getCoste();
                     break;
                 } else {
@@ -245,6 +248,7 @@ public class Jugador implements Serializable {
                 }
             }
         }
+        Collections.sort(this.ejercito.getUnidades(), new Unidad.comparadorEDEF());
     }
 
     /**
@@ -254,6 +258,33 @@ public class Jugador implements Serializable {
     @Override
     public String toString() {
         return "El jugador " + this.nombre + " es del equipo " + this.equipo + " y consta de " + this.puntos + " puntos";
+    }
+
+    /**
+     * Override de la funcion equals para comparar que dos unidades son iguales
+     *
+     * @param o
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o != null && o instanceof Jugador) {
+            Jugador j = (Jugador) o;
+            return (this.puntos == j.puntos && this.ejercito == j.ejercito && this.equipo == j.equipo);
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 23 * hash + Objects.hashCode(this.nombre);
+        hash = 23 * hash + Objects.hashCode(this.equipo);
+        hash = 23 * hash + this.puntos;
+        hash = 23 * hash + Objects.hashCode(this.ejercito);
+        hash = 23 * hash + Objects.hashCode(this.escenario);
+        hash = 23 * hash + (this.acabarpartida ? 1 : 0);
+        return hash;
     }
 
 }

@@ -6,6 +6,8 @@ package modelos.unidad;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Objects;
 import modelos.coordenadas.Coordenadas;
 import modelos.escenario.Escenario;
 import modelos.excepciones.FueradeMapaException;
@@ -392,6 +394,28 @@ public abstract class Unidad implements Serializable {
     }
 
     /**
+     * Clase stataic para comparar que hace un override para llamar a la funcion
+     * compare reescribiendola la cual recibe dos unidas y llama a utils que
+     * compara enteros para comparar las energias de defensa de dos unidades
+     *
+     *
+     */
+    public static class comparadorEDEF implements Comparator<Unidad> {
+
+        @Override
+        public int compare(Unidad unidad1, Unidad unidad2) {
+            if (unidad1.getEnergiadefensa() > unidad2.getEnergiadefensa()) {
+                return -1;
+            } else if (unidad1.getEnergiadefensa() < unidad2.getEnergiadefensa()) {
+                return 1;
+            } else {
+                return 0;
+            }
+
+        }
+    }
+
+    /**
      * toString que devuelve un string con toda la información
      *
      * @return
@@ -418,5 +442,46 @@ public abstract class Unidad implements Serializable {
     @Override
     public String toString() {
         return this.nombre + " tripulado por " + this.tripulantes;
+    }
+
+    /**
+     * Override de la funcion equals para comparar que dos unidades son iguales
+     *
+     * @param o
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o != null && o instanceof Unidad) {
+            Unidad u = (Unidad) o;
+            return (this.energiadefensa == u.energiadefensa
+                    && this.energiamov == u.energiamov
+                    && this.energiataque == u.energiataque
+                    && this.jugador == u.jugador
+                    && this.posicion == u.posicion
+                    && this.rangoataque == u.rangoataque
+                    && this.tripulantes == u.tripulantes);
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.nombre);
+        hash = 37 * hash + Objects.hashCode(this.jugador);
+        hash = 37 * hash + this.coste;
+        hash = 37 * hash + this.energiadefensa;
+        hash = 37 * hash + this.energiataque;
+        hash = 37 * hash + this.energiamov;
+        hash = 37 * hash + this.potencia;
+        hash = 37 * hash + this.puntosderrota;
+        hash = 37 * hash + Objects.hashCode(this.tripulantes);
+        hash = 37 * hash + Objects.hashCode(this.posicion);
+        hash = 37 * hash + this.energiagastadaxmov;
+        hash = 37 * hash + Objects.hashCode(this.maxmov);
+        hash = 37 * hash + this.rangoataque;
+        hash = 37 * hash + this.seresneed;
+        return hash;
     }
 }

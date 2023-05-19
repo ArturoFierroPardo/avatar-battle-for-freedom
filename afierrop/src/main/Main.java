@@ -27,8 +27,7 @@ import utils.Utils;
  */
 public class Main {
 
-    //REVISAR SI ME PASO DE ATAQUE A FUERA DE MAPA NO SALTA BUCLE, SALTA, ARREGLARLO, HAY UNA PARTIDA YA GUARDADA PARA PROBAR.
-    // RECORDAR QUE ARBOLALMAS PONER CON 50000 PUNTOS EN VEZ DE 5000 Y EL RANGO DE ATAQUE DE AT99 PONER A 100 EN VEZ DE 10 PARA PROBAR.
+    //PARA EL CENTRO DE MANDOS DARLE A TODO UN DATE Y ORDENARLO EN FUNCION DE ELLO de mayor fecha a mas reciente
     /**
      * Main para empezar el juego. Además selecciona un escenario el cual se le
      * pide al usuario. Y si quiere empezar una partida nueva o cargar alguna
@@ -133,8 +132,8 @@ public class Main {
                                 break;
                         }
                     } while (bucle);
-                    Jugador jugador1 = new Jugador("Arturo", Equipo.RDA, escenario);
-                    Jugador jugador2 = new Jugador("Pedro", Equipo.NAVI, escenario);
+                    Jugador jugador1 = new Jugador("Jugador 1", Equipo.RDA, escenario);
+                    Jugador jugador2 = new Jugador("Jugador 2", Equipo.NAVI, escenario);
                     Partida partida = new Partida(jugador1, jugador2, escenario);
                     partida.comienzaPartida();
                     listapartidas.add(partida);
