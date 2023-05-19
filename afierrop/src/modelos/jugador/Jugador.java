@@ -261,7 +261,7 @@ public class Jugador implements Serializable {
     }
 
     /**
-     * Override de la funcion equals para comparar que dos unidades son iguales
+     * Override de la funcion equals para comparar si dos jugador son iguales
      *
      * @param o
      */
@@ -269,12 +269,15 @@ public class Jugador implements Serializable {
     public boolean equals(Object o) {
         if (o != null && o instanceof Jugador) {
             Jugador j = (Jugador) o;
-            return (this.puntos == j.puntos && this.ejercito == j.ejercito && this.equipo == j.equipo);
+            return (this.nombre.equals(j.nombre) && this.puntos == j.puntos && this.ejercito.equals(j.ejercito) && this.equipo == j.equipo && this.nombre.equals(j.nombre));
         } else {
             return false;
         }
     }
 
+    /**
+     * Override del hashcode para esta clase
+     */
     @Override
     public int hashCode() {
         int hash = 5;

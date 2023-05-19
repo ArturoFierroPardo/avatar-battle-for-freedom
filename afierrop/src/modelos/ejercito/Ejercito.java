@@ -6,6 +6,7 @@ package modelos.ejercito;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 import modelos.unidad.Unidad;
 
 /**
@@ -53,6 +54,31 @@ public class Ejercito implements Serializable {
     @Override
     public String toString() {
         return "\nSu ejercito consta de " + this.unidades;
+    }
+
+    /**
+     * Override de la funcion equals para comparar que dos unidades son iguales
+     *
+     * @param o
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o != null && o instanceof Ejercito) {
+            Ejercito e = (Ejercito) o;
+            return this.unidades == e.unidades;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Override del hashcode para esta clase
+     */
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 53 * hash + Objects.hashCode(this.unidades);
+        return hash;
     }
 
 }

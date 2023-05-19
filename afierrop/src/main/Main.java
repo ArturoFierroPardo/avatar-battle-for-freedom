@@ -27,7 +27,7 @@ import utils.Utils;
  */
 public class Main {
 
-    //PARA EL CENTRO DE MANDOS DARLE A TODO UN DATE Y ORDENARLO EN FUNCION DE ELLO de mayor fecha a mas reciente
+    //PARA EL CENTRO DE MANDOS DARLE A TODO UN DATE Y ORDENARLO EN FUNCION DE ELLO de mayor fecha a mas reciente. CREAR UNA CLASE ACCIONES QUE TENGA UNA FECHA Y UN STRING DE ATRIBUTOS, SE AÑADIRA UN SRTING A ESTA CLASE CADA VEZ QUE SE HAGA UNA ACCION
     /**
      * Main para empezar el juego. Además selecciona un escenario el cual se le
      * pide al usuario. Y si quiere empezar una partida nueva o cargar alguna

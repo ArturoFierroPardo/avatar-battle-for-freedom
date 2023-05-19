@@ -5,6 +5,8 @@
 package modelos.escenario;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Objects;
 import modelos.coordenadas.Coordenadas;
 import modelos.excepciones.FueradeMapaException;
 import modelos.unidad.Unidad;
@@ -152,5 +154,34 @@ public abstract class Escenario implements Serializable {
         return "\tNombre: " + this.nombre + "\n"
                 + "\tPuntos iniciales de cada jugador: " + this.puntoscomienzo + "\n"
                 + "\tDimension: " + this.xmax + "X" + this.ymax + "\n";
+    }
+
+    /**
+     * Override de la funcion equals para comparar si dos escenarios son iguales
+     *
+     * @param o
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o != null && o instanceof Escenario) {
+            Escenario e = (Escenario) o;
+            return (this.mapa == e.mapa && this.puntoscomienzo == e.puntoscomienzo && this.xmax == e.xmax && this.ymax == e.ymax);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Override del hashcode para esta clase
+     */
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + Objects.hashCode(this.nombre);
+        hash = 29 * hash + this.puntoscomienzo;
+        hash = 29 * hash + this.xmax;
+        hash = 29 * hash + this.ymax;
+        hash = 29 * hash + Arrays.deepHashCode(this.mapa);
+        return hash;
     }
 }

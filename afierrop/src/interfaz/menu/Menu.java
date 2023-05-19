@@ -4,6 +4,7 @@
  */
 package interfaz.menu;
 
+import java.util.Objects;
 import modelos.equipo.Equipo;
 import modelos.escenario.Escenario;
 import modelos.excepciones.FueradeMapaException;
@@ -528,6 +529,28 @@ public class Menu {
                 System.out.println("\tOPCION INVALIDA. SU UNIDAD NO TIENE TRIPULANTES SUFICIENTES PARA ATACAR. SELECCIONE OTRA UNIDAD\n");
             }
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o != null && o instanceof Menu) {
+            Menu m = (Menu) o;
+            return (this.jugadorjuega == m.jugadorjuega && this.escenario == m.escenario);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Override del hashcode para esta clase
+     */
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + Objects.hashCode(this.jugadorjuega);
+        hash = 97 * hash + Objects.hashCode(this.escenario);
+        return hash;
     }
 
 }

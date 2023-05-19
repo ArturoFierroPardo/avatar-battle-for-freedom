@@ -27,7 +27,7 @@ public class Banshee extends Bestia {
      * tripulantes se asignan con setters al comprar la unidad
      */
     public Banshee() {
-        super("Banshee de Montaña", null, 2000, 3500, 8000, 3500, 300, 1000, new ArrayList<Ser>(), null, 10, "Casilla aleatoria", 3, 2);
+        super("Banshee de Montaña", null, 2000, 3500, 8000, 3500, 300, 1000, new ArrayList<Ser>(), null, 10, "Casilla aleatoria", 10, 2);
     }
 
     /**
@@ -61,6 +61,7 @@ public class Banshee extends Bestia {
                 while (coordenadacorrecta) {
                     coordenada = new Coordenadas(escenario);
                     if (escenario.checkMapaAñadir(this, coordenada)) {
+                        escenario.getMapa()[this.getPosicion().getX()][this.getPosicion().getY()] = null;
                         this.setPosicion(coordenada);
                         escenario.checkMapaAñadir(this, coordenada);
                         coordenadacorrecta = false;

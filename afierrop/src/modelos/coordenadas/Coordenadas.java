@@ -5,6 +5,7 @@
 package modelos.coordenadas;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Random;
 import modelos.escenario.Escenario;
 import modelos.excepciones.FueradeMapaException;
@@ -251,6 +252,35 @@ public class Coordenadas implements Serializable {
     @Override
     public String toString() {
         return "(" + this.x + ", " + this.y + ")";
+    }
+
+    /**
+     * Override de la funcion equals para comparar que dos unidades son iguales
+     *
+     * @param o
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o != null && o instanceof Coordenadas) {
+            Coordenadas c = (Coordenadas) o;
+            return (this.x == c.x && this.y == c.y);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Override del hashcode para esta clase
+     */
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + this.x;
+        hash = 53 * hash + this.y;
+        hash = 53 * hash + Objects.hashCode(this.escenario);
+        hash = 53 * hash + this.casillasmovidasx;
+        hash = 53 * hash + this.casillasmovidasy;
+        return hash;
     }
 
 }

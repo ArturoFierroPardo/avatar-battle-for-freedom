@@ -5,6 +5,7 @@
 package modelos.ser;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  *
@@ -103,6 +104,8 @@ public abstract class Ser implements Serializable {
 
     /**
      * Funcion que imprime toda la informacion del ser
+     *
+     * @return
      */
     public String toStringInfo() {
         return "\tNombre: " + this.nombre + "\n"
@@ -112,6 +115,36 @@ public abstract class Ser implements Serializable {
                 + "\tVida: " + this.vida + "\n"
                 + "\tPuntos: " + this.puntosderrota + " \n";
 
+    }
+
+    /**
+     * Override de la funcion equals para comparar que dos unidades son iguales
+     *
+     * @param o
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o != null && o instanceof Ser) {
+            Ser s = (Ser) o;
+            return (this.nombre.equals(s.nombre) && this.cargo == s.cargo && this.raza == s.raza && this.vida == s.vida);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Override del hashcode para esta clase
+     */
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 71 * hash + this.coste;
+        hash = 71 * hash + Objects.hashCode(this.cargo);
+        hash = 71 * hash + Objects.hashCode(this.raza);
+        hash = 71 * hash + this.vida;
+        hash = 71 * hash + this.puntosderrota;
+        hash = 71 * hash + Objects.hashCode(this.nombre);
+        return hash;
     }
 
     /**

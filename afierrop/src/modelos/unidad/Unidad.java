@@ -294,6 +294,7 @@ public abstract class Unidad implements Serializable {
                 while (coordenadacorrecta) {
                     coordenada = new Coordenadas(this, antiguacoordx, antiguacoordy, escenario);
                     if (escenario.checkMapaAñadir(this, coordenada)) {
+                        escenario.getMapa()[this.posicion.getX()][this.posicion.getY()] = null;
                         this.setPosicion(coordenada);
                         escenario.checkMapaAñadir(this, coordenada);
                         coordenadacorrecta = false;
@@ -375,12 +376,12 @@ public abstract class Unidad implements Serializable {
                         nounidad = false;
                     } else {
                         System.out.println("\nHA ACERTADO Y DISPARADO CON EXITO\n");
-                        System.out.println("Hay una unidad " + unidadahi.getNombre() + " en la posicion " + posicioninvestigar + " que ha sido atacada por " + this.getNombre() + " en la posicion " + this.getPosicion() + ". Le quedan " + unidadahi.getEnergiadefensa() + " puntos de energia de defensa y " + unidadahi.getTripulantes() + " tripulantes\n");
+                        System.out.println("Hay una unidad " + unidadahi.getNombre() + " en la posicion " + posicioninvestigar + " que ha sido atacada por " + this.getNombre() + " en la posicion " + this.getPosicion() + ". Le quedan " + unidadahi.getEnergiadefensa() + " puntos de energia de defensa y esta trpulado por " + unidadahi.getTripulantes() + "\n");
                         nounidad = false;
                     }
                 } else {
                     nounidad = false;
-                    System.out.println("\nNO HABIA NINGUNA UNIDAD EN EL RANGO DE ATAQUE\n" + posicioninvestigar);
+                    System.out.println("\nNO HABIA NINGUNA UNIDAD EN LA POSICION " + posicioninvestigar + "\n");
 
                 }
                 nounidad = false;
@@ -445,7 +446,7 @@ public abstract class Unidad implements Serializable {
     }
 
     /**
-     * Override de la funcion equals para comparar que dos unidades son iguales
+     * Override de la funcion equals para comparar si dos unidades son iguales
      *
      * @param o
      */
@@ -453,18 +454,25 @@ public abstract class Unidad implements Serializable {
     public boolean equals(Object o) {
         if (o != null && o instanceof Unidad) {
             Unidad u = (Unidad) o;
-            return (this.energiadefensa == u.energiadefensa
+            return (this.nombre.equals(u.nombre)
+                    && this.coste == u.coste
+                    && this.potencia == u.potencia
+                    && this.energiadefensa == u.energiadefensa
                     && this.energiamov == u.energiamov
                     && this.energiataque == u.energiataque
                     && this.jugador == u.jugador
                     && this.posicion == u.posicion
                     && this.rangoataque == u.rangoataque
-                    && this.tripulantes == u.tripulantes);
+                    && this.tripulantes == u.tripulantes
+                    && this.nombre.equals(u.nombre));
         } else {
             return false;
         }
     }
 
+    /**
+     * Override del hashcode para esta clase
+     */
     @Override
     public int hashCode() {
         int hash = 7;

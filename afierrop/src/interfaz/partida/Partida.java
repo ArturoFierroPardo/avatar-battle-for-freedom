@@ -7,6 +7,7 @@ package interfaz.partida;
 import interfaz.menu.Menu;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
+import java.util.Objects;
 import modelos.escenario.Escenario;
 import modelos.excepciones.FueradeMapaException;
 import modelos.excepciones.PuntosdeCompraInsuficientesException;
@@ -165,6 +166,35 @@ public class Partida implements Serializable {
     @Override
     public String toString() {
         return "La partida comienza en el escenario " + this.escenario.getNombre() + ".\nLuchara " + this.jugador1.getNombre() + " del equipo " + this.jugador1.getEquipo() + " contra " + this.jugador2.getNombre() + " del equipo " + this.jugador2.getEquipo() + "\n";
+    }
+
+    /**
+     * Override de la funcion equals para comparar que dos unidades son iguales
+     *
+     * @param o
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o != null && o instanceof Partida) {
+            Partida p = (Partida) o;
+            return (this.jugador1 == p.jugador1 && this.jugador2 == p.jugador2 && this.turnos == p.turnos && this.escenario == p.escenario);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Override del hashcode para esta clase
+     */
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.jugador1);
+        hash = 53 * hash + Objects.hashCode(this.jugador2);
+        hash = 53 * hash + Objects.hashCode(this.escenario);
+        hash = 53 * hash + this.turnos;
+        hash = 53 * hash + (this.terminada ? 1 : 0);
+        return hash;
     }
 
 }
