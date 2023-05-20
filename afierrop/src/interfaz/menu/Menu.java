@@ -45,8 +45,14 @@ public class Menu {
      */
     private Escenario escenario;
 
+    /**
+     * Centro de mandos del jugador que esta en su turno jugando
+     */
     private CentroDeMandos centrodemandos;
 
+    /**
+     * Centro de mandos del jugador que no esta en su turno y sin jugar
+     */
     private CentroDeMandos centrodemandosnojuega;
 
     /**
@@ -69,7 +75,8 @@ public class Menu {
      * opciones que tiene el jugador.Dependiendo de cual escoja se llamara a una
      * funcion especifica o si es la 4 directamente se cambiara de turno gracias
      * a una funcion en partida.Con un bucle dowhile se registra y se repita si
-     * el usuario ha introducido la opcion mal.
+     * el usuario ha introducido la opcion mal. Añade al centro de mandos la
+     * accion de cada opcion del menu.
      *
      * @throws modelos.excepciones.PuntosdeCompraInsuficientesException
      * @throws modelos.excepciones.FueradeMapaException
@@ -553,6 +560,11 @@ public class Menu {
         }
     }
 
+    /**
+     * Override de la funcion equals para comparar si dos menus son iguales
+     *
+     * @param o
+     */
     @Override
     public boolean equals(Object o) {
         if (o != null && o instanceof Menu) {

@@ -417,24 +417,41 @@ public abstract class Unidad implements Serializable {
     }
 
     /**
-     * toString que devuelve un string con toda la información
+     * toString que devuelve un string con toda la información y si la posicion
+     * es null (que es al comprarla) imprime un string en vez del objeto
      *
      * @return
      */
     public String toStringInfo() {
-        return "Nombre: " + this.nombre + "\n"
-                + "\tPosicion: " + this.posicion.toString() + "\n"
-                + "\tCoste: " + this.coste + "\n"
-                + "\tEnergia de defensa: " + this.energiadefensa + "\n"
-                + "\tEnergia de ataque: " + this.energiataque + "\n"
-                + "\tEnergia de movimiento: " + this.energiamov + "\n"
-                + "\tPotencia: " + this.potencia + "\n"
-                + "\tPuntos si se derrota: " + this.puntosderrota + " \n"
-                + "\tTripulantes actuales: " + this.tripulantes + "\n"
-                + "\tSeres necesarios para el funcionamiento: " + this.seresneed + "\n"
-                + "\tEnergia que gasta al moverse: " + this.energiagastadaxmov + "\n"
-                + "\tMaximas casillas que puede moverse por turno: " + this.maxmov + "\n"
-                + "\tRango de ataque: " + this.rangoataque + " casillas\n";
+        if (this.posicion == null) {
+            return "\tNombre: " + this.nombre + "\n"
+                    + "\tPosicion: Unidad no desplegada\n"
+                    + "\tCoste: " + this.coste + "\n"
+                    + "\tEnergia de defensa: " + this.energiadefensa + "\n"
+                    + "\tEnergia de ataque: " + this.energiataque + "\n"
+                    + "\tEnergia de movimiento: " + this.energiamov + "\n"
+                    + "\tPotencia: " + this.potencia + "\n"
+                    + "\tPuntos si se derrota: " + this.puntosderrota + " \n"
+                    + "\tTripulantes actuales: " + this.tripulantes + "\n"
+                    + "\tSeres necesarios para el funcionamiento: " + this.seresneed + "\n"
+                    + "\tEnergia que gasta al moverse: " + this.energiagastadaxmov + "\n"
+                    + "\tMaximas casillas que puede moverse por turno: " + this.maxmov + "\n"
+                    + "\tRango de ataque: " + this.rangoataque + " casillas\n";
+        } else {
+            return "\tNombre: " + this.nombre + "\n"
+                    + "\tPosicion: " + this.posicion.toString() + "\n"
+                    + "\tCoste: " + this.coste + "\n"
+                    + "\tEnergia de defensa: " + this.energiadefensa + "\n"
+                    + "\tEnergia de ataque: " + this.energiataque + "\n"
+                    + "\tEnergia de movimiento: " + this.energiamov + "\n"
+                    + "\tPotencia: " + this.potencia + "\n"
+                    + "\tPuntos si se derrota: " + this.puntosderrota + " \n"
+                    + "\tTripulantes actuales: " + this.tripulantes + "\n"
+                    + "\tSeres necesarios para el funcionamiento: " + this.seresneed + "\n"
+                    + "\tEnergia que gasta al moverse: " + this.energiagastadaxmov + "\n"
+                    + "\tMaximas casillas que puede moverse por turno: " + this.maxmov + "\n"
+                    + "\tRango de ataque: " + this.rangoataque + " casillas\n";
+        }
     }
 
     /**

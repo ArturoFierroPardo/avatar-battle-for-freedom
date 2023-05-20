@@ -222,7 +222,8 @@ public class Jugador implements Serializable {
     /**
      * Funcion para recibir daño restando las energias de defensa de una unidad
      * y la de los seres. Se castea en unidad. Pide por parametro la unidad que
-     * ataca y la posicion en donde esta la unidad a la que se ataca
+     * ataca y la posicion en donde esta la unidad a la que se ataca. Ordena en
+     * funcion de la vida el ejercito.
      *
      * @param unidad
      * @param posicion
@@ -252,16 +253,16 @@ public class Jugador implements Serializable {
     }
 
     /**
-     * Función toString que devuelve un string con el nombre, el equipo y los
-     * puntos del jugador
+     * Función toString que devuelve un string con el nombre, el equipo, los
+     * puntos y el ejercito de jugador
      */
     @Override
     public String toString() {
-        return "El jugador " + this.nombre + " es del equipo " + this.equipo + " y consta de " + this.puntos + " puntos";
+        return "\nEl jugador " + this.nombre + " es del equipo " + this.equipo + ", consta de " + this.puntos + " puntos y su ejercito esta formado por: \n";
     }
 
     /**
-     * Override de la funcion equals para comparar si dos jugador son iguales
+     * Override de la funcion equals para comparar si dos jugadores son iguales
      *
      * @param o
      */

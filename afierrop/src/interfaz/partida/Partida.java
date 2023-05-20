@@ -43,8 +43,13 @@ public class Partida implements Serializable {
      */
     private int turnos;
 
+    /**
+     * Centro de mandos del jugador 1
+     */
     private CentroDeMandos cm1;
-
+    /**
+     * Centro de mandos del jugador 2
+     */
     private CentroDeMandos cm2;
 
     /**
@@ -174,7 +179,7 @@ public class Partida implements Serializable {
      */
     @Override
     public String toString() {
-        return "La partida comienza en el escenario " + this.escenario.getNombre() + ".\nLuchara " + this.jugador1.getNombre() + " del equipo " + this.jugador1.getEquipo() + " contra " + this.jugador2.getNombre() + " del equipo " + this.jugador2.getEquipo() + "\n";
+        return "\nLa partida comienza en el escenario " + this.escenario.getNombre() + ".\nLuchara " + this.jugador1.getNombre() + " del equipo " + this.jugador1.getEquipo() + " contra " + this.jugador2.getNombre() + " del equipo " + this.jugador2.getEquipo() + "\n";
     }
 
     /**
