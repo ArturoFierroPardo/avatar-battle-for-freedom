@@ -4,6 +4,7 @@
  */
 package interfaz.partida;
 
+import interfaz.centrodemandos.CentroDeMandos;
 import interfaz.menu.Menu;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
@@ -106,12 +107,14 @@ public class Partida implements Serializable {
      * @throws java.io.FileNotFoundException
      */
     public void comienzaPartida() throws PuntosdeCompraInsuficientesException, FueradeMapaException, SinEnergiaMovimientoException, SinEnergiaAtaqueException, SinTripulantesSuficientesException, FileNotFoundException {
+        CentroDeMandos CM1 = new CentroDeMandos();
+        CentroDeMandos CM2 = new CentroDeMandos();
         System.out.println(toString());
         boolean bucle = true;
         do {
             if (this.turnos % 2 == 1) {
                 System.out.println("TURNO---------->  " + this.turnos);
-                Menu menu = new Menu(this.jugador1, this.escenario);
+                Menu menu = new Menu(this.jugador1, this.escenario, CM1);
                 menu.enseñarMenu();
                 this.turnos++;
             }
@@ -125,7 +128,7 @@ public class Partida implements Serializable {
             }
             if (this.turnos % 2 == 0) {
                 System.out.println("TURNO---------->  " + this.turnos);
-                Menu menu = new Menu(this.jugador2, this.escenario);
+                Menu menu = new Menu(this.jugador2, this.escenario, CM2);
                 menu.enseñarMenu();
                 this.turnos++;
             }
