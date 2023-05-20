@@ -107,8 +107,8 @@ public class Partida implements Serializable {
      * @throws java.io.FileNotFoundException
      */
     public void comienzaPartida() throws PuntosdeCompraInsuficientesException, FueradeMapaException, SinEnergiaMovimientoException, SinEnergiaAtaqueException, SinTripulantesSuficientesException, FileNotFoundException {
-        CentroDeMandos CM1 = new CentroDeMandos();
-        CentroDeMandos CM2 = new CentroDeMandos();
+        CentroDeMandos CM1 = new CentroDeMandos(this.jugador1);
+        CentroDeMandos CM2 = new CentroDeMandos(this.jugador2);
         System.out.println(toString());
         boolean bucle = true;
         do {

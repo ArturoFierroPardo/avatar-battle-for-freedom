@@ -76,22 +76,21 @@ public class Menu {
      */
     public void enseñarMenu() throws PuntosdeCompraInsuficientesException, FueradeMapaException, SinEnergiaMovimientoException, SinEnergiaAtaqueException, SinTripulantesSuficientesException {
         boolean bucle = false;
-        int ejercitoantes = 0;
-        System.out.println("Turno de " + this.jugadorjuega.getNombre() + "\n");
-        System.out.println("-------------------MENU-------------------\n");
-        System.out.println("\t1) Comprar una unidad");
-        System.out.println("\t2) Mover una unidad");
-        System.out.println("\t3) Atacar a una unidad enemiga");
-        System.out.println("\t4) Ver el centro de mandos");
-        System.out.println("\t5) Finalizar el turno");
-        System.out.println("\t6) Finalizar y guardar partida\n");
         while (true) {
-            try {
-                do {
+            do {
+                try {
+                    System.out.println("Turno de " + this.jugadorjuega.getNombre() + "\n");
+                    System.out.println("-------------------MENU-------------------\n");
+                    System.out.println("\t1) Comprar una unidad");
+                    System.out.println("\t2) Mover una unidad");
+                    System.out.println("\t3) Atacar a una unidad enemiga");
+                    System.out.println("\t4) Ver el centro de mandos");
+                    System.out.println("\t5) Finalizar el turno");
+                    System.out.println("\t6) Finalizar y guardar partida\n");
                     int opcion = Utils.leerEntero("Elija que quiere hacer escribiendo el numero correspondiente: ");
                     switch (opcion) {
                         case 1:
-                            ejercitoantes = this.jugadorjuega.getEjercito().getUnidades().size();
+                            int ejercitoantes = this.jugadorjuega.getEjercito().getUnidades().size();
                             compraUnidad();
                             String comprado = "El jugador " + this.jugadorjuega.getNombre() + " ha comprado " + (this.jugadorjuega.getEjercito().getUnidades().size() - ejercitoantes) + " unidades, de manera que ha expandido su ejercito a " + this.jugadorjuega.getEjercito().getUnidades() + "\n";
                             this.centrodemandos.añadirString(comprado);
@@ -118,10 +117,8 @@ public class Menu {
                             }
                             break;
                         case 4:
-                            System.out.println("-------------------CENTRO DE MANDOS-------------------\n");
-                            int opcioncm = Utils.leerEntero("Elija que quiere hacer escribiendo el numero correspondiente: ");
-                            System.out.println(this.centrodemandos.toString());
-                            bucle = false;
+                            this.centrodemandos.enseñarCM();
+                            bucle = true;
                             break;
                         case 5:
                             System.out.println(this.jugadorjuega.getNombre() + " ha pasado de turno \n");
@@ -135,15 +132,12 @@ public class Menu {
                             System.out.println("\tOPCION INVALIDA. VUELVA A INTENTARLO CORRECTAMENTE\n");
                             bucle = true;
                             break;
-
                     }
-
-                } while (bucle);
-                break;
-            } catch (IndexOutofBounceException iob) {
-                System.out.println("\tOPCION INVALIDA. NO PUEDE MOVER UNIDADES NI ATACAR CON ELLAS PORQUE NO TIENE. VUELVA A INTENTARLO CORRECTAMENTE\n");
-
-            }
+                } catch (IndexOutofBounceException iob) {
+                    System.out.println("\tOPCION INVALIDA. NO PUEDE MOVER UNIDADES NI ATACAR CON ELLAS PORQUE NO TIENE. VUELVA A INTENTARLO CORRECTAMENTE\n");
+                }
+            } while (bucle);
+            break;
         }
     }
 
