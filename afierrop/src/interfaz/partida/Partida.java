@@ -43,6 +43,10 @@ public class Partida implements Serializable {
      */
     private int turnos;
 
+    private CentroDeMandos cm1;
+
+    private CentroDeMandos cm2;
+
     /**
      * Dicta si la partida esta terminada con un true y false si no
      */
@@ -55,13 +59,17 @@ public class Partida implements Serializable {
      * @param jugador1
      * @param jugador2
      * @param escenario
+     * @param cm1
+     * @param cm2
      */
-    public Partida(Jugador jugador1, Jugador jugador2, Escenario escenario) {
+    public Partida(Jugador jugador1, Jugador jugador2, Escenario escenario, CentroDeMandos cm1, CentroDeMandos cm2) {
         this.jugador1 = jugador1;
         this.jugador2 = jugador2;
         this.escenario = escenario;
         this.turnos = 1;
         this.terminada = false;
+        this.cm1 = cm1;
+        this.cm2 = cm2;
     }
 
     /**
@@ -107,14 +115,12 @@ public class Partida implements Serializable {
      * @throws java.io.FileNotFoundException
      */
     public void comienzaPartida() throws PuntosdeCompraInsuficientesException, FueradeMapaException, SinEnergiaMovimientoException, SinEnergiaAtaqueException, SinTripulantesSuficientesException, FileNotFoundException {
-        CentroDeMandos CM1 = new CentroDeMandos(this.jugador1);
-        CentroDeMandos CM2 = new CentroDeMandos(this.jugador2);
         System.out.println(toString());
         boolean bucle = true;
         do {
             if (this.turnos % 2 == 1) {
                 System.out.println("TURNO---------->  " + this.turnos);
-                Menu menu = new Menu(this.jugador1, this.escenario, CM1);
+                Menu menu = new Menu(this.jugador1, this.escenario, this.cm1, this.cm2);
                 menu.enseñarMenu();
                 this.turnos++;
             }
@@ -128,7 +134,7 @@ public class Partida implements Serializable {
             }
             if (this.turnos % 2 == 0) {
                 System.out.println("TURNO---------->  " + this.turnos);
-                Menu menu = new Menu(this.jugador2, this.escenario, CM2);
+                Menu menu = new Menu(this.jugador2, this.escenario, this.cm2, this.cm1);
                 menu.enseñarMenu();
                 this.turnos++;
             }

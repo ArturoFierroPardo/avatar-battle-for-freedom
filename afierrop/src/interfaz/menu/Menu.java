@@ -47,6 +47,8 @@ public class Menu {
 
     private CentroDeMandos centrodemandos;
 
+    private CentroDeMandos centrodemandosnojuega;
+
     /**
      * Constructor de menu que necesita el jugador que este jugando actualmente
      * en el turno y el escenario
@@ -55,10 +57,11 @@ public class Menu {
      * @param escenario
      * @param centrodemandos
      */
-    public Menu(Jugador jugadorjuega, Escenario escenario, CentroDeMandos centrodemandos) {
+    public Menu(Jugador jugadorjuega, Escenario escenario, CentroDeMandos centrodemandos, CentroDeMandos centrodemandosnojuega) {
         this.jugadorjuega = jugadorjuega;
         this.escenario = escenario;
         this.centrodemandos = centrodemandos;
+        this.centrodemandosnojuega = centrodemandosnojuega;
     }
 
     /**
@@ -92,9 +95,9 @@ public class Menu {
                         case 1:
                             int ejercitoantes = this.jugadorjuega.getEjercito().getUnidades().size();
                             compraUnidad();
-                            String comprado = "El jugador " + this.jugadorjuega.getNombre() + " ha comprado " + (this.jugadorjuega.getEjercito().getUnidades().size() - ejercitoantes) + " unidades, de manera que ha expandido su ejercito a " + this.jugadorjuega.getEjercito().getUnidades() + "\n";
+                            String comprado = "El jugador " + this.jugadorjuega.getNombre() + " ha comprado " + (this.jugadorjuega.getEjercito().getUnidades().size() - ejercitoantes) + " unidad/unidades, y la/las ha desplegado en el campo de batalla\n";
                             this.centrodemandos.añadirString(comprado);
-                            bucle = false;
+                            this.centrodemandosnojuega.añadirString(comprado);
                             break;
                         case 2:
                             if (this.jugadorjuega.getEjercito().getUnidades().isEmpty()) {
@@ -104,6 +107,9 @@ public class Menu {
                             if (this.jugadorjuega.getEjercito().getUnidades().size() >= 0) {
                                 bucle = false;
                                 moverUnidad();
+                                String movido = "El jugador " + this.jugadorjuega.getNombre() + " ha movido una de sus unidades\n";
+                                this.centrodemandos.añadirString(movido);
+                                this.centrodemandosnojuega.añadirString(movido);
                             }
                             break;
                         case 3:
@@ -114,6 +120,9 @@ public class Menu {
                             if (this.jugadorjuega.getEjercito().getUnidades().size() >= 0) {
                                 bucle = false;
                                 atacarUnidad();
+                                String atacado = "El jugador " + this.jugadorjuega.getNombre() + " ha efectuado un ataque\n";
+                                this.centrodemandos.añadirString(atacado);
+                                this.centrodemandosnojuega.añadirString(atacado);
                             }
                             break;
                         case 4:
@@ -122,6 +131,9 @@ public class Menu {
                             break;
                         case 5:
                             System.out.println(this.jugadorjuega.getNombre() + " ha pasado de turno \n");
+                            String turno = "El jugador " + this.jugadorjuega.getNombre() + " ha pasado el turno\n";
+                            this.centrodemandos.añadirString(turno);
+                            this.centrodemandosnojuega.añadirString(turno);
                             bucle = false;
                             break;
                         case 6:

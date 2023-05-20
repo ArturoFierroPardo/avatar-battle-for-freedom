@@ -4,16 +4,19 @@
  */
 package interfaz.centrodemandos;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import modelos.excepciones.IndexOutofBounceException;
 import modelos.jugador.Jugador;
+import modelos.unidad.Unidad;
 import utils.Utils;
 
 /**
  *
  * @author artur
  */
-public class CentroDeMandos {
+public class CentroDeMandos implements Serializable {
 
     private Jugador jugador;
 
@@ -39,7 +42,7 @@ public class CentroDeMandos {
             switch (opcioncm) {
                 case 1:
                     if (this.acciones.isEmpty()) {
-                        System.out.println("No ha sucedido nada en la partida\n");
+                        System.out.println("\tNo ha sucedido nada en la partida\n");
                     } else {
                         System.out.println("\n" + this.toString());
                     }
@@ -51,7 +54,11 @@ public class CentroDeMandos {
                             if (this.jugador.getEjercito().getUnidades().isEmpty()) {
                                 throw new IndexOutofBounceException();
                             } else {
-                                System.out.println("\n" + this.jugador.getEjercito().getUnidades().toString());
+                                Collections.sort(this.jugador.getEjercito().getUnidades(), new Unidad.comparadorEDEF());
+                                for (int i = 0; i < this.jugador.getEjercito().getUnidades().size(); i++) {
+                                    int j = 1 + i;
+                                    System.out.println("\t" + j + ") Unidad " + j + ": " + this.jugador.getEjercito().getUnidades().get(i) + "\n");
+                                }
                                 boolean buclever = false;
                                 while (true) {
                                     try {

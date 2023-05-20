@@ -4,6 +4,7 @@
  */
 package main;
 
+import interfaz.centrodemandos.CentroDeMandos;
 import interfaz.partida.Partida;
 import io.Io;
 import java.io.FileNotFoundException;
@@ -27,7 +28,7 @@ import utils.Utils;
  */
 public class Main {
 
-    //PARA EL CENTRO DE MANDOS DARLE A TODO UN DATE Y ORDENARLO EN FUNCION DE ELLO de mayor fecha a mas reciente. CREAR UNA CLASE ACCIONES QUE TENGA UNA FECHA Y UN STRING DE ATRIBUTOS, SE AÑADIRA UN SRTING A ESTA CLASE CADA VEZ QUE SE HAGA UNA ACCION
+    //LAS ACCIONES YA ESTAN ORDENADAS PORQUE SE GUARDAN EN FUNCION DE QUE SE HACE PRIMERO. METERLE EL STRING QUE SE AÑADE AL CENTRO DE MANDOS DE ATACAR, MOVER Y FINALIZAR TURNO. METERLE LAS ACCIONES DE EL OTRO JUGADOR AL CENTRO DE MANDOS DEL OTRO, ORDENAR EL EJERCITO EN CENTRO DE MANDOS POR VIDA. COMENTAR CADA COSA DE LA CLASE NUEVA Y LO NUEVO AÑADIDO EN EL PROGRAMA ENTERO
     /**
      * Main para empezar el juego. Además selecciona un escenario el cual se le
      * pide al usuario. Y si quiere empezar una partida nueva o cargar alguna
@@ -134,7 +135,9 @@ public class Main {
                     } while (bucle);
                     Jugador jugador1 = new Jugador("Jugador 1", Equipo.RDA, escenario);
                     Jugador jugador2 = new Jugador("Jugador 2", Equipo.NAVI, escenario);
-                    Partida partida = new Partida(jugador1, jugador2, escenario);
+                    CentroDeMandos CM1 = new CentroDeMandos(jugador1);
+                    CentroDeMandos CM2 = new CentroDeMandos(jugador2);
+                    Partida partida = new Partida(jugador1, jugador2, escenario, CM1, CM2);
                     partida.comienzaPartida();
                     listapartidas.add(partida);
                     buclepart = false;

@@ -422,7 +422,8 @@ public abstract class Unidad implements Serializable {
      * @return
      */
     public String toStringInfo() {
-        return "\tNombre: " + this.nombre + "\n"
+        return "Nombre: " + this.nombre + "\n"
+                + "\tPosicion: " + this.posicion.toString() + "\n"
                 + "\tCoste: " + this.coste + "\n"
                 + "\tEnergia de defensa: " + this.energiadefensa + "\n"
                 + "\tEnergia de ataque: " + this.energiataque + "\n"
