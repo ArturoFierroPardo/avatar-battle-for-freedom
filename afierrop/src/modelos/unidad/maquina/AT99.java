@@ -23,7 +23,7 @@ public class AT99 extends Maquina {
      * con setters al comprar la unidad
      */
     public AT99() {
-        super("AT-99 Escorpion", null, 15000, 7500, 7500, 5000, 500, 10000, new ArrayList<Ser>(), null, 100, "20", 1000, 4);
+        super("AT-99 Escorpion", null, 15000, 7500, 7500, 5000, 500, 10000, new ArrayList<Ser>(), null, 100, "20", 10, 4);
     }
 
 }
