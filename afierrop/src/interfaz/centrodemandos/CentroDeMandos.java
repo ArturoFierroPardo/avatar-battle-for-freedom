@@ -162,8 +162,9 @@ public class CentroDeMandos implements Serializable {
     @Override
     public String toString() {
         String listaacciones = "";
-        for (String accion : this.acciones) {
-            listaacciones += accion + "\n";
+        for (int i = 0; i < this.acciones.size(); i++) {
+            int j = 1 + i;
+            listaacciones += "\t" + j + ") Accion " + j + ": " + this.acciones.get(i) + "\n";
         }
         return listaacciones;
     }

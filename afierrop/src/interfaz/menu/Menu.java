@@ -5,6 +5,7 @@
 package interfaz.menu;
 
 import interfaz.centrodemandos.CentroDeMandos;
+import java.util.Date;
 import java.util.Objects;
 import modelos.equipo.Equipo;
 import modelos.escenario.Escenario;
@@ -102,7 +103,8 @@ public class Menu {
                         case 1:
                             int ejercitoantes = this.jugadorjuega.getEjercito().getUnidades().size();
                             compraUnidad();
-                            String comprado = "El jugador " + this.jugadorjuega.getNombre() + " ha comprado " + (this.jugadorjuega.getEjercito().getUnidades().size() - ejercitoantes) + " unidad/unidades, y la/las ha desplegado en el campo de batalla\n";
+                            Date compra = new Date();
+                            String comprado = "El jugador " + this.jugadorjuega.getNombre() + " ha comprado " + (this.jugadorjuega.getEjercito().getUnidades().size() - ejercitoantes) + " unidad/unidades, y la/las ha desplegado en el campo de batalla ----------" + compra + "\n";
                             this.centrodemandos.añadirString(comprado);
                             this.centrodemandosnojuega.añadirString(comprado);
                             break;
@@ -114,7 +116,8 @@ public class Menu {
                             if (this.jugadorjuega.getEjercito().getUnidades().size() >= 0) {
                                 bucle = false;
                                 moverUnidad();
-                                String movido = "El jugador " + this.jugadorjuega.getNombre() + " ha movido una de sus unidades\n";
+                                Date mover = new Date();
+                                String movido = "El jugador " + this.jugadorjuega.getNombre() + " ha movido una de sus unidades ----------" + mover + "\n";
                                 this.centrodemandos.añadirString(movido);
                                 this.centrodemandosnojuega.añadirString(movido);
                             }
@@ -127,23 +130,33 @@ public class Menu {
                             if (this.jugadorjuega.getEjercito().getUnidades().size() >= 0) {
                                 bucle = false;
                                 atacarUnidad();
-                                String atacado = "El jugador " + this.jugadorjuega.getNombre() + " ha efectuado un ataque\n";
+                                Date atacar = new Date();
+                                String atacado = "El jugador " + this.jugadorjuega.getNombre() + " ha efectuado un ataque ----------" + atacar + "\n";
                                 this.centrodemandos.añadirString(atacado);
                                 this.centrodemandosnojuega.añadirString(atacado);
                             }
                             break;
                         case 4:
                             this.centrodemandos.enseñarCM();
+                            Date vercm = new Date();
+                            String cm = "El jugador " + this.jugadorjuega.getNombre() + " ha abierto su centro de mandos ----------" + vercm + "\n";
+                            this.centrodemandos.añadirString(cm);
+                            this.centrodemandosnojuega.añadirString(cm);
                             bucle = true;
                             break;
                         case 5:
                             System.out.println(this.jugadorjuega.getNombre() + " ha pasado de turno \n");
-                            String turno = "El jugador " + this.jugadorjuega.getNombre() + " ha pasado el turno\n";
+                            Date turnos = new Date();
+                            String turno = "El jugador " + this.jugadorjuega.getNombre() + " ha pasado el turno ----------" + turnos + "\n";
                             this.centrodemandos.añadirString(turno);
                             this.centrodemandosnojuega.añadirString(turno);
                             bucle = false;
                             break;
                         case 6:
+                            Date fin = new Date();
+                            String finyguardar = "El jugador " + this.jugadorjuega.getNombre() + " ha guardado y finalizado la partida ----------" + fin + "\n";
+                            this.centrodemandos.añadirString(finyguardar);
+                            this.centrodemandosnojuega.añadirString(finyguardar);
                             this.jugadorjuega.setAcabarPartida(true);
                             bucle = false;
                             break;
