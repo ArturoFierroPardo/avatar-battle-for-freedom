@@ -101,45 +101,71 @@ public class Menu {
                     int opcion = Utils.leerEntero("Elija que quiere hacer escribiendo el numero correspondiente: ");
                     switch (opcion) {
                         case 1:
-                            int ejercitoantes = this.jugadorjuega.getEjercito().getUnidades().size();
-                            compraUnidad();
+                            Unidad unidadcompra = compraUnidad();
                             Date compra = new Date();
-                            String comprado = "El jugador " + this.jugadorjuega.getNombre() + " ha comprado " + (this.jugadorjuega.getEjercito().getUnidades().size() - ejercitoantes) + " unidad/unidades, y la/las ha desplegado en el campo de batalla ----------" + compra + "\n";
-                            this.centrodemandos.añadirString(comprado);
-                            this.centrodemandosnojuega.añadirString(comprado);
+                            if (unidadcompra == null) {
+                                String comprano = "El jugador " + this.jugadorjuega.getNombre() + " ha intentado comprar una unidad sin exito ---------->" + compra + "\n";
+                                this.centrodemandos.añadirString(comprano);
+                                this.centrodemandosnojuega.añadirString(comprano);
+                            } else {
+                                String compradoinfo = "El jugador " + this.jugadorjuega.getNombre() + " ha comprado un " + unidadcompra.getNombre() + ", y lo ha desplegado en el campo de batalla en la posicion " + unidadcompra.getPosicion().toString() + " ---------->" + compra + "\n";
+                                String comprado = "El jugador " + this.jugadorjuega.getNombre() + " ha comprado un " + unidadcompra.getNombre() + ", y lo ha desplegado en el campo de batalla ---------->" + compra + "\n";
+                                this.centrodemandos.añadirString(compradoinfo);
+                                this.centrodemandosnojuega.añadirString(comprado);
+                            }
                             break;
                         case 2:
                             if (this.jugadorjuega.getEjercito().getUnidades().isEmpty()) {
                                 bucle = true;
+                                Date mover = new Date();
+                                String movido = "El jugador " + this.jugadorjuega.getNombre() + " ha intentado mover una unidad sin exito ---------->" + mover + "\n";
+                                this.centrodemandos.añadirString(movido);
+                                this.centrodemandosnojuega.añadirString(movido);
                                 throw new IndexOutofBounceException();
                             }
                             if (this.jugadorjuega.getEjercito().getUnidades().size() >= 0) {
                                 bucle = false;
-                                moverUnidad();
+                                Unidad unidadmover = moverUnidad();
                                 Date mover = new Date();
-                                String movido = "El jugador " + this.jugadorjuega.getNombre() + " ha movido una de sus unidades ----------" + mover + "\n";
-                                this.centrodemandos.añadirString(movido);
-                                this.centrodemandosnojuega.añadirString(movido);
+                                if (unidadmover == null) {
+                                    String movido = "El jugador " + this.jugadorjuega.getNombre() + " ha intentado mover una unidad sin exito ---------->" + mover + "\n";
+                                    this.centrodemandos.añadirString(movido);
+                                    this.centrodemandosnojuega.añadirString(movido);
+                                } else {
+                                    String movido = "El jugador " + this.jugadorjuega.getNombre() + " ha movido su " + unidadmover.getNombre() + " ---------->" + mover + "\n";
+                                    String movidoinfo = "El jugador " + this.jugadorjuega.getNombre() + " ha movido su " + unidadmover.getNombre() + " a la posicion " + unidadmover.getPosicion().toString() + " ---------->" + mover + "\n";
+                                    this.centrodemandos.añadirString(movidoinfo);
+                                    this.centrodemandosnojuega.añadirString(movido);
+                                }
                             }
                             break;
                         case 3:
                             if (this.jugadorjuega.getEjercito().getUnidades().isEmpty()) {
                                 bucle = true;
+                                Date atacar = new Date();
+                                String atacado = "El jugador " + this.jugadorjuega.getNombre() + " ha intentado atacar a una unidad sin exito ---------->" + atacar + "\n";
+                                this.centrodemandos.añadirString(atacado);
+                                this.centrodemandosnojuega.añadirString(atacado);
                                 throw new IndexOutofBounceException();
                             }
                             if (this.jugadorjuega.getEjercito().getUnidades().size() >= 0) {
                                 bucle = false;
-                                atacarUnidad();
+                                String ataque = atacarUnidad();
                                 Date atacar = new Date();
-                                String atacado = "El jugador " + this.jugadorjuega.getNombre() + " ha efectuado un ataque ----------" + atacar + "\n";
-                                this.centrodemandos.añadirString(atacado);
-                                this.centrodemandosnojuega.añadirString(atacado);
+                                if (ataque.isBlank()) {
+                                    String noatacado = "El jugador " + this.jugadorjuega.getNombre() + " ha intentado atacar a una unidad sin exito ---------->" + atacar + "\n";
+                                    this.centrodemandos.añadirString(noatacado);
+                                    this.centrodemandosnojuega.añadirString(noatacado);
+                                } else {
+                                    this.centrodemandos.añadirString(ataque);
+                                    this.centrodemandosnojuega.añadirString(ataque);
+                                }
                             }
                             break;
                         case 4:
                             this.centrodemandos.enseñarCM();
                             Date vercm = new Date();
-                            String cm = "El jugador " + this.jugadorjuega.getNombre() + " ha abierto su centro de mandos ----------" + vercm + "\n";
+                            String cm = "El jugador " + this.jugadorjuega.getNombre() + " ha abierto su centro de mandos ---------->" + vercm + "\n";
                             this.centrodemandos.añadirString(cm);
                             this.centrodemandosnojuega.añadirString(cm);
                             bucle = true;
@@ -147,14 +173,14 @@ public class Menu {
                         case 5:
                             System.out.println(this.jugadorjuega.getNombre() + " ha pasado de turno \n");
                             Date turnos = new Date();
-                            String turno = "El jugador " + this.jugadorjuega.getNombre() + " ha pasado el turno ----------" + turnos + "\n";
+                            String turno = "El jugador " + this.jugadorjuega.getNombre() + " ha pasado el turno ---------->" + turnos + "\n";
                             this.centrodemandos.añadirString(turno);
                             this.centrodemandosnojuega.añadirString(turno);
                             bucle = false;
                             break;
                         case 6:
                             Date fin = new Date();
-                            String finyguardar = "El jugador " + this.jugadorjuega.getNombre() + " ha guardado y finalizado la partida ----------" + fin + "\n";
+                            String finyguardar = "El jugador " + this.jugadorjuega.getNombre() + " ha guardado y finalizado la partida ---------->" + fin + "\n";
                             this.centrodemandos.añadirString(finyguardar);
                             this.centrodemandosnojuega.añadirString(finyguardar);
                             this.jugadorjuega.setAcabarPartida(true);
@@ -200,7 +226,8 @@ public class Menu {
      * no, si es no, se repite. Si una unidad no ha comprado los suficientes
      * seres para estar operativo se quita del ejercito.
      */
-    private void compraUnidad() throws PuntosdeCompraInsuficientesException, FueradeMapaException {
+    private Unidad compraUnidad() throws PuntosdeCompraInsuficientesException, FueradeMapaException {
+        Unidad unidad = null;
         boolean bucle = true;
         boolean bucleunidades = false;
         boolean bucleseres = false;
@@ -257,9 +284,11 @@ public class Menu {
                                             }
                                             if (at99.getSeresneed() > at99.getTripulantes().size() || at99.getTripulantes().isEmpty()) {
                                                 this.jugadorjuega.getEjercito().getUnidades().remove(at99);
+                                                unidad = null;
                                             }
                                             System.out.println(this.jugadorjuega.getEjercito());
                                             bucleunidades = false;
+                                            unidad = at99;
                                             break;
                                         case 2:
                                             this.jugadorjuega.comprarUnidad(aerospatiale);
@@ -292,9 +321,11 @@ public class Menu {
                                             }
                                             if (aerospatiale.getSeresneed() > aerospatiale.getTripulantes().size() || aerospatiale.getTripulantes().isEmpty()) {
                                                 this.jugadorjuega.getEjercito().getUnidades().remove(aerospatiale);
+                                                unidad = null;
                                             }
                                             System.out.println(this.jugadorjuega.getEjercito());
                                             bucleunidades = false;
+                                            unidad = aerospatiale;
                                             break;
                                         case 3:
                                             this.jugadorjuega.comprarUnidad(mk6);
@@ -326,9 +357,11 @@ public class Menu {
                                             }
                                             if (mk6.getSeresneed() > mk6.getTripulantes().size() || mk6.getTripulantes().isEmpty()) {
                                                 this.jugadorjuega.getEjercito().getUnidades().remove(mk6);
+                                                unidad = null;
                                             }
                                             System.out.println(this.jugadorjuega.getEjercito());
                                             bucleunidades = false;
+                                            unidad = mk6;
                                             break;
                                         case 4:
                                             System.out.println("\n" + this.jugadorjuega.getNombre() + " no ha comprado ninguna unidad\n");
@@ -337,10 +370,11 @@ public class Menu {
                                         default:
                                             System.out.println("\tOPCION INVALIDA. VUELVA A INTENTARLO CORRECTAMENTE\n");
                                             bucleunidades = true;
+                                            unidad = null;
                                             break;
                                     }
                                 } while (bucleunidades);
-
+                                return unidad;
                             } else {
                                 Unidad banshee = new Banshee();
                                 Unidad thanator = new Thanator();
@@ -382,9 +416,11 @@ public class Menu {
                                             }
                                             if (banshee.getSeresneed() > banshee.getTripulantes().size() || banshee.getTripulantes().isEmpty()) {
                                                 this.jugadorjuega.getEjercito().getUnidades().remove(banshee);
+                                                unidad = null;
                                             }
                                             System.out.println(this.jugadorjuega.getEjercito());
                                             bucleunidades = false;
+                                            unidad = banshee;
                                             break;
                                         case 2:
                                             this.jugadorjuega.comprarUnidad(thanator);
@@ -415,11 +451,12 @@ public class Menu {
                                             }
                                             if (thanator.getSeresneed() > thanator.getTripulantes().size() || thanator.getTripulantes().isEmpty()) {
                                                 this.jugadorjuega.getEjercito().getUnidades().remove(thanator);
+                                                unidad = null;
                                             }
                                             System.out.println(this.jugadorjuega.getEjercito());
                                             bucleunidades = false;
+                                            unidad = thanator;
                                             break;
-
                                         case 3:
                                             this.jugadorjuega.comprarUnidad(titanothere);
                                             titanothere.setJugador(this.jugadorjuega);
@@ -449,14 +486,17 @@ public class Menu {
                                             }
                                             if (titanothere.getSeresneed() > titanothere.getTripulantes().size() || titanothere.getTripulantes().isEmpty()) {
                                                 this.jugadorjuega.getEjercito().getUnidades().remove(titanothere);
+                                                unidad = null;
                                             }
                                             System.out.println(this.jugadorjuega.getEjercito());
                                             bucleunidades = false;
+                                            unidad = titanothere;
                                             break;
 
                                         case 4:
                                             System.out.println(this.jugadorjuega.getNombre() + " no ha comprado ninguna unidad\n");
                                             bucleunidades = false;
+                                            unidad = null;
                                             break;
                                         default:
                                             System.out.println("\tOPCION INVALIDA. VUELVA A INTENTARLO CORRECTAMENTE\n");
@@ -474,6 +514,7 @@ public class Menu {
                 }
             }
         }
+        return unidad;
     }
 
     /**
@@ -486,7 +527,7 @@ public class Menu {
      * @throws modelos.excepciones.SinEnergiaMovimientoException
      * @throws modelos.excepciones.SinTripulantesSuficientesException
      */
-    public void moverUnidad() throws FueradeMapaException, SinEnergiaMovimientoException, SinTripulantesSuficientesException {
+    public Unidad moverUnidad() throws FueradeMapaException, SinEnergiaMovimientoException, SinTripulantesSuficientesException {
         boolean buclemover = false;
         System.out.println(this.jugadorjuega.getEjercito());
         while (true) {
@@ -507,9 +548,10 @@ public class Menu {
                             throw new SinTripulantesSuficientesException();
                         } else {
                             this.jugadorjuega.restarEnergia(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
-                            this.jugadorjuega.moverUnidad(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
+                            Unidad unidad = this.jugadorjuega.moverUnidad(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
                             System.out.println(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover).getNombre() + " se ha movida a " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover).getPosicion());
                             buclemover = false;
+                            return unidad;
                         }
                     }
                 } while (buclemover);
@@ -523,6 +565,7 @@ public class Menu {
                 System.out.println("\tOPCION INVALIDA. SU UNIDAD NO TIENE TRIPULANTES SUFICIENTES PARA MOVERSE. SELECCIONE OTRA UNIDAD\n");
             }
         }
+        return null;
     }
 
     /**
@@ -535,7 +578,7 @@ public class Menu {
      * @throws modelos.excepciones.SinEnergiaAtaqueException
      * @throws modelos.excepciones.SinTripulantesSuficientesException
      */
-    public void atacarUnidad() throws IndexOutofBounceException, FueradeMapaException, SinEnergiaAtaqueException, SinTripulantesSuficientesException {
+    public String atacarUnidad() throws IndexOutofBounceException, FueradeMapaException, SinEnergiaAtaqueException, SinTripulantesSuficientesException {
         boolean bucleatacar = true;
         System.out.println(this.jugadorjuega.getEjercito());
         while (true) {
@@ -556,8 +599,9 @@ public class Menu {
                             throw new SinTripulantesSuficientesException();
                         } else {
                             this.jugadorjuega.restarEnergiaAtaque(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar));
-                            this.jugadorjuega.atacarUnidad(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar));
+                            String ataque = this.jugadorjuega.atacarUnidad(this.jugadorjuega.getEjercito().getUnidades().get(eleccionatacar));
                             bucleatacar = false;
+                            return ataque;
                         }
                     }
                 } while (bucleatacar);
@@ -571,6 +615,7 @@ public class Menu {
                 System.out.println("\tOPCION INVALIDA. SU UNIDAD NO TIENE TRIPULANTES SUFICIENTES PARA ATACAR. SELECCIONE OTRA UNIDAD\n");
             }
         }
+        return "";
     }
 
     /**

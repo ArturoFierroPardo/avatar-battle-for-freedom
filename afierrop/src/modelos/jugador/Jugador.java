@@ -174,13 +174,14 @@ public class Jugador implements Serializable {
     /**
      * Funcion moverunidad, que llama a la funcion moverunidad de unidad ya que
      * es distinta para algunas unidades y no general. Pide la unidad que hay
-     * que mover por parametro
+     * que mover por parametro. Devuelve una unidad.
      *
      * @param unidad
      * @throws modelos.excepciones.FueradeMapaException
      */
-    public void moverUnidad(Unidad unidad) throws FueradeMapaException {
+    public Unidad moverUnidad(Unidad unidad) throws FueradeMapaException {
         unidad.moverUnidad(this.escenario);
+        return unidad;
     }
 
     /**
@@ -203,8 +204,9 @@ public class Jugador implements Serializable {
      * @throws modelos.excepciones.FueradeMapaException
      * @throws modelos.excepciones.SinEnergiaAtaqueException
      */
-    public void atacarUnidad(Unidad unidad) throws FueradeMapaException, SinEnergiaAtaqueException {
-        unidad.atacarUnidad(this, this.escenario);
+    public String atacarUnidad(Unidad unidad) throws FueradeMapaException, SinEnergiaAtaqueException {
+        String ataque = unidad.atacarUnidad(this, this.escenario);
+        return ataque;
     }
 
     /**

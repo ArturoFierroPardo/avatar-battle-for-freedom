@@ -328,7 +328,7 @@ public abstract class Unidad implements Serializable {
      * @throws modelos.excepciones.FueradeMapaException
      * @throws modelos.excepciones.SinEnergiaAtaqueException
      */
-    public void atacarUnidad(Jugador jugador, Escenario escenario) throws FueradeMapaException, SinEnergiaAtaqueException {
+    public String atacarUnidad(Jugador jugador, Escenario escenario) throws FueradeMapaException, SinEnergiaAtaqueException {
         boolean nounidad = true;
         int ataquex2 = 0;
         int ataquey2 = 0;
@@ -376,12 +376,17 @@ public abstract class Unidad implements Serializable {
                         nounidad = false;
                     } else {
                         System.out.println("\nHA ACERTADO Y DISPARADO CON EXITO\n");
-                        System.out.println("Hay una unidad " + unidadahi.getNombre() + " en la posicion " + posicioninvestigar + " que ha sido atacada por " + this.getNombre() + " en la posicion " + this.getPosicion() + ". Le quedan " + unidadahi.getEnergiadefensa() + " puntos de energia de defensa y esta trpulado por " + unidadahi.getTripulantes() + "\n");
                         nounidad = false;
+                        if (this.jugador.equals(unidadahi.jugador)) {
+                            return "El jugador " + this.jugador.getNombre() + " ha atacado con su " + this.nombre + " a un " + unidadahi.getNombre() + " en la posicion " + unidadahi.posicion.toString() + ". Le quedan " + unidadahi.getEnergiadefensa() + " puntos de energia de defensa y esta trpulado por " + unidadahi.getTripulantes() + ". HA SIDO FUEGO AMIGO" + "\n";
+                        } else {
+                            return "El jugador " + this.jugador.getNombre() + " ha atacado con su " + this.nombre + " a un " + unidadahi.getNombre() + " en la posicion " + unidadahi.posicion.toString() + ". Le quedan " + unidadahi.getEnergiadefensa() + " puntos de energia de defensa y esta trpulado por " + unidadahi.getTripulantes() + ". NO HA SIDO FUEGO AMIGO" + "\n";
+                        }
                     }
                 } else {
                     nounidad = false;
                     System.out.println("\nNO HABIA NINGUNA UNIDAD EN LA POSICION " + posicioninvestigar + "\n");
+                    return "";
 
                 }
                 nounidad = false;
@@ -392,6 +397,7 @@ public abstract class Unidad implements Serializable {
             }
 
         }
+        return "";
     }
 
     /**

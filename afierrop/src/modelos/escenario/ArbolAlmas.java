@@ -17,7 +17,7 @@ public class ArbolAlmas extends Escenario {
      * se le pasa por parametro, que son los que se le pasa mediante sus hijos.
      */
     public ArbolAlmas() {
-        super("Arbol de las Almas", 5000, 100, 100);
+        super("Arbol de las Almas", 50000, 100, 100);
     }
 
 }
