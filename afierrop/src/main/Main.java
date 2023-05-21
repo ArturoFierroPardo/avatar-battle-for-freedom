@@ -28,6 +28,7 @@ import utils.Utils;
  */
 public class Main {
 
+    // Hacer Javadoc, memoria y esperar a ver nota y comentarios de entrega, antes de entregar la 3º entrega.
     /**
      * Main para empezar el juego. Además selecciona un escenario el cual se le
      * pide al usuario. Y si quiere empezar una partida nueva o cargar alguna
@@ -46,7 +47,8 @@ public class Main {
      * archivo, es por ello que gracia a que añadimos a un arraylist todas las
      * partidas anteriores y la nueva, se va stackeando en ese arraylist y luego
      * se carga en el archivo. Todas las clases tiene implementadas la
-     * serializacion para poder usar los archivos bien.
+     * serializacion para poder usar los archivos bien. Se permite al jugador
+     * elegir su nombre y equipo.
      *
      * @param args the command line arguments
      * @throws modelos.excepciones.FueradeMapaException
@@ -59,14 +61,17 @@ public class Main {
      */
     public static void main(String[] args) throws FueradeMapaException, PuntosdeCompraInsuficientesException, SinEnergiaMovimientoException, SinEnergiaAtaqueException, SinTripulantesSuficientesException, FileNotFoundException, ClassNotFoundException {
         Io io = new Io();
+        Equipo equipo1 = null;
+        Equipo equipo2 = null;
         ArrayList<Partida> listapartidas = io.cargarArchivo();
         boolean buclecarga = true;
         boolean buclepart = true;
+        boolean bucleequip = true;
         System.out.println("\tAVATAR BATTLE FOR FREEDOM\n");
         do {
             System.out.println("\n-------------------SELECCION DE PARTIDA-------------------\n");
-            System.out.println("1) Cargar Partida Anterior\n");
-            System.out.println("2) Nueva Partida\n");
+            System.out.println("\t1) Cargar Partida Anterior\n");
+            System.out.println("\t2) Nueva Partida\n");
             int eleccionpartida = Utils.leerEntero("Quieres cargar otra partida o empezar una nueva? ");
             switch (eleccionpartida) {
                 case 1:
@@ -132,8 +137,31 @@ public class Main {
                                 break;
                         }
                     } while (bucle);
-                    Jugador jugador1 = new Jugador("Jugador 1", Equipo.RDA, escenario);
-                    Jugador jugador2 = new Jugador("Jugador 2", Equipo.NAVI, escenario);
+                    String nombre1 = Utils.leerCadena("Jugador 1, elija su nombre: ");
+                    String nombre2 = Utils.leerCadena("Jugador2, elija su nombre: ");
+                    do {
+                        System.out.println("\n-------------------SELECCION DE EQUIPO-------------------\n");
+                        System.out.println("\t1) Equipo RDA");
+                        System.out.println("\t2) Equip NAVI\n");
+                        int eleccionequipo = Utils.leerEntero("Jugador 1 seleccione su equipo: (El Jugador 2 será del equipo contrario) ");
+                        switch (eleccionequipo) {
+                            case 1:
+                                equipo1 = Equipo.RDA;
+                                equipo2 = Equipo.NAVI;
+                                bucleequip = false;
+                                break;
+                            case 2:
+                                equipo1 = Equipo.NAVI;
+                                equipo2 = Equipo.RDA;
+                                bucleequip = false;
+                                break;
+                            default:
+                                System.out.println("\tOPCION INVALIDA. VUELVA A INTENTARLO CORRECTAMENTE\n");
+                                break;
+                        }
+                    } while (bucleequip);
+                    Jugador jugador1 = new Jugador(nombre1, equipo1, escenario);
+                    Jugador jugador2 = new Jugador(nombre2, equipo2, escenario);
                     CentroDeMandos CM1 = new CentroDeMandos(jugador1);
                     CentroDeMandos CM2 = new CentroDeMandos(jugador2);
                     Partida partida = new Partida(jugador1, jugador2, escenario, CM1, CM2);
