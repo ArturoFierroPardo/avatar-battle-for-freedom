@@ -86,18 +86,34 @@ public class Partida implements Serializable {
         return this.jugador1;
     }
 
+    /**
+     *
+     * @return
+     */
     public Jugador getJugador2() {
         return this.jugador2;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getTurnos() {
         return this.turnos;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean getTerminada() {
         return this.terminada;
     }
 
+    /**
+     *
+     * @return
+     */
     public Escenario getEscenario() {
         return this.escenario;
     }

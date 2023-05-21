@@ -13,6 +13,11 @@ public enum TipoRaza {
     /**
      * Clase enumerada que consta de dos tipos de raza.
      */
-    HUMANO, NAVI;
+    HUMANO,
+
+    /**
+     *
+     */
+    NAVI;
 
 }

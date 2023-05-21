@@ -63,6 +63,7 @@ public class Menu {
      * @param jugadorjuega
      * @param escenario
      * @param centrodemandos
+     * @param centrodemandosnojuega
      */
     public Menu(Jugador jugadorjuega, Escenario escenario, CentroDeMandos centrodemandos, CentroDeMandos centrodemandosnojuega) {
         this.jugadorjuega = jugadorjuega;
@@ -523,6 +524,7 @@ public class Menu {
      * funcion moverunidad de jugador que llama a la de unidad y restandole la
      * energia de mov indicada de la clase unidad.
      *
+     * @return 
      * @throws modelos.excepciones.FueradeMapaException
      * @throws modelos.excepciones.SinEnergiaMovimientoException
      * @throws modelos.excepciones.SinTripulantesSuficientesException
@@ -570,9 +572,10 @@ public class Menu {
 
     /**
      * Funcion atacar unidad, ataca llamando a la funcion atacar de jugador, que
-     * llama a la de unidad. Resta energia de ataque a la unidad y a la enemiga
-     * la de defensa en la clase jugador y unidad. Puede haber fuego amigo.
+     * llama a la de unidad.Resta energia de ataque a la unidad y a la enemiga
+ la de defensa en la clase jugador y unidad. Puede haber fuego amigo.
      *
+     * @return 
      * @throws modelos.excepciones.IndexOutofBounceException
      * @throws modelos.excepciones.FueradeMapaException
      * @throws modelos.excepciones.SinEnergiaAtaqueException

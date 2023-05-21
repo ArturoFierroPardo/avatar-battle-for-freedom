@@ -82,22 +82,42 @@ public abstract class Ser implements Serializable {
         return this.nombre;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getCoste() {
         return this.coste;
     }
 
+    /**
+     *
+     * @return
+     */
     public TipoCargo getCargo() {
         return this.cargo;
     }
 
+    /**
+     *
+     * @return
+     */
     public TipoRaza getRaza() {
         return this.raza;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getVida() {
         return this.vida;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getPuntosderrota() {
         return this.puntosderrota;
     }

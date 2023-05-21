@@ -181,7 +181,6 @@ public class Coordenadas implements Serializable {
      * Setters
      *
      * @param x
-     * @param y
      * @throws modelos.excepciones.FueradeMapaException
      */
     public void setX(int x) throws FueradeMapaException {
@@ -190,6 +189,11 @@ public class Coordenadas implements Serializable {
 
     }
 
+    /**
+     *
+     * @param y
+     * @throws FueradeMapaException
+     */
     public void setY(int y) throws FueradeMapaException {
         this.y = y;
         checkCoordenadaY(this.y, this.escenario);
@@ -204,14 +208,26 @@ public class Coordenadas implements Serializable {
         return this.x;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getY() {
         return this.y;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getCasillasMovidasY() {
         return this.casillasmovidasy;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getCasillasMovidasX() {
         return this.casillasmovidasx;
     }

@@ -13,6 +13,11 @@ public enum TipoCargo {
     /**
      * Clase enumerada que consta de dos tipos de cargos.
      */
-    OFICIAL, GUERRERO;
+    OFICIAL,
+
+    /**
+     *
+     */
+    GUERRERO;
 
 }

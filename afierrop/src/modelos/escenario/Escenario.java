@@ -79,18 +79,34 @@ public abstract class Escenario implements Serializable {
         return this.nombre;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getPuntoscomienzo() {
         return this.puntoscomienzo;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getXmax() {
         return this.xmax;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getYmax() {
         return this.ymax;
     }
 
+    /**
+     *
+     * @return
+     */
     public Unidad[][] getMapa() {
         return this.mapa;
     }

@@ -15,6 +15,11 @@ public enum Equipo implements Serializable {
     /**
      * Clase enumerada que consta de dos tipos de equipo.
      */
-    RDA, NAVI;
+    RDA,
+
+    /**
+     *
+     */
+    NAVI;
 
 }

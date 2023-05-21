@@ -142,32 +142,47 @@ public abstract class Unidad implements Serializable {
      * Setters
      *
      * @param energiadefensa
-     * @param energiataque
-     * @param energiamov
-     * @param posicion
-     * @param tripulantes
-     * @param jugador
      */
     public void setEnergiadefensa(int energiadefensa) {
         this.energiadefensa = energiadefensa;
     }
 
+    /**
+     *
+     * @param energiataque
+     */
     public void setEnergiataque(int energiataque) {
         this.energiataque = energiataque;
     }
 
+    /**
+     *
+     * @param energiamov
+     */
     public void setEnergiamov(int energiamov) {
         this.energiamov = energiamov;
     }
 
+    /**
+     *
+     * @param posicion
+     */
     public void setPosicion(Coordenadas posicion) {
         this.posicion = posicion;
     }
 
+    /**
+     *
+     * @param tripulantes
+     */
     public void setTripulantes(ArrayList<Ser> tripulantes) {
         this.tripulantes = tripulantes;
     }
 
+    /**
+     *
+     * @param jugador
+     */
     public void setJugador(Jugador jugador) {
         this.jugador = jugador;
     }
@@ -187,55 +202,107 @@ public abstract class Unidad implements Serializable {
         return this.nombre;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getCoste() {
         return this.coste;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getEnergiadefensa() {
         return this.energiadefensa;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getEnergiataque() {
         return this.energiataque;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getEnergiamov() {
         return this.energiamov;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getPotencia() {
         return this.potencia;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getPuntosderrota() {
         return this.puntosderrota;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Ser> getTripulantes() {
         return this.tripulantes;
     }
 
+    /**
+     *
+     * @return
+     */
     public Coordenadas getPosicion() {
         return this.posicion;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getEnergiagastadaxmov() {
         return this.energiagastadaxmov;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getMaxmov() {
         int maxmov1 = Integer.parseInt(this.maxmov);
         return maxmov1;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getRangoataque() {
         return this.rangoataque;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getSeresneed() {
         return this.seresneed;
     }
 
+    /**
+     *
+     * @return
+     */
     public Jugador getJugador() {
         return this.jugador;
     }
@@ -319,12 +386,13 @@ public abstract class Unidad implements Serializable {
      * llama a la funcion recibir daño que esta en jugador y hace daño a la
      * unidad establecida como la atacada, y sale del bucle.Si no habia ninguna
      * unidad, sale del bucle y avisa de que no ha daod a ningun enemigo el
-     * disparo. Se controlan todas las excepciones posibles. Tambien comprueba
-     * que el rango de ataque esta dentro del mapa, si no le pide que vuelva a
-     * intentarlo.
+     * disparo.Se controlan todas las excepciones posibles. Tambien comprueba
+ que el rango de ataque esta dentro del mapa, si no le pide que vuelva a
+ intentarlo.
      *
      * @param jugador
      * @param escenario
+     * @return 
      * @throws modelos.excepciones.FueradeMapaException
      * @throws modelos.excepciones.SinEnergiaAtaqueException
      */
@@ -409,6 +477,12 @@ public abstract class Unidad implements Serializable {
      */
     public static class comparadorEDEF implements Comparator<Unidad> {
 
+        /**
+         *
+         * @param unidad1
+         * @param unidad2
+         * @return
+         */
         @Override
         public int compare(Unidad unidad1, Unidad unidad2) {
             if (unidad1.getEnergiadefensa() > unidad2.getEnergiadefensa()) {

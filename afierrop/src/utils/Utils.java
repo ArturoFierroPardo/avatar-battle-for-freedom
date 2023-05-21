@@ -63,7 +63,8 @@ public class Utils {
 
     /**
      * Función para leer una cadena de caracteres, hay que introducir un string
-     * y devuelve otro string. Este sin enseñar nada por pantalla
+     * y devuelve otro string.Este sin enseñar nada por pantalla
+     * @return 
      */
     public static String leerCadena() {
 

@@ -49,6 +49,10 @@ public class CentroDeMandos implements Serializable {
         return this.jugador;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<String> getAcciones() {
         return this.acciones;
     }

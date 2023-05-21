@@ -78,17 +78,23 @@ public class Jugador implements Serializable {
      * Setters
      *
      * @param ejercito
-     * @param puntos
-     * @param acabarpartida
      */
     public void setEjercito(Ejercito ejercito) {
         this.ejercito = ejercito;
     }
 
+    /**
+     *
+     * @param puntos
+     */
     public void setPuntos(int puntos) {
         this.puntos = puntos;
     }
 
+    /**
+     *
+     * @param acabarpartida
+     */
     public void setAcabarPartida(boolean acabarpartida) {
         this.acabarpartida = acabarpartida;
     }
@@ -102,18 +108,34 @@ public class Jugador implements Serializable {
         return this.nombre;
     }
 
+    /**
+     *
+     * @return
+     */
     public Equipo getEquipo() {
         return this.equipo;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getPuntos() {
         return this.puntos;
     }
 
+    /**
+     *
+     * @return
+     */
     public Ejercito getEjercito() {
         return this.ejercito;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean getAcabarPartida() {
         return this.acabarpartida;
     }
@@ -173,10 +195,11 @@ public class Jugador implements Serializable {
 
     /**
      * Funcion moverunidad, que llama a la funcion moverunidad de unidad ya que
-     * es distinta para algunas unidades y no general. Pide la unidad que hay
-     * que mover por parametro. Devuelve una unidad.
+     * es distinta para algunas unidades y no general.Pide la unidad que hay que
+     * mover por parametro. Devuelve una unidad.
      *
      * @param unidad
+     * @return
      * @throws modelos.excepciones.FueradeMapaException
      */
     public Unidad moverUnidad(Unidad unidad) throws FueradeMapaException {
@@ -197,10 +220,11 @@ public class Jugador implements Serializable {
 
     /**
      * Funcion atacar unidad, que llama a la funcion atacarunidad de unidad ya
-     * que es distinta para algunas unidades y no general. Pide por parametro
-     * una unidad que es la que va a atacar.
+     * que es distinta para algunas unidades y no general.Pide por parametro una
+     * unidad que es la que va a atacar.
      *
      * @param unidad
+     * @return
      * @throws modelos.excepciones.FueradeMapaException
      * @throws modelos.excepciones.SinEnergiaAtaqueException
      */
