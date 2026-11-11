@@ -172,6 +172,9 @@ not already using UTF-8 — the Windows command prompt, typically — run `chcp
 
 Saved games are written to `partidas.dat` in the working directory.
 
+In an IDE, open the folder as a Maven project — NetBeans, IntelliJ IDEA and
+Eclipse all read `pom.xml` directly, with no further setup.
+
 Other useful targets:
 
 ```bash
