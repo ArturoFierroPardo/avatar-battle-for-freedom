@@ -13,6 +13,13 @@ import modelos.ser.TipoCargo;
 public class Omaticaya extends Navi {
 
     /**
+     * Identificador de version para la serializacion. Fijarlo a mano evita
+     * que un cambio en la clase invalide las partidas ya guardadas con una
+     * InvalidClassException.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
      * Constructor de Omaticaya. Hereda de navi y luego de ser. Omaticaya asigna
      * sus atributos unicos (nombre, coste, tipo de cargo, vida y puntos), navi
      * asigna su atributo unico que es la raza navi y los demás los deja, y Ser

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package main;
 
 import interfaz.centrodemandos.CentroDeMandos;
@@ -20,17 +16,47 @@ import modelos.excepciones.SinEnergiaAtaqueException;
 import modelos.excepciones.SinEnergiaMovimientoException;
 import modelos.excepciones.SinTripulantesSuficientesException;
 import modelos.jugador.Jugador;
+import utils.EntradaCerradaException;
 import utils.Utils;
 
 /**
+ * Punto de entrada del juego.
  *
- * @author artur
+ * @author Arturo Fierro Pardo
  */
 public class Main {
 
-    // Hacer Javadoc, memoria y esperar a ver nota y comentarios de entrega, antes de entregar la 3º entrega.
     /**
-     * Main para empezar el juego. Además selecciona un escenario el cual se le
+     * Arranca el juego y termina de forma ordenada si se cierra la entrada
+     * estandar (por ejemplo al pulsar Ctrl+D, o al agotarse un fichero de
+     * entrada redirigido).
+     *
+     * @param args argumentos de linea de comandos; no se utilizan
+     * @throws modelos.excepciones.FueradeMapaException si se intenta usar una
+     * coordenada fuera de los limites del escenario
+     * @throws modelos.excepciones.PuntosdeCompraInsuficientesException si no
+     * hay puntos suficientes para una compra
+     * @throws modelos.excepciones.SinEnergiaMovimientoException si una unidad
+     * se queda sin energia de movimiento
+     * @throws modelos.excepciones.SinEnergiaAtaqueException si una unidad se
+     * queda sin energia de ataque
+     * @throws modelos.excepciones.SinTripulantesSuficientesException si una
+     * unidad no tiene los tripulantes necesarios
+     * @throws java.io.FileNotFoundException si no se puede escribir el fichero
+     * de partidas guardadas
+     * @throws java.lang.ClassNotFoundException si el fichero de partidas
+     * guardadas no se corresponde con las clases del juego
+     */
+    public static void main(String[] args) throws FueradeMapaException, PuntosdeCompraInsuficientesException, SinEnergiaMovimientoException, SinEnergiaAtaqueException, SinTripulantesSuficientesException, FileNotFoundException, ClassNotFoundException {
+        try {
+            jugar();
+        } catch (EntradaCerradaException ece) {
+            System.out.println("\nSe ha cerrado la entrada. Fin del juego.");
+        }
+    }
+
+    /**
+     * Bucle principal del juego.Además selecciona un escenario el cual se le
      * pide al usuario. Y si quiere empezar una partida nueva o cargar alguna
      * anterior. Se construye el IO, y se añade a un arraylist partidas, todo lo
      * que haya en el archivo. Si decide cargar la partida anterior, de la nueva
@@ -50,16 +76,22 @@ public class Main {
      * serializacion para poder usar los archivos bien. Se permite al jugador
      * elegir su nombre y equipo.
      *
-     * @param args the command line arguments
-     * @throws modelos.excepciones.FueradeMapaException
-     * @throws modelos.excepciones.PuntosdeCompraInsuficientesException
-     * @throws modelos.excepciones.SinEnergiaMovimientoException
-     * @throws modelos.excepciones.SinEnergiaAtaqueException
-     * @throws modelos.excepciones.SinTripulantesSuficientesException
-     * @throws java.io.FileNotFoundException
-     * @throws java.lang.ClassNotFoundException
+     * @throws modelos.excepciones.FueradeMapaException si se intenta usar una
+     * coordenada fuera de los limites del escenario
+     * @throws modelos.excepciones.PuntosdeCompraInsuficientesException si no
+     * hay puntos suficientes para una compra
+     * @throws modelos.excepciones.SinEnergiaMovimientoException si una unidad
+     * se queda sin energia de movimiento
+     * @throws modelos.excepciones.SinEnergiaAtaqueException si una unidad se
+     * queda sin energia de ataque
+     * @throws modelos.excepciones.SinTripulantesSuficientesException si una
+     * unidad no tiene los tripulantes necesarios
+     * @throws java.io.FileNotFoundException si no se puede escribir el fichero
+     * de partidas guardadas
+     * @throws java.lang.ClassNotFoundException si el fichero de partidas
+     * guardadas no se corresponde con las clases del juego
      */
-    public static void main(String[] args) throws FueradeMapaException, PuntosdeCompraInsuficientesException, SinEnergiaMovimientoException, SinEnergiaAtaqueException, SinTripulantesSuficientesException, FileNotFoundException, ClassNotFoundException {
+    private static void jugar() throws FueradeMapaException, PuntosdeCompraInsuficientesException, SinEnergiaMovimientoException, SinEnergiaAtaqueException, SinTripulantesSuficientesException, FileNotFoundException, ClassNotFoundException {
         Io io = new Io();
         Equipo equipo1 = null;
         Equipo equipo2 = null;

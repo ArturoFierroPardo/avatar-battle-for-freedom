@@ -24,6 +24,13 @@ import modelos.jugador.Jugador;
 public class Partida implements Serializable {
 
     /**
+     * Identificador de version para la serializacion. Fijarlo a mano evita
+     * que un cambio en la clase invalide las partidas ya guardadas con una
+     * InvalidClassException.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
      * Primer jugador
      */
     private Jugador jugador1;
@@ -142,7 +149,7 @@ public class Partida implements Serializable {
             if (this.turnos % 2 == 1) {
                 System.out.println("TURNO---------->  " + this.turnos);
                 Menu menu = new Menu(this.jugador1, this.escenario, this.cm1, this.cm2);
-                menu.enseñarMenu();
+                menu.mostrarMenu();
                 this.turnos++;
             }
             if (this.jugador1.getAcabarPartida() == true) {
@@ -156,7 +163,7 @@ public class Partida implements Serializable {
             if (this.turnos % 2 == 0) {
                 System.out.println("TURNO---------->  " + this.turnos);
                 Menu menu = new Menu(this.jugador2, this.escenario, this.cm2, this.cm1);
-                menu.enseñarMenu();
+                menu.mostrarMenu();
                 this.turnos++;
             }
             if (this.jugador2.getAcabarPartida() == true) {
@@ -205,9 +212,13 @@ public class Partida implements Serializable {
      */
     @Override
     public boolean equals(Object o) {
-        if (o != null && o instanceof Partida) {
+        if (o instanceof Partida) {
             Partida p = (Partida) o;
-            return (this.jugador1 == p.jugador1 && this.jugador2 == p.jugador2 && this.turnos == p.turnos && this.escenario == p.escenario);
+            return this.turnos == p.turnos
+                    && this.terminada == p.terminada
+                    && Objects.equals(this.jugador1, p.jugador1)
+                    && Objects.equals(this.jugador2, p.jugador2)
+                    && Objects.equals(this.escenario, p.escenario);
         } else {
             return false;
         }

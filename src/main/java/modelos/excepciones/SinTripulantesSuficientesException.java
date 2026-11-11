@@ -9,6 +9,13 @@ package modelos.excepciones;
  * @author artur
  */
 public class SinTripulantesSuficientesException extends Exception {
+
+    /**
+     * Identificador de version para la serializacion. Fijarlo a mano evita
+     * que un cambio en la clase invalide las partidas ya guardadas con una
+     * InvalidClassException.
+     */
+    private static final long serialVersionUID = 1L;
     /**
      * Excepcion para poder comprobar que la unidad tiene tripulantes suficiente
      * en funcion de los que necesita, para realizar un ataque o moverse, se

@@ -16,6 +16,13 @@ import modelos.unidad.Unidad;
 public class Ejercito implements Serializable {
 
     /**
+     * Identificador de version para la serializacion. Fijarlo a mano evita
+     * que un cambio en la clase invalide las partidas ya guardadas con una
+     * InvalidClassException.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
      * Lista de las unidades que tiene el ejercito
      */
     private ArrayList<Unidad> unidades;
@@ -57,28 +64,35 @@ public class Ejercito implements Serializable {
     }
 
     /**
-     * Override de la funcion equals para comparar que dos unidades son iguales
+     * Compara dos ejercitos por las unidades que los componen.
      *
-     * @param o
+     * <p>
+     * La version anterior comparaba las listas con {@code ==}, es decir
+     * comprobaba si ambos ejercitos compartian el mismo objeto lista, de modo
+     * que dos ejercitos con las mismas unidades nunca resultaban iguales.
+     *
+     * @param o objeto con el que comparar
+     * @return {@code true} si ambos ejercitos tienen las mismas unidades en el
+     * mismo orden
      */
     @Override
     public boolean equals(Object o) {
-        if (o != null && o instanceof Ejercito) {
+        if (o instanceof Ejercito) {
             Ejercito e = (Ejercito) o;
-            return this.unidades == e.unidades;
+            return Objects.equals(this.unidades, e.unidades);
         } else {
             return false;
         }
     }
 
     /**
-     * Override del hashcode para esta clase
+     * Devuelve un codigo hash coherente con {@link #equals(Object)}.
+     *
+     * @return el codigo hash del ejercito
      */
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 53 * hash + Objects.hashCode(this.unidades);
-        return hash;
+        return Objects.hash(this.unidades);
     }
 
 }

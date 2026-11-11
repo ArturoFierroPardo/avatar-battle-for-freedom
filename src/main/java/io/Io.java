@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package io;
 
 import interfaz.partida.Partida;
@@ -12,120 +8,133 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
+ * Persistencia de las partidas en disco mediante serializacion de objetos.
  *
- * @author artur
+ * <p>
+ * Todas las partidas guardadas viven en un unico fichero binario. Por eso las
+ * clases del modelo implementan {@link java.io.Serializable} y fijan su
+ * {@code serialVersionUID}.
+ *
+ * @author Arturo Fierro Pardo
  */
 public class Io {
 
     /**
-     * Archivo donde se guarda todo
+     * Fichero donde se guardan todas las partidas.
      */
-    private static String archivo = "partidas.dat";
+    private static final String ARCHIVO = "partidas.dat";
 
     /**
-     * Lista de partidas guardadas en el archivo
+     * Lista de partidas cargadas del fichero.
      */
     private ArrayList<Partida> partidas;
 
     /**
-     * Constructor de IO para usar las funciones, solo tiene un arraylist de
-     * partidas como atributo
+     * Crea el gestor de ficheros con una lista de partidas vacia.
      */
     public Io() {
-        this.partidas = new ArrayList<Partida>();
+        this.partidas = new ArrayList<>();
     }
 
     /**
-     * Getters
+     * Devuelve las partidas que tiene cargadas este gestor.
      *
-     * @return
+     * @return la lista de partidas
      */
     public ArrayList<Partida> getPartidas() {
         return this.partidas;
     }
 
     /**
-     * Funcion guardarpartida, mete la partida que se le pasa por parametro en
-     * el constructor de IO
+     * Añade una partida a la lista en memoria, sin escribirla en disco.
      *
-     * @param partida
+     * @param partida partida que se quiere guardar
      */
     public void guardarPartida(Partida partida) {
         this.partidas.add(partida);
     }
 
     /**
-     * Funcion guardar en archivo, que mete en un fichero predeterminado un
-     * ArrayList de partidas.Habia que poner todas las clases como Serializables
-     * para poder pasarlo.Una vez escrito todo comprobamos excepciones y
-     * comprobamos que el fichero y todo cierra.
+     * Escribe la lista de partidas en el fichero, sobrescribiendo su contenido
+     * anterior.
      *
-     * @param partidaslist
-     * @throws java.io.FileNotFoundException
+     * @param partidaslist partidas que se quieren persistir
+     * @throws java.io.FileNotFoundException si el fichero no se puede crear o
+     * abrir para escritura
      */
     public void guardarArchivo(ArrayList<Partida> partidaslist) throws FileNotFoundException {
-        FileOutputStream fos = null;
-        ObjectOutputStream oos = null;
-        try {
-            fos = new FileOutputStream(archivo);
-            oos = new ObjectOutputStream(fos);
+        // try-with-resources cierra los dos flujos tambien si salta una
+        // excepcion, lo que antes exigia dos bloques finally anidados.
+        try (FileOutputStream fos = new FileOutputStream(ARCHIVO);
+             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
             oos.writeObject(partidaslist);
-
         } catch (IOException ex) {
-            System.out.println("Error al guardar partida");
-        } finally {
-            if (oos != null) {
-                try {
-                    oos.close();
-                } catch (IOException ex) {
-                    System.out.println("Error al cerrar el fichero");
-                }
-            }
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException ex) {
-                    System.out.println("Error al cerrar el fichero");
-                }
-            }
+            System.out.println("Error al guardar la partida: " + ex.getMessage());
         }
-
     }
 
     /**
-     * Funcion cargar archivo, en un fichero predeterminado que es en donde se
-     * guardo la anterior sacamos el arraylist de partidas y lo returneamos.
-     * Comprobamos excepciones y que todo se ha cerrado.
+     * Lee del fichero la lista de partidas guardadas.
      *
-     * @return
+     * <p>
+     * Si el fichero todavia no existe se devuelve una lista vacia: es lo normal
+     * la primera vez que se ejecuta el juego, y no se trata como un error. El
+     * resto de fallos de lectura si se informan por consola, en vez de
+     * descartarse en silencio como ocurria antes.
+     *
+     * @return las partidas guardadas, o una lista vacia si no hay ninguna
      */
     public ArrayList<Partida> cargarArchivo() {
-        FileInputStream fis = null;
-        ObjectInputStream is = null;
-        try {
-            fis = new FileInputStream(archivo);
-            is = new ObjectInputStream(fis);
-            this.partidas = (ArrayList<Partida>) is.readObject();
-        } catch (IOException io) {
+        try (FileInputStream fis = new FileInputStream(ARCHIVO);
+             ObjectInputStream is = new ObjectInputStream(fis)) {
+            this.partidas = leerPartidas(is);
+        } catch (FileNotFoundException fnf) {
+            // Primera ejecucion: todavia no hay partidas guardadas.
+            this.partidas = new ArrayList<>();
+        } catch (IOException ex) {
+            System.out.println("No se han podido leer las partidas guardadas: " + ex.getMessage());
+            this.partidas = new ArrayList<>();
         } catch (ClassNotFoundException ex) {
-        } finally {
-            if (is != null) {
-                try {
-                    is.close();
-                } catch (IOException ex) {
-                    System.out.println("Error al cerrar el fichero");
-                }
-            }
-            if (fis != null) {
-                try {
-                    fis.close();
-                } catch (IOException ex) {
-                    System.out.println("Error al cerrar el fichero");
-                }
-            }
+            System.out.println("El fichero de partidas no se corresponde con esta version del juego.");
+            this.partidas = new ArrayList<>();
         }
         return this.partidas;
+    }
+
+    /**
+     * Lee un objeto del flujo y comprueba que de verdad es una lista de
+     * partidas antes de devolverlo.
+     *
+     * <p>
+     * La serializacion de Java no conserva los tipos genericos, asi que el
+     * casteo a {@code ArrayList<Partida>} no se puede verificar en tiempo de
+     * compilacion. Se recorre la lista comprobando cada elemento para que un
+     * fichero corrupto o de otra version falle aqui con un mensaje claro, en
+     * lugar de provocar un ClassCastException mas adelante en mitad del juego.
+     *
+     * @param is flujo del que se lee
+     * @return la lista de partidas leida
+     * @throws IOException si el contenido del fichero no es una lista de
+     * partidas
+     * @throws ClassNotFoundException si el fichero referencia clases que no
+     * existen en esta version
+     */
+    private ArrayList<Partida> leerPartidas(ObjectInputStream is)
+            throws IOException, ClassNotFoundException {
+        Object leido = is.readObject();
+        if (!(leido instanceof List<?>)) {
+            throw new IOException("el fichero no contiene una lista de partidas");
+        }
+        ArrayList<Partida> resultado = new ArrayList<>();
+        for (Object elemento : (List<?>) leido) {
+            if (!(elemento instanceof Partida)) {
+                throw new IOException("el fichero contiene datos que no son partidas");
+            }
+            resultado.add((Partida) elemento);
+        }
+        return resultado;
     }
 }

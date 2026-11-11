@@ -14,6 +14,13 @@ import modelos.ser.Ser;
 public class Aerospatiale extends Maquina {
 
     /**
+     * Identificador de version para la serializacion. Fijarlo a mano evita
+     * que un cambio en la clase invalide las partidas ya guardadas con una
+     * InvalidClassException.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
      * Constructor de Aerospatiale. Hereda de Maquina y luego de Unidad.
      * Aerospatiale asigna sus atributos unicos (nombre, coste, energias,
      * potencia, puntos, tripulantes, posicion, energia gastada al moverse,
@@ -24,7 +31,7 @@ public class Aerospatiale extends Maquina {
      * comprar la unidad
      */
     public Aerospatiale() {
-        super("Aerospatiale SA-2 Samson", null, 2500, 1000, 1000, 500, 80, 1500, new ArrayList<Ser>(), null, 50, "10", 5, 2);
+        super("Aerospatiale SA-2 Samson", null, 2500, 1000, 1000, 500, 80, 1500, new ArrayList<Ser>(), null, 50, 10, 5, 2);
     }
 
 }

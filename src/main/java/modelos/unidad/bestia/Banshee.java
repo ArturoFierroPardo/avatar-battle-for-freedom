@@ -18,6 +18,13 @@ import modelos.ser.Ser;
 public class Banshee extends Bestia {
 
     /**
+     * Identificador de version para la serializacion. Fijarlo a mano evita
+     * que un cambio en la clase invalide las partidas ya guardadas con una
+     * InvalidClassException.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
      * Constructor de Banshee. Hereda de Bestia y luego de Unidad. Banshee
      * asigna sus atributos unicos (nombre, coste, energias, potencia, puntos,
      * tripulantes, posicion, energia gastada al moverse, maximo movimiento,
@@ -27,7 +34,7 @@ public class Banshee extends Bestia {
      * tripulantes se asignan con setters al comprar la unidad
      */
     public Banshee() {
-        super("Banshee de Montaña", null, 2000, 3500, 8000, 3500, 300, 1000, new ArrayList<Ser>(), null, 10, "Casilla aleatoria", 10, 2);
+        super("Banshee de Montaña", null, 2000, 3500, 8000, 3500, 300, 1000, new ArrayList<Ser>(), null, 10, MOVIMIENTO_ALEATORIO, 10, 2);
     }
 
     /**
@@ -60,10 +67,10 @@ public class Banshee extends Bestia {
                 Coordenadas coordenada;
                 while (coordenadacorrecta) {
                     coordenada = new Coordenadas(escenario);
-                    if (escenario.checkMapaAñadir(this, coordenada)) {
+                    if (escenario.colocarUnidadSiLibre(this, coordenada)) {
                         escenario.getMapa()[this.getPosicion().getX()][this.getPosicion().getY()] = null;
                         this.setPosicion(coordenada);
-                        escenario.checkMapaAñadir(this, coordenada);
+                        escenario.colocarUnidadSiLibre(this, coordenada);
                         coordenadacorrecta = false;
                     } else {
                         coordenada = new Coordenadas(escenario);

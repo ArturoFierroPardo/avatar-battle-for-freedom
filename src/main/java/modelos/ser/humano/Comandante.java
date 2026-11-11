@@ -13,6 +13,13 @@ import modelos.ser.TipoCargo;
 public class Comandante extends Humano {
 
     /**
+     * Identificador de version para la serializacion. Fijarlo a mano evita
+     * que un cambio en la clase invalide las partidas ya guardadas con una
+     * InvalidClassException.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
      * Constructor de Comandante. Hereda de humano y luego de ser. Comandante
      * asigna sus atributos unicos (nombre, coste, tipo de cargo, vida y
      * puntos), Humano asigna su atributo unico que es la raza humana y los

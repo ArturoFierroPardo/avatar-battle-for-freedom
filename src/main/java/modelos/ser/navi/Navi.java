@@ -15,6 +15,13 @@ import modelos.ser.TipoRaza;
 public abstract class Navi extends Ser {
 
     /**
+     * Identificador de version para la serializacion. Fijarlo a mano evita
+     * que un cambio en la clase invalide las partidas ya guardadas con una
+     * InvalidClassException.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
      * Constructor de Navi.Solo asigna el atributo de raza especificamente como
      * raza navi, su hijo esepcifica los demas atributos.Hereda de la clase ser
      * su constructor que asigna a los atributos como los parametros que se le

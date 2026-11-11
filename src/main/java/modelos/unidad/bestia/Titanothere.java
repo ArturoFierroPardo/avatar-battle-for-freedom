@@ -15,6 +15,13 @@ import modelos.ser.Ser;
 public class Titanothere extends Bestia {
 
     /**
+     * Identificador de version para la serializacion. Fijarlo a mano evita
+     * que un cambio en la clase invalide las partidas ya guardadas con una
+     * InvalidClassException.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
      * Constructor de Titanothere. Hereda de Bestia y luego de Unidad.
      * Titanothere asigna sus atributos unicos (nombre, coste, energias,
      * potencia, puntos, tripulantes, posicion, energia gastada al moverse,
@@ -25,7 +32,7 @@ public class Titanothere extends Bestia {
      * comprar la unidad
      */
     public Titanothere() {
-        super("Titanothere Cabezamartillo", null, 1000, 11000, 11000, 4500, 300, 250, new ArrayList<Ser>(), null, 25, "2", 1, 1);
+        super("Titanothere Cabezamartillo", null, 1000, 11000, 11000, 4500, 300, 250, new ArrayList<Ser>(), null, 25, 2, 1, 1);
     }
 
     /**

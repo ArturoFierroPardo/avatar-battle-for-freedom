@@ -14,6 +14,13 @@ import java.util.Objects;
 public abstract class Ser implements Serializable {
 
     /**
+     * Identificador de version para la serializacion. Fijarlo a mano evita
+     * que un cambio en la clase invalide las partidas ya guardadas con una
+     * InvalidClassException.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
      * Cuanto cuesta el ser
      */
     private int coste;
@@ -144,7 +151,7 @@ public abstract class Ser implements Serializable {
      */
     @Override
     public boolean equals(Object o) {
-        if (o != null && o instanceof Ser) {
+        if (o instanceof Ser) {
             Ser s = (Ser) o;
             return (this.nombre.equals(s.nombre) && this.cargo == s.cargo && this.raza == s.raza && this.vida == s.vida);
         } else {

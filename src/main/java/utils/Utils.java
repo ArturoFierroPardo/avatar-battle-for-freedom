@@ -1,266 +1,125 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UncheckedIOException;
 
 /**
+ * Utilidades para leer datos por la entrada estandar.
  *
- * @author artur
- */
-/**
- * Como leer datos de la consola (cuando el usuario teclea algo)
+ * <p>
+ * La clase mantiene un unico {@link BufferedReader} compartido sobre
+ * {@code System.in}. Esto es importante: si cada lectura creara su propio
+ * lector, el buffer interno de cada instancia leeria por adelantado un bloque
+ * entero de la entrada y lo descartaria al quedar el objeto fuera de uso, de
+ * forma que las lineas siguientes se perderian. Con teclado el efecto pasa
+ * desapercibido porque la consola entrega los datos linea a linea, pero con la
+ * entrada redirigida desde un fichero o una tuberia se pierden datos.
  *
+ * @author Arturo Fierro Pardo
  */
-public class Utils {
+public final class Utils {
 
     /**
-     * Función para leer una cadena de caracteres, hay que introducir un string
-     * y devuelve otro string.
+     * Lector unico y compartido sobre la entrada estandar.
+     */
+    private static final BufferedReader CONSOLA =
+            new BufferedReader(new InputStreamReader(System.in));
+
+    /**
+     * Clase de utilidades: no se instancia.
+     */
+    private Utils() {
+    }
+
+    /**
+     * Lee una linea de la entrada estandar mostrando antes un mensaje.
      *
-     * @param mensaje
-     * @return
+     * @param mensaje texto que se muestra al usuario antes de leer
+     * @return la linea leida, sin el salto de linea final
+     * @throws EntradaCerradaException si la entrada estandar se ha cerrado
      */
     public static String leerCadena(String mensaje) {
-
-        BufferedReader consola = new BufferedReader(new InputStreamReader(System.in));
-        /**
-         * InputStreamReader es una clase que lee de la entrada estándar de la
-         * consola(System.in) datos de texto (por poner Reader). Si pusiesemos
-         * OutputStream saca datos. OutputStreamWriter genera caracteres. *
-         */
-        String linea = "";
-        /**
-         * Hay que inicializar la variable por si el string esta vacío*
-         */
         System.out.println(mensaje);
-        /**
-         * Pedimos al usuario que escriba una cadena*
-         */
-        try {
-            linea = consola.readLine();
-            /**
-             * Creamos la variable linea que es un string(creada arriba), para
-             * que a la variable consola que la leemos con readLine() la
-             * guardemos en esa variable. La metemos en un try porque puede
-             * haber excepciones que dan a error, por ello ejecutamos el catch
-             * por si sale una excepcion.*
-             */
-        } catch (IOException ex) {
-            System.out.println("Error de lectura por entrada estandar");
-            /**
-             * El programa ejecutara el try y si hay error, lo que haya en el
-             * catch.*
-             */
-        }
-
-        return linea;
+        return leerCadena();
     }
 
     /**
-     * Función para leer una cadena de caracteres, hay que introducir un string
-     * y devuelve otro string.Este sin enseñar nada por pantalla
-     * @return 
+     * Lee una linea de la entrada estandar sin mostrar ningun mensaje.
+     *
+     * @return la linea leida, sin el salto de linea final
+     * @throws EntradaCerradaException si la entrada estandar se ha cerrado
+     * @throws UncheckedIOException si falla la lectura por otro motivo
      */
     public static String leerCadena() {
-
-        BufferedReader consola = new BufferedReader(new InputStreamReader(System.in));
-        /**
-         * InputStreamReader es una clase que lee de la entrada estándar de la
-         * consola(System.in) datos de texto (por poner Reader). Si pusiesemos
-         * OutputStream saca datos. OutputStreamWriter genera caracteres. *
-         */
-        String linea = "";
-        /**
-         * Hay que inicializar la variable por si el string esta vacío*
-         */
-
+        String linea;
         try {
-            linea = consola.readLine();
-            /**
-             * Creamos la variable linea que es un string(creada arriba), para
-             * que a la variable consola que la leemos con readLine() la
-             * guardemos en esa variable. La metemos en un try porque puede
-             * haber excepciones que dan a error, por ello ejecutamos el catch
-             * por si sale una excepcion.*
-             */
+            linea = CONSOLA.readLine();
         } catch (IOException ex) {
-            System.out.println("Error de lectura por entrada estandar");
-            /**
-             * El programa ejecutara el try y si hay error, lo que haya en el
-             * catch.*
-             */
+            throw new UncheckedIOException("Error de lectura por entrada estandar", ex);
         }
-
+        if (linea == null) {
+            // readLine() devuelve null al llegar al final de la entrada.
+            // Sin este control, quien llama a leerEntero() volveria a pedir el
+            // dato indefinidamente, porque el fin de entrada no se corrige
+            // repitiendo la pregunta.
+            throw new EntradaCerradaException();
+        }
         return linea;
     }
 
     /**
-     * Función para leer un entero, hay que introducir un string y devuelve un
-     * int.
+     * Pide un numero entero por la entrada estandar y lo repite hasta que el
+     * usuario introduzca uno valido.
      *
-     * @param mensaje
-     * @return
+     * @param mensaje texto que se muestra al usuario antes de leer
+     * @return el entero introducido
+     * @throws EntradaCerradaException si la entrada estandar se ha cerrado
      */
     public static int leerEntero(String mensaje) {
-
-        int numero = 0;
-        /**
-         * creamos una variable numero*
-         */
-        String linea;
-        boolean lecturaCorrecta = false;
-
-        while (!lecturaCorrecta) {
+        while (true) {
             try {
-                linea = leerCadena(mensaje);
-                numero = Integer.parseInt(linea);
-                lecturaCorrecta = true;
-
+                return Integer.parseInt(leerCadena(mensaje).trim());
             } catch (NumberFormatException nfe) {
                 System.out.println("Debe introducir un numero, por favor, repita");
             }
-            /**
-             * la variable numero será igual a lo que ponga el usuario por
-             * consola. Tiene excepciones, en el que el usuario no ponga un
-             * entero, por lo que habra que hacer un bucle para volver a
-             * repetirlo hasta que ponga un entero. Si salta la excepcion en el
-             * parseint las lineas de abajo no se leen. Por lo que cuando pasa a
-             * la de abajo (cuando no hay execpciones) cambiamos el valor de
-             * lecturacorrecta para salir del bucle.*
-             */
         }
-        return numero;
     }
 
     /**
-     * Funciona para saber si un número es primo, devuelve un booleano siendo
-     * true si es primo.Hay que introducir un int para utlizarlo.
+     * Pide un numero decimal de doble precision y lo repite hasta que el
+     * usuario introduzca uno valido.
      *
-     * @param numero
-     * @return
-     */
-    public static boolean esPrimo(int numero) {
-        int divisor = 2;
-        boolean primo = true;
-        while ((primo) && (numero != divisor)) {
-            if (numero % divisor == 0) {
-                primo = false;
-            }
-            divisor++;
-        }
-        return primo;
-    }
-
-    /**
-     * Funciona para hacer que una cadena (String) que tenga alguna vocal con
-     * acento la convierta en una vocal sin acenta para poder imprimirla.
-     *
-     * @param cadenaALimpiar
-     * @return
-     */
-    public static String limpiarAcentos(String cadenaALimpiar) {
-        cadenaALimpiar = cadenaALimpiar.replace("á", "a");
-        cadenaALimpiar = cadenaALimpiar.replace("é", "e");
-        cadenaALimpiar = cadenaALimpiar.replace("í", "i");
-        cadenaALimpiar = cadenaALimpiar.replace("ó", "o");
-        cadenaALimpiar = cadenaALimpiar.replace("ú", "u");
-        cadenaALimpiar = cadenaALimpiar.replace("Á", "A");
-        cadenaALimpiar = cadenaALimpiar.replace("É", "E");
-        cadenaALimpiar = cadenaALimpiar.replace("Í", "I");
-        cadenaALimpiar = cadenaALimpiar.replace("Ó", "O");
-        cadenaALimpiar = cadenaALimpiar.replace("Ú", "U");
-        return cadenaALimpiar;
-    }
-
-    /**
-     * Funciona para hacer que una cadena (String) que tenga espacios los quite.
-     *
-     * @param cadenaALimpiar
-     * @return
-     */
-    public static String limpiarEspacios(String cadenaALimpiar) {
-        cadenaALimpiar = cadenaALimpiar.replace(" ", "");
-        return cadenaALimpiar;
-    }
-
-    /**
-     * Función para leer un double, hay que introducir un string y devuelve un
-     * double.
-     *
-     * @param mensaje
-     * @return
+     * @param mensaje texto que se muestra al usuario antes de leer
+     * @return el numero introducido
+     * @throws EntradaCerradaException si la entrada estandar se ha cerrado
      */
     public static double leerDouble(String mensaje) {
-
-        double numero = 0;
-        /**
-         * creamos una variable numero*
-         */
-        String linea;
-        boolean lecturaCorrecta = false;
-
-        while (!lecturaCorrecta) {
+        while (true) {
             try {
-                linea = leerCadena(mensaje);
-                numero = Double.parseDouble(linea);
-                lecturaCorrecta = true;
-
+                return Double.parseDouble(leerCadena(mensaje).trim());
             } catch (NumberFormatException nfe) {
                 System.out.println("Debe introducir un numero, por favor, repita");
             }
-            /**
-             * la variable numero será igual a lo que ponga el usuario por
-             * consola. Tiene excepciones, en el que el usuario no ponga un
-             * entero, por lo que habra que hacer un bucle para volver a
-             * repetirlo hasta que ponga un entero. Si salta la excepcion en el
-             * parseint las lineas de abajo no se leen. Por lo que cuando pasa a
-             * la de abajo (cuando no hay execpciones) cambiamos el valor de
-             * lecturacorrecta para salir del bucle.*
-             */
         }
-        return numero;
     }
 
     /**
-     * Función para leer un float, hay que introducir un string y devuelve un
-     * float.
+     * Pide un numero decimal de precision simple y lo repite hasta que el
+     * usuario introduzca uno valido.
      *
-     * @param mensaje
-     * @return
+     * @param mensaje texto que se muestra al usuario antes de leer
+     * @return el numero introducido
+     * @throws EntradaCerradaException si la entrada estandar se ha cerrado
      */
     public static float leerFloat(String mensaje) {
-
-        float numero = 0;
-        /**
-         * creamos una variable numero*
-         */
-        String linea;
-        boolean lecturaCorrecta = false;
-
-        while (!lecturaCorrecta) {
+        while (true) {
             try {
-                linea = leerCadena(mensaje);
-                numero = Float.parseFloat(linea);
-                lecturaCorrecta = true;
-
+                return Float.parseFloat(leerCadena(mensaje).trim());
             } catch (NumberFormatException nfe) {
                 System.out.println("Debe introducir un numero, por favor, repita");
             }
-            /**
-             * la variable numero será igual a lo que ponga el usuario por
-             * consola. Tiene excepciones, en el que el usuario no ponga un
-             * entero, por lo que habra que hacer un bucle para volver a
-             * repetirlo hasta que ponga un entero. Si salta la excepcion en el
-             * parseint las lineas de abajo no se leen. Por lo que cuando pasa a
-             * la de abajo (cuando no hay execpciones) cambiamos el valor de
-             * lecturacorrecta para salir del bucle.*
-             */
         }
-        return numero;
     }
 }

@@ -73,7 +73,7 @@ public class Menu {
     }
 
     /**
-     * Funcion enseñarMenu() que al llamarse enseña por pantala las distintas
+     * Funcion mostrarMenu() que al llamarse enseña por pantala las distintas
      * opciones que tiene el jugador.Dependiendo de cual escoja se llamara a una
      * funcion especifica o si es la 4 directamente se cambiara de turno gracias
      * a una funcion en partida.Con un bucle dowhile se registra y se repita si
@@ -86,7 +86,7 @@ public class Menu {
      * @throws modelos.excepciones.SinEnergiaAtaqueException
      * @throws modelos.excepciones.SinTripulantesSuficientesException
      */
-    public void enseñarMenu() throws PuntosdeCompraInsuficientesException, FueradeMapaException, SinEnergiaMovimientoException, SinEnergiaAtaqueException, SinTripulantesSuficientesException {
+    public void mostrarMenu() throws PuntosdeCompraInsuficientesException, FueradeMapaException, SinEnergiaMovimientoException, SinEnergiaAtaqueException, SinTripulantesSuficientesException {
         boolean bucle = false;
         while (true) {
             do {
@@ -106,13 +106,13 @@ public class Menu {
                             Date compra = new Date();
                             if (unidadcompra == null) {
                                 String comprano = "El jugador " + this.jugadorjuega.getNombre() + " ha intentado comprar una unidad sin exito ---------->" + compra + "\n";
-                                this.centrodemandos.añadirString(comprano);
-                                this.centrodemandosnojuega.añadirString(comprano);
+                                this.centrodemandos.anadirAccion(comprano);
+                                this.centrodemandosnojuega.anadirAccion(comprano);
                             } else {
                                 String compradoinfo = "El jugador " + this.jugadorjuega.getNombre() + " ha comprado un " + unidadcompra.getNombre() + ", y lo ha desplegado en el campo de batalla en la posicion " + unidadcompra.getPosicion().toString() + " ---------->" + compra + "\n";
                                 String comprado = "El jugador " + this.jugadorjuega.getNombre() + " ha comprado un " + unidadcompra.getNombre() + ", y lo ha desplegado en el campo de batalla ---------->" + compra + "\n";
-                                this.centrodemandos.añadirString(compradoinfo);
-                                this.centrodemandosnojuega.añadirString(comprado);
+                                this.centrodemandos.anadirAccion(compradoinfo);
+                                this.centrodemandosnojuega.anadirAccion(comprado);
                             }
                             break;
                         case 2:
@@ -120,8 +120,8 @@ public class Menu {
                                 bucle = true;
                                 Date mover = new Date();
                                 String movido = "El jugador " + this.jugadorjuega.getNombre() + " ha intentado mover una unidad sin exito ---------->" + mover + "\n";
-                                this.centrodemandos.añadirString(movido);
-                                this.centrodemandosnojuega.añadirString(movido);
+                                this.centrodemandos.anadirAccion(movido);
+                                this.centrodemandosnojuega.anadirAccion(movido);
                                 throw new IndexOutofBounceException();
                             }
                             if (this.jugadorjuega.getEjercito().getUnidades().size() >= 0) {
@@ -130,13 +130,13 @@ public class Menu {
                                 Date mover = new Date();
                                 if (unidadmover == null) {
                                     String movido = "El jugador " + this.jugadorjuega.getNombre() + " ha intentado mover una unidad sin exito ---------->" + mover + "\n";
-                                    this.centrodemandos.añadirString(movido);
-                                    this.centrodemandosnojuega.añadirString(movido);
+                                    this.centrodemandos.anadirAccion(movido);
+                                    this.centrodemandosnojuega.anadirAccion(movido);
                                 } else {
                                     String movido = "El jugador " + this.jugadorjuega.getNombre() + " ha movido su " + unidadmover.getNombre() + " ---------->" + mover + "\n";
                                     String movidoinfo = "El jugador " + this.jugadorjuega.getNombre() + " ha movido su " + unidadmover.getNombre() + " a la posicion " + unidadmover.getPosicion().toString() + " ---------->" + mover + "\n";
-                                    this.centrodemandos.añadirString(movidoinfo);
-                                    this.centrodemandosnojuega.añadirString(movido);
+                                    this.centrodemandos.anadirAccion(movidoinfo);
+                                    this.centrodemandosnojuega.anadirAccion(movido);
                                 }
                             }
                             break;
@@ -145,8 +145,8 @@ public class Menu {
                                 bucle = true;
                                 Date atacar = new Date();
                                 String atacado = "El jugador " + this.jugadorjuega.getNombre() + " ha intentado atacar a una unidad sin exito ---------->" + atacar + "\n";
-                                this.centrodemandos.añadirString(atacado);
-                                this.centrodemandosnojuega.añadirString(atacado);
+                                this.centrodemandos.anadirAccion(atacado);
+                                this.centrodemandosnojuega.anadirAccion(atacado);
                                 throw new IndexOutofBounceException();
                             }
                             if (this.jugadorjuega.getEjercito().getUnidades().size() >= 0) {
@@ -155,35 +155,35 @@ public class Menu {
                                 Date atacar = new Date();
                                 if (ataque.isBlank()) {
                                     String noatacado = "El jugador " + this.jugadorjuega.getNombre() + " ha intentado atacar a una unidad sin exito ---------->" + atacar + "\n";
-                                    this.centrodemandos.añadirString(noatacado);
-                                    this.centrodemandosnojuega.añadirString(noatacado);
+                                    this.centrodemandos.anadirAccion(noatacado);
+                                    this.centrodemandosnojuega.anadirAccion(noatacado);
                                 } else {
-                                    this.centrodemandos.añadirString(ataque);
-                                    this.centrodemandosnojuega.añadirString(ataque);
+                                    this.centrodemandos.anadirAccion(ataque);
+                                    this.centrodemandosnojuega.anadirAccion(ataque);
                                 }
                             }
                             break;
                         case 4:
-                            this.centrodemandos.enseñarCM();
+                            this.centrodemandos.mostrarCentroDeMandos();
                             Date vercm = new Date();
                             String cm = "El jugador " + this.jugadorjuega.getNombre() + " ha abierto su centro de mandos ---------->" + vercm + "\n";
-                            this.centrodemandos.añadirString(cm);
-                            this.centrodemandosnojuega.añadirString(cm);
+                            this.centrodemandos.anadirAccion(cm);
+                            this.centrodemandosnojuega.anadirAccion(cm);
                             bucle = true;
                             break;
                         case 5:
                             System.out.println(this.jugadorjuega.getNombre() + " ha pasado de turno \n");
                             Date turnos = new Date();
                             String turno = "El jugador " + this.jugadorjuega.getNombre() + " ha pasado el turno ---------->" + turnos + "\n";
-                            this.centrodemandos.añadirString(turno);
-                            this.centrodemandosnojuega.añadirString(turno);
+                            this.centrodemandos.anadirAccion(turno);
+                            this.centrodemandosnojuega.anadirAccion(turno);
                             bucle = false;
                             break;
                         case 6:
                             Date fin = new Date();
                             String finyguardar = "El jugador " + this.jugadorjuega.getNombre() + " ha guardado y finalizado la partida ---------->" + fin + "\n";
-                            this.centrodemandos.añadirString(finyguardar);
-                            this.centrodemandosnojuega.añadirString(finyguardar);
+                            this.centrodemandos.anadirAccion(finyguardar);
+                            this.centrodemandosnojuega.anadirAccion(finyguardar);
                             this.jugadorjuega.setAcabarPartida(true);
                             bucle = false;
                             break;
@@ -628,9 +628,10 @@ public class Menu {
      */
     @Override
     public boolean equals(Object o) {
-        if (o != null && o instanceof Menu) {
+        if (o instanceof Menu) {
             Menu m = (Menu) o;
-            return (this.jugadorjuega == m.jugadorjuega && this.escenario == m.escenario);
+            return Objects.equals(this.jugadorjuega, m.jugadorjuega)
+                    && Objects.equals(this.escenario, m.escenario);
         } else {
             return false;
         }

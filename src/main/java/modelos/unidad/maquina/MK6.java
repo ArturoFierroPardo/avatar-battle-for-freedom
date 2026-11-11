@@ -15,6 +15,13 @@ import modelos.ser.Ser;
 public class MK6 extends Maquina {
 
     /**
+     * Identificador de version para la serializacion. Fijarlo a mano evita
+     * que un cambio en la clase invalide las partidas ya guardadas con una
+     * InvalidClassException.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
      * Constructor de MK6. Hereda de Maquina y luego de Unidad. MK6 asigna sus
      * atributos unicos (nombre, coste, energias, potencia, puntos, tripulantes,
      * posicion, energia gastada al moverse, maximo movimiento, rango de ataque
@@ -24,7 +31,7 @@ public class MK6 extends Maquina {
      * con setters al comprar la unidad
      */
     public MK6() {
-        super("Plataforma de Movilidad Amplificada Mitsubishi MK-6", null, 500, 0, 1000, 500, 20, 50, new ArrayList<Ser>(), null, 25, "2", 1, 1);
+        super("Plataforma de Movilidad Amplificada Mitsubishi MK-6", null, 500, 0, 1000, 500, 20, 50, new ArrayList<Ser>(), null, 25, 2, 1, 1);
     }
 
     /**

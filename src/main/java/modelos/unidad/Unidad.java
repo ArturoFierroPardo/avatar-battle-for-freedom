@@ -24,6 +24,19 @@ import utils.Utils;
 public abstract class Unidad implements Serializable {
 
     /**
+     * Valor de {@code maxmov} que indica que la unidad no tiene alcance
+     * maximo de movimiento y se desplaza a una casilla cualquiera del mapa.
+     */
+    public static final int MOVIMIENTO_ALEATORIO = -1;
+
+    /**
+     * Identificador de version para la serializacion. Fijarlo a mano evita
+     * que un cambio en la clase invalide las partidas ya guardadas con una
+     * InvalidClassException.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
      * Nombre de la unidad
      */
     private String nombre;
@@ -82,11 +95,18 @@ public abstract class Unidad implements Serializable {
     private int energiagastadaxmov;
 
     /**
-     * Maximas casillas que se puede mover en un turno. Es un String porque
-     * Banshee se puede mover a infinitas casillas, no obstante en funciones de
-     * moverse lo convertimos en un int con un Parse int
+     * Maximas casillas que se puede mover en un turno, o
+     * {@link #MOVIMIENTO_ALEATORIO} si la unidad no tiene alcance limitado y
+     * salta a una casilla cualquiera del mapa.
+     *
+     * <p>
+     * Antes era un {@code String} para poder guardar el texto "Casilla
+     * aleatoria" en el caso de la Banshee, y el getter hacia un
+     * {@code Integer.parseInt} sobre el, de forma que consultar el alcance de
+     * una Banshee lanzaba NumberFormatException. Ahora el dato es numerico y el
+     * texto solo se genera al mostrarlo.
      */
-    private String maxmov;
+    private int maxmov;
 
     /**
      * Rango de ataque
@@ -120,7 +140,7 @@ public abstract class Unidad implements Serializable {
      *
      *
      */
-    public Unidad(String nombre, Jugador jugador, int coste, int energiadefensa, int energiataque, int energiamov, int potencia, int puntosderrota, ArrayList<Ser> tripulantes, Coordenadas posicion, int energiagastadaxmov, String maxmov, int rangoataque, int seresneed) {
+    public Unidad(String nombre, Jugador jugador, int coste, int energiadefensa, int energiataque, int energiamov, int potencia, int puntosderrota, ArrayList<Ser> tripulantes, Coordenadas posicion, int energiagastadaxmov, int maxmov, int rangoataque, int seresneed) {
         this.nombre = nombre;
         this.jugador = jugador;
         this.coste = coste;
@@ -191,12 +211,7 @@ public abstract class Unidad implements Serializable {
      * Getters.
      *
      *
-     * Para maxmov se pasa a int ya que maxmov es un String puesto ya que
-     * banshee no tiene rango de movimiento y se la he puesto como un string que
-     * pone movimiento aleatorio, así le puedo poner ese atributo
-     *
-     *
-     * @return
+     * @return el nombre de la unidad
      */
     public String getNombre() {
         return this.nombre;
@@ -279,8 +294,28 @@ public abstract class Unidad implements Serializable {
      * @return
      */
     public int getMaxmov() {
-        int maxmov1 = Integer.parseInt(this.maxmov);
-        return maxmov1;
+        return this.maxmov;
+    }
+
+    /**
+     * Indica si la unidad se mueve a una casilla cualquiera del mapa en lugar
+     * de tener un alcance limitado.
+     *
+     * @return {@code true} si su movimiento es aleatorio y sin alcance maximo
+     */
+    public boolean tieneMovimientoAleatorio() {
+        return this.maxmov == MOVIMIENTO_ALEATORIO;
+    }
+
+    /**
+     * Devuelve el alcance de movimiento en un texto apto para mostrar al
+     * jugador.
+     *
+     * @return el numero de casillas, o "Casilla aleatoria" si no tiene alcance
+     * limitado
+     */
+    public String getMaxmovDescripcion() {
+        return tieneMovimientoAleatorio() ? "Casilla aleatoria" : String.valueOf(this.maxmov);
     }
 
     /**
@@ -360,10 +395,10 @@ public abstract class Unidad implements Serializable {
                 Coordenadas coordenada;
                 while (coordenadacorrecta) {
                     coordenada = new Coordenadas(this, antiguacoordx, antiguacoordy, escenario);
-                    if (escenario.checkMapaAñadir(this, coordenada)) {
+                    if (escenario.colocarUnidadSiLibre(this, coordenada)) {
                         escenario.getMapa()[this.posicion.getX()][this.posicion.getY()] = null;
                         this.setPosicion(coordenada);
-                        escenario.checkMapaAñadir(this, coordenada);
+                        escenario.colocarUnidadSiLibre(this, coordenada);
                         coordenadacorrecta = false;
                     } else {
                         coordenada = new Coordenadas(this, antiguacoordx, antiguacoordy, escenario);
@@ -414,32 +449,26 @@ public abstract class Unidad implements Serializable {
             } else {
                 ataquey2 = ataquey;
             }
-            if (ataquex + this.posicion.getX() > escenario.getXmax()) {
-                ataquex2 = this.posicion.getX() + ataquex;
+            // La casilla de destino tiene que ser un indice valido del mapa:
+            // de 0 a xmax - 1 y de 0 a ymax - 1. Antes se comparaba con
+            // "> xmax", de modo que un ataque justo al borde pasaba el filtro y
+            // abortaba la partida al indexar el mapa. Ademas el aviso se
+            // imprimia pero no se cortaba la iteracion, asi que el ataque podia
+            // llegar a ejecutarse de todos modos.
+            int destinox = this.posicion.getX() + ataquex;
+            int destinoy = this.posicion.getY() + ataquey;
+            if (destinox < 0 || destinox >= escenario.getXmax()
+                    || destinoy < 0 || destinoy >= escenario.getYmax()) {
                 System.out.println("NO PUEDE ATACAR FUERA DEL MAPA. VUELVA A INTENTARLO");
                 nounidad = true;
-            }
-            if (ataquex + this.posicion.getX() < 0) {
-                ataquex2 = this.posicion.getX() + ataquex;
-                System.out.println("NO PUEDE ATACAR FUERA DEL MAPA. VUELVA A INTENTARLO");
-                nounidad = true;
-            }
-            if (ataquey + this.posicion.getY() > escenario.getYmax()) {
-                ataquey2 = this.posicion.getY() + ataquey;
-                System.out.println("NO PUEDE ATACAR FUERA DEL MAPA. VUELVA A INTENTARLO");
-                nounidad = true;
-            }
-            if (ataquey + this.posicion.getY() < 0) {
-                ataquey2 = this.posicion.getY() + ataquey;
-                System.out.println("NO PUEDE ATACAR FUERA DEL MAPA. VUELVA A INTENTARLO");
-                nounidad = true;
+                continue;
             }
             if (ataquex2 <= this.getRangoataque() && ataquey2 <= this.getRangoataque() - ataquex2 && ataquex2 >= 0 && ataquey2 >= 0) {
-                Coordenadas posicioninvestigar = new Coordenadas(this, ataquex, ataquey, escenario, 1);
-                if (!(escenario.checkMapa(this, posicioninvestigar, escenario))) {
-                    Unidad unidadahi = escenario.getunidadMapa(posicioninvestigar);
-                    jugador.recibirdaño(this, posicioninvestigar);
-                    if (escenario.checkMapa(this, posicioninvestigar, escenario)) {
+                Coordenadas posicioninvestigar = Coordenadas.desplazada(this, ataquex, ataquey, escenario);
+                if (!(escenario.estaLibre(this, posicioninvestigar, escenario))) {
+                    Unidad unidadahi = escenario.getUnidadMapa(posicioninvestigar);
+                    jugador.recibirDano(this, posicioninvestigar);
+                    if (escenario.estaLibre(this, posicioninvestigar, escenario)) {
                         System.out.println("\nHA ACABADO CON LA UNIDAD QUE HABIA EN LA POSICION " + posicioninvestigar + " SE TRATABA DE UN " + unidadahi.getNombre() + "\n");
                         nounidad = false;
                     } else {
@@ -515,7 +544,7 @@ public abstract class Unidad implements Serializable {
                     + "\tTripulantes actuales: " + this.tripulantes + "\n"
                     + "\tSeres necesarios para el funcionamiento: " + this.seresneed + "\n"
                     + "\tEnergia que gasta al moverse: " + this.energiagastadaxmov + "\n"
-                    + "\tMaximas casillas que puede moverse por turno: " + this.maxmov + "\n"
+                    + "\tMaximas casillas que puede moverse por turno: " + getMaxmovDescripcion() + "\n"
                     + "\tRango de ataque: " + this.rangoataque + " casillas\n";
         } else {
             return "\tNombre: " + this.nombre + "\n"
@@ -529,7 +558,7 @@ public abstract class Unidad implements Serializable {
                     + "\tTripulantes actuales: " + this.tripulantes + "\n"
                     + "\tSeres necesarios para el funcionamiento: " + this.seresneed + "\n"
                     + "\tEnergia que gasta al moverse: " + this.energiagastadaxmov + "\n"
-                    + "\tMaximas casillas que puede moverse por turno: " + this.maxmov + "\n"
+                    + "\tMaximas casillas que puede moverse por turno: " + getMaxmovDescripcion() + "\n"
                     + "\tRango de ataque: " + this.rangoataque + " casillas\n";
         }
     }
@@ -544,50 +573,52 @@ public abstract class Unidad implements Serializable {
     }
 
     /**
-     * Override de la funcion equals para comparar si dos unidades son iguales
+     * Compara dos unidades por su estado: nombre, caracteristicas, posicion y
+     * tripulacion.
      *
-     * @param o
+     * <p>
+     * El jugador dueño de la unidad queda deliberadamente fuera de la
+     * comparacion. Es una referencia hacia atras: el jugador contiene su
+     * ejercito, el ejercito contiene sus unidades y la unidad volveria a
+     * apuntar al jugador, de modo que incluirlo haria que la comparacion se
+     * llamase a si misma hasta desbordar la pila.
+     *
+     * @param o objeto con el que comparar
+     * @return {@code true} si representan la misma unidad en el mismo estado
      */
     @Override
     public boolean equals(Object o) {
-        if (o != null && o instanceof Unidad) {
+        if (o instanceof Unidad) {
             Unidad u = (Unidad) o;
-            return (this.nombre.equals(u.nombre)
+            return Objects.equals(this.nombre, u.nombre)
                     && this.coste == u.coste
-                    && this.potencia == u.potencia
                     && this.energiadefensa == u.energiadefensa
-                    && this.energiamov == u.energiamov
                     && this.energiataque == u.energiataque
-                    && this.jugador == u.jugador
-                    && this.posicion == u.posicion
+                    && this.energiamov == u.energiamov
+                    && this.potencia == u.potencia
+                    && this.puntosderrota == u.puntosderrota
+                    && this.energiagastadaxmov == u.energiagastadaxmov
                     && this.rangoataque == u.rangoataque
-                    && this.tripulantes == u.tripulantes
-                    && this.nombre.equals(u.nombre));
+                    && this.seresneed == u.seresneed
+                    && this.maxmov == u.maxmov
+                    && Objects.equals(this.posicion, u.posicion)
+                    && Objects.equals(this.tripulantes, u.tripulantes);
         } else {
             return false;
         }
     }
 
     /**
-     * Override del hashcode para esta clase
+     * Devuelve un codigo hash coherente con {@link #equals(Object)}, sobre los
+     * mismos campos y excluyendo igualmente al jugador dueño.
+     *
+     * @return el codigo hash de la unidad
      */
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 37 * hash + Objects.hashCode(this.nombre);
-        hash = 37 * hash + Objects.hashCode(this.jugador);
-        hash = 37 * hash + this.coste;
-        hash = 37 * hash + this.energiadefensa;
-        hash = 37 * hash + this.energiataque;
-        hash = 37 * hash + this.energiamov;
-        hash = 37 * hash + this.potencia;
-        hash = 37 * hash + this.puntosderrota;
-        hash = 37 * hash + Objects.hashCode(this.tripulantes);
-        hash = 37 * hash + Objects.hashCode(this.posicion);
-        hash = 37 * hash + this.energiagastadaxmov;
-        hash = 37 * hash + Objects.hashCode(this.maxmov);
-        hash = 37 * hash + this.rangoataque;
-        hash = 37 * hash + this.seresneed;
-        return hash;
+        return Objects.hash(this.nombre, this.coste, this.energiadefensa,
+                this.energiataque, this.energiamov, this.potencia,
+                this.puntosderrota, this.energiagastadaxmov, this.rangoataque,
+                this.seresneed, this.maxmov, this.posicion, this.tripulantes);
     }
 }

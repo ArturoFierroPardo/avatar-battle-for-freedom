@@ -6,6 +6,8 @@ package modelos.jugador;
 
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 import modelos.coordenadas.Coordenadas;
 import modelos.ejercito.Ejercito;
@@ -23,6 +25,13 @@ import modelos.unidad.Unidad;
  * @author artur
  */
 public class Jugador implements Serializable {
+
+    /**
+     * Identificador de version para la serializacion. Fijarlo a mano evita
+     * que un cambio en la clase invalide las partidas ya guardadas con una
+     * InvalidClassException.
+     */
+    private static final long serialVersionUID = 1L;
 
     /**
      * Nombre del jugador
@@ -144,34 +153,30 @@ public class Jugador implements Serializable {
      * Función de compra de Unidades.Si el jugador tiene los puntos necesarios
      * para la compra de la unidad, se compra y se restan los puntos gastados.Si
      * no, se lanza la excepcion que sera catcheada en el menu para repetirlo
-     * con un bucle.Al comprar la unidad se añade al mapa de unidades viendo si
-     * hay o no una unidad ya.
+     * con un bucle.Al comprar la unidad se busca una casilla libre del mapa
+     * sorteando coordenadas hasta encontrarla, y se despliega ahi.
      *
-     * @param unidad
-     * @throws modelos.excepciones.PuntosdeCompraInsuficientesException
-     * @throws modelos.excepciones.FueradeMapaException
+     * @param unidad unidad que se quiere comprar
+     * @throws modelos.excepciones.PuntosdeCompraInsuficientesException si el
+     * jugador no tiene puntos suficientes
+     * @throws modelos.excepciones.FueradeMapaException si la coordenada
+     * sorteada cae fuera de los limites del escenario
      */
     public void comprarUnidad(Unidad unidad) throws PuntosdeCompraInsuficientesException, FueradeMapaException {
-        boolean coordenadacorrecta = true;
-        Coordenadas posicion;
-        if (this.puntos >= unidad.getCoste()) {
-            while (coordenadacorrecta) {
-                posicion = new Coordenadas(this.escenario);
-                if (this.escenario.checkMapaAñadir(unidad, posicion) == false) {
-                    unidad.setPosicion(posicion);
-                    this.escenario.checkMapaAñadir(unidad, posicion);
-                    this.ejercito.getUnidades().add(unidad);
-                    Collections.sort(this.ejercito.getUnidades(), new Unidad.comparadorEDEF());
-                    this.puntos = this.puntos - unidad.getCoste();
-                    break;
-                } else {
-                    posicion = new Coordenadas(this.escenario);
-                    coordenadacorrecta = true;
-                }
-            }
-        } else {
+        if (this.puntos < unidad.getCoste()) {
             throw new PuntosdeCompraInsuficientesException();
         }
+        // colocarUnidadSiLibre devuelve true cuando la casilla estaba vacia y
+        // ha colocado ahi la unidad, asi que hay que seguir sorteando mientras
+        // devuelva false.
+        Coordenadas posicion;
+        do {
+            posicion = new Coordenadas(this.escenario);
+        } while (!this.escenario.colocarUnidadSiLibre(unidad, posicion));
+        unidad.setPosicion(posicion);
+        this.ejercito.getUnidades().add(unidad);
+        Collections.sort(this.ejercito.getUnidades(), new Unidad.comparadorEDEF());
+        this.puntos = this.puntos - unidad.getCoste();
     }
 
     /**
@@ -246,36 +251,84 @@ public class Jugador implements Serializable {
     }
 
     /**
-     * Funcion para recibir daño restando las energias de defensa de una unidad
-     * y la de los seres. Se castea en unidad. Pide por parametro la unidad que
-     * ataca y la posicion en donde esta la unidad a la que se ataca. Ordena en
-     * funcion de la vida el ejercito.
+     * Aplica el daño de un ataque sobre la unidad que ocupa la posicion
+     * indicada.
      *
-     * @param unidad
-     * @param posicion
-     * @throws modelos.excepciones.FueradeMapaException
+     * <p>
+     * La potencia del atacante se descuenta primero de la energia de defensa de
+     * la unidad atacada. Si la potencia no llega a agotarla, ahi acaba el
+     * ataque. Si la supera, la energia de defensa queda a cero y el exceso se
+     * reparte a partes iguales entre los tripulantes: los que se quedan sin
+     * vida mueren y dan sus puntos al atacante, y si la unidad se queda sin
+     * tripulantes queda destruida, se retira del ejercito de su dueño y se
+     * libera su casilla del mapa.
+     *
+     * @param unidad unidad atacante, de la que se toma la potencia
+     * @param posicion casilla del mapa donde esta la unidad atacada
+     * @throws modelos.excepciones.FueradeMapaException si la posicion queda
+     * fuera de los limites del escenario
      */
-    public void recibirdaño(Unidad unidad, Coordenadas posicion) throws FueradeMapaException {
-        if (unidad.getPotencia() <= this.escenario.getunidadMapa(posicion).getEnergiadefensa()) {
-            this.escenario.getunidadMapa(posicion).setEnergiadefensa(this.escenario.getunidadMapa(posicion).getEnergiadefensa() - unidad.getPotencia());
-        } else {
-            this.escenario.getunidadMapa(posicion).setEnergiadefensa(0);
-            int dañoigual = (unidad.getPotencia() - this.escenario.getunidadMapa(posicion).getEnergiadefensa()) / this.escenario.getunidadMapa(posicion).getTripulantes().size();
-            for (Ser ser : this.escenario.getunidadMapa(posicion).getTripulantes()) {
-                ser.setVida(ser.getVida() - dañoigual);
-                if (ser.getVida() <= 0) {
-                    this.puntos = this.puntos + ser.getPuntosderrota();
-                    this.escenario.getunidadMapa(posicion).getTripulantes().remove(ser);
-                }
-                if (this.escenario.getunidadMapa(posicion).getTripulantes().isEmpty()) {
-                    this.puntos = this.puntos + this.escenario.getunidadMapa(posicion).getPuntosderrota();
-                    this.escenario.getunidadMapa(posicion).getJugador().getEjercito().getUnidades().remove(this.escenario.getunidadMapa(posicion));
-                    this.escenario.getMapa()[this.escenario.getunidadMapa(posicion).getPosicion().getX()][this.escenario.getunidadMapa(posicion).getPosicion().getY()] = null;
-                    break;
-                }
+    public void recibirDano(Unidad unidad, Coordenadas posicion) throws FueradeMapaException {
+        Unidad atacada = this.escenario.getUnidadMapa(posicion);
+        if (atacada == null) {
+            return;
+        }
+
+        if (unidad.getPotencia() <= atacada.getEnergiadefensa()) {
+            atacada.setEnergiadefensa(atacada.getEnergiadefensa() - unidad.getPotencia());
+            Collections.sort(this.ejercito.getUnidades(), new Unidad.comparadorEDEF());
+            return;
+        }
+
+        // El exceso se calcula ANTES de poner la energia de defensa a cero: de
+        // lo contrario se repartiria la potencia entera del atacante en vez de
+        // solo la parte que ha atravesado la defensa.
+        int exceso = unidad.getPotencia() - atacada.getEnergiadefensa();
+        atacada.setEnergiadefensa(0);
+
+        List<Ser> tripulantes = atacada.getTripulantes();
+        if (tripulantes.isEmpty()) {
+            // Sin tripulantes no hay entre quien repartir el exceso, y dividir
+            // por su numero seria una division por cero.
+            destruirUnidad(atacada, posicion);
+            Collections.sort(this.ejercito.getUnidades(), new Unidad.comparadorEDEF());
+            return;
+        }
+
+        int danoPorTripulante = exceso / tripulantes.size();
+        // Se recorre con un Iterator porque los tripulantes que mueren se
+        // eliminan de la lista: hacerlo dentro de un for-each lanzaria una
+        // ConcurrentModificationException.
+        Iterator<Ser> it = tripulantes.iterator();
+        while (it.hasNext()) {
+            Ser ser = it.next();
+            ser.setVida(ser.getVida() - danoPorTripulante);
+            if (ser.getVida() <= 0) {
+                this.puntos = this.puntos + ser.getPuntosderrota();
+                it.remove();
             }
         }
+
+        if (tripulantes.isEmpty()) {
+            destruirUnidad(atacada, posicion);
+        }
+
         Collections.sort(this.ejercito.getUnidades(), new Unidad.comparadorEDEF());
+    }
+
+    /**
+     * Retira una unidad destruida del ejercito de su dueño y libera su casilla
+     * del mapa, sumando sus puntos de derrota a este jugador.
+     *
+     * @param destruida unidad que queda fuera de combate
+     * @param posicion casilla del mapa que ocupaba
+     */
+    private void destruirUnidad(Unidad destruida, Coordenadas posicion) {
+        this.puntos = this.puntos + destruida.getPuntosderrota();
+        if (destruida.getJugador() != null) {
+            destruida.getJugador().getEjercito().getUnidades().remove(destruida);
+        }
+        this.escenario.getMapa()[posicion.getX()][posicion.getY()] = null;
     }
 
     /**
@@ -294,27 +347,33 @@ public class Jugador implements Serializable {
      */
     @Override
     public boolean equals(Object o) {
-        if (o != null && o instanceof Jugador) {
+        if (o instanceof Jugador) {
             Jugador j = (Jugador) o;
-            return (this.nombre.equals(j.nombre) && this.puntos == j.puntos && this.ejercito.equals(j.ejercito) && this.equipo == j.equipo && this.nombre.equals(j.nombre));
+            return Objects.equals(this.nombre, j.nombre)
+                    && this.equipo == j.equipo
+                    && this.puntos == j.puntos
+                    && this.acabarpartida == j.acabarpartida
+                    && Objects.equals(this.ejercito, j.ejercito);
         } else {
             return false;
         }
     }
 
     /**
-     * Override del hashcode para esta clase
+     * Devuelve un codigo hash coherente con {@link #equals(Object)}.
+     *
+     * <p>
+     * El escenario queda fuera a proposito: lo comparten los dos jugadores de
+     * la partida y su mapa contiene unidades que apuntan de vuelta a sus
+     * jugadores, asi que incluirlo haria que el calculo se llamase a si mismo
+     * hasta desbordar la pila.
+     *
+     * @return el codigo hash del jugador
      */
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 23 * hash + Objects.hashCode(this.nombre);
-        hash = 23 * hash + Objects.hashCode(this.equipo);
-        hash = 23 * hash + this.puntos;
-        hash = 23 * hash + Objects.hashCode(this.ejercito);
-        hash = 23 * hash + Objects.hashCode(this.escenario);
-        hash = 23 * hash + (this.acabarpartida ? 1 : 0);
-        return hash;
+        return Objects.hash(this.nombre, this.equipo, this.puntos,
+                this.acabarpartida, this.ejercito);
     }
 
 }

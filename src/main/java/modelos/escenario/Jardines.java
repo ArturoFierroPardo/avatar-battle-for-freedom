@@ -11,6 +11,13 @@ package modelos.escenario;
 public class Jardines extends Escenario {
 
     /**
+     * Identificador de version para la serializacion. Fijarlo a mano evita
+     * que un cambio en la clase invalide las partidas ya guardadas con una
+     * InvalidClassException.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
      * Constructor de Jardines. Hereda de Escenario. Jardines asigna sus
      * atributos unicos (nombre, puntoscomienzo, xmax e ymax), y Escenario (el
      * padre de todos) asigna a todos los valores como los que se le pasa por

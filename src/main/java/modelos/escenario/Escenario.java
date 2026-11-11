@@ -5,7 +5,7 @@
 package modelos.escenario;
 
 import java.io.Serializable;
-import java.util.Arrays;
+
 import java.util.Objects;
 import modelos.coordenadas.Coordenadas;
 import modelos.excepciones.FueradeMapaException;
@@ -16,6 +16,13 @@ import modelos.unidad.Unidad;
  * @author artur
  */
 public abstract class Escenario implements Serializable {
+
+    /**
+     * Identificador de version para la serializacion. Fijarlo a mano evita
+     * que un cambio en la clase invalide las partidas ya guardadas con una
+     * InvalidClassException.
+     */
+    private static final long serialVersionUID = 1L;
 
     /**
      * Nombre del escenario
@@ -117,7 +124,7 @@ public abstract class Escenario implements Serializable {
      * @param coordenada
      * @return
      */
-    public Unidad getunidadMapa(Coordenadas coordenada) {
+    public Unidad getUnidadMapa(Coordenadas coordenada) {
         int posx = coordenada.getX();
         int posy = coordenada.getY();
         return this.mapa[posx][posy];
@@ -132,7 +139,7 @@ public abstract class Escenario implements Serializable {
      * @return
      * @throws modelos.excepciones.FueradeMapaException
      */
-    public boolean checkMapaAñadir(Unidad unidad, Coordenadas posicion) throws FueradeMapaException {
+    public boolean colocarUnidadSiLibre(Unidad unidad, Coordenadas posicion) throws FueradeMapaException {
         if (this.mapa[posicion.getX()][posicion.getY()] == null) {
             this.mapa[posicion.getX()][posicion.getY()] = unidad;
             return true;
@@ -152,7 +159,7 @@ public abstract class Escenario implements Serializable {
      * @return
      * @throws modelos.excepciones.FueradeMapaException
      */
-    public boolean checkMapa(Unidad unidad, Coordenadas posicion, Escenario escenario) throws FueradeMapaException {
+    public boolean estaLibre(Unidad unidad, Coordenadas posicion, Escenario escenario) throws FueradeMapaException {
         if (this.mapa[posicion.getX()][posicion.getY()] == null) {
             return true;
         } else {
@@ -173,31 +180,40 @@ public abstract class Escenario implements Serializable {
     }
 
     /**
-     * Override de la funcion equals para comparar si dos escenarios son iguales
+     * Compara dos escenarios por su definicion: nombre, puntos iniciales y
+     * dimensiones.
      *
-     * @param o
+     * <p>
+     * El mapa de unidades no entra en la comparacion. Es el estado cambiante de
+     * la partida, no parte de la identidad del escenario, y ademas cada unidad
+     * del mapa apunta a su jugador, el jugador a su ejercito y el ejercito de
+     * vuelta a sus unidades: recorrerlo haria que la comparacion se llamase a
+     * si misma hasta desbordar la pila.
+     *
+     * @param o objeto con el que comparar
+     * @return {@code true} si son el mismo escenario
      */
     @Override
     public boolean equals(Object o) {
-        if (o != null && o instanceof Escenario) {
+        if (o instanceof Escenario) {
             Escenario e = (Escenario) o;
-            return (this.mapa == e.mapa && this.puntoscomienzo == e.puntoscomienzo && this.xmax == e.xmax && this.ymax == e.ymax);
+            return Objects.equals(this.nombre, e.nombre)
+                    && this.puntoscomienzo == e.puntoscomienzo
+                    && this.xmax == e.xmax
+                    && this.ymax == e.ymax;
         } else {
             return false;
         }
     }
 
     /**
-     * Override del hashcode para esta clase
+     * Devuelve un codigo hash coherente con {@link #equals(Object)}, sobre los
+     * mismos campos y excluyendo igualmente el mapa de unidades.
+     *
+     * @return el codigo hash del escenario
      */
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.nombre);
-        hash = 29 * hash + this.puntoscomienzo;
-        hash = 29 * hash + this.xmax;
-        hash = 29 * hash + this.ymax;
-        hash = 29 * hash + Arrays.deepHashCode(this.mapa);
-        return hash;
+        return Objects.hash(this.nombre, this.puntoscomienzo, this.xmax, this.ymax);
     }
 }

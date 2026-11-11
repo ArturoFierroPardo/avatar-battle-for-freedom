@@ -9,6 +9,13 @@ package modelos.excepciones;
  * @author artur
  */
 public class SinEnergiaDefensaException extends Exception {
+
+    /**
+     * Identificador de version para la serializacion. Fijarlo a mano evita
+     * que un cambio en la clase invalide las partidas ya guardadas con una
+     * InvalidClassException.
+     */
+    private static final long serialVersionUID = 1L;
     /**
      * Excepcion para poder comprobar que la unidad tiene energia de defensa
      * suficiente para recibir daño, se lanza en recibir daño y atacar unidad.

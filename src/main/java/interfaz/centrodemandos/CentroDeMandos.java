@@ -20,6 +20,13 @@ import utils.Utils;
 public class CentroDeMandos implements Serializable {
 
     /**
+     * Identificador de version para la serializacion. Fijarlo a mano evita
+     * que un cambio en la clase invalide las partidas ya guardadas con una
+     * InvalidClassException.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
      * Jugador que esta usando el centro de mandos
      */
     private Jugador jugador;
@@ -58,12 +65,12 @@ public class CentroDeMandos implements Serializable {
     }
 
     /**
-     * Funcion añadirString que añade al arraylist de centro de mandos el string
+     * Funcion anadirAccion que añade al arraylist de centro de mandos el string
      * que se le pasa por parametro
      *
      * @param accion
      */
-    public void añadirString(String accion) {
+    public void anadirAccion(String accion) {
         this.acciones.add(accion);
     }
 
@@ -80,7 +87,7 @@ public class CentroDeMandos implements Serializable {
      *
      * @throws modelos.excepciones.IndexOutofBounceException
      */
-    public void enseñarCM() throws IndexOutofBounceException {
+    public void mostrarCentroDeMandos() throws IndexOutofBounceException {
         boolean bucle = true;
         do {
             System.out.println("-------------------CENTRO DE MANDOS-------------------\n");
@@ -181,9 +188,10 @@ public class CentroDeMandos implements Serializable {
      */
     @Override
     public boolean equals(Object o) {
-        if (o != null && o instanceof CentroDeMandos) {
+        if (o instanceof CentroDeMandos) {
             CentroDeMandos cm = (CentroDeMandos) o;
-            return (this.jugador == cm.getJugador() && this.acciones == cm.getAcciones());
+            return Objects.equals(this.jugador, cm.jugador)
+                    && Objects.equals(this.acciones, cm.acciones);
         } else {
             return false;
         }

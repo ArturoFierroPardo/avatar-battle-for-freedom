@@ -18,6 +18,13 @@ import modelos.unidad.Unidad;
 public class Coordenadas implements Serializable {
 
     /**
+     * Identificador de version para la serializacion. Fijarlo a mano evita
+     * que un cambio en la clase invalide las partidas ya guardadas con una
+     * InvalidClassException.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
      * Coordenada en eje X
      */
     private int x;
@@ -44,41 +51,71 @@ public class Coordenadas implements Serializable {
     private int casillasmovidasy;
 
     /**
-     * Constructor de coordenadas, que recibe la coordenada x e y como se le
-     * indique y un escenario en el que se juega para poder ver cual es el
-     * limite maximo.
+     * Construye una coordenada concreta dentro de un escenario.
      *
-     * @param x
-     * @param y
-     * @param escenario
-     * @throws modelos.excepciones.FueradeMapaException
+     * @param x coordenada en el eje X
+     * @param y coordenada en el eje Y
+     * @param escenario escenario que fija los limites del mapa
+     * @throws modelos.excepciones.FueradeMapaException si la coordenada cae
+     * fuera del mapa del escenario
      */
     public Coordenadas(int x, int y, Escenario escenario) throws FueradeMapaException {
+        // Antes este constructor no validaba nada, asi que aceptaba
+        // coordenadas fuera del mapa y el error no aparecia hasta indexar el
+        // array de unidades, con un ArrayIndexOutOfBoundsException.
+        comprobarDentroDelMapa(x, y, escenario);
         this.x = x;
         this.y = y;
         this.escenario = escenario;
     }
 
     /**
-     * Constructor de coordenada que en funcion de la unidad que se le pasa, los
-     * parametros y el escenario, construye una coordenada que se genera desde
-     * la posicon nueva en la que esta.
+     * Crea la coordenada que resulta de desplazarse un numero de casillas desde
+     * la posicion actual de una unidad.
      *
-     * @param unidad
-     * @param x
-     * @param y
-     * @param escenario
-     * @param z
+     * <p>
+     * Sustituye a un constructor que llevaba un quinto parametro {@code int z}
+     * sin usar, cuyo unico cometido era distinguirlo de la otra sobrecarga con
+     * la misma lista de tipos. Un metodo con nombre propio no necesita ese
+     * parametro de relleno y deja claro en la llamada lo que se esta
+     * construyendo.
+     *
+     * @param unidad unidad desde la que se mide el desplazamiento
+     * @param dx casillas que se avanzan en el eje X, con signo
+     * @param dy casillas que se avanzan en el eje Y, con signo
+     * @param escenario escenario que fija los limites del mapa
+     * @return la coordenada de destino, recortada a los limites del mapa
      */
-    public Coordenadas(Unidad unidad, int x, int y, Escenario escenario, int z) {
-        this.x = x + unidad.getPosicion().getX();
-        this.y = y + unidad.getPosicion().getY();
-        if (this.x < 0) {
-            this.x = 0;
+    public static Coordenadas desplazada(Unidad unidad, int dx, int dy, Escenario escenario) {
+        Coordenadas destino = new Coordenadas();
+        destino.escenario = escenario;
+        destino.x = recortar(unidad.getPosicion().getX() + dx, escenario.getXmax());
+        destino.y = recortar(unidad.getPosicion().getY() + dy, escenario.getYmax());
+        return destino;
+    }
+
+    /**
+     * Constructor vacio de uso interno, para las factorias estaticas.
+     */
+    private Coordenadas() {
+    }
+
+    /**
+     * Encaja un valor en el intervalo de indices validos del mapa.
+     *
+     * @param valor valor a recortar
+     * @param limite numero de casillas del eje, de modo que el indice maximo
+     * valido es {@code limite - 1}
+     * @return el valor recortado al intervalo [0, limite - 1]
+     */
+    private static int recortar(int valor, int limite) {
+        if (valor < 0) {
+            return 0;
         }
-        if (this.y < 0) {
-            this.y = 0;
+        if (valor > limite - 1) {
+            return limite - 1;
         }
+        return valor;
     }
 
     /**
@@ -94,22 +131,6 @@ public class Coordenadas implements Serializable {
         Random rand = new Random();
         this.x = rand.nextInt(this.escenario.getXmax());
         this.y = rand.nextInt(this.escenario.getYmax());
-        checkCoordenadaX(this.x, this.escenario);
-        checkCoordenadaY(this.y, this.escenario);
-    }
-
-    /**
-     * Constructor de coordenada que genera aleatorios en funcion de los
-     * parametros que reciba como maximos a elegir
-     *
-     * @param x
-     * @param y
-     * @throws modelos.excepciones.FueradeMapaException
-     */
-    public Coordenadas(int x, int y) throws FueradeMapaException {
-        Random rand = new Random();
-        this.x = rand.nextInt(x);
-        this.y = rand.nextInt(y);
         checkCoordenadaX(this.x, this.escenario);
         checkCoordenadaY(this.y, this.escenario);
     }
@@ -142,13 +163,16 @@ public class Coordenadas implements Serializable {
             this.y = y;
         } else {
             int yaleatoria = rand.nextInt(-1 * (unidad.getMaxmov() - restacasillas), unidad.getMaxmov() - restacasillas);
-            if (y + yaleatoria > escenario.getYmax()) {
+            // La ultima casilla valida del eje es ymax - 1, no ymax: con la
+            // comparacion estricta anterior una unidad podia acabar justo en
+            // ymax y abortar la partida al indexar el mapa.
+            if (y + yaleatoria >= escenario.getYmax()) {
                 this.y = y;
             } else {
                 this.y = y + yaleatoria;
             }
         }
-        if (x + xaleatoria > escenario.getXmax()) {
+        if (x + xaleatoria >= escenario.getXmax()) {
             this.x = x;
         } else {
             this.x = x + xaleatoria;
@@ -160,21 +184,12 @@ public class Coordenadas implements Serializable {
             this.y = 0;
         }
 
-        checkCoordenadaX(this.x, this.escenario);
-        checkCoordenadaY(this.y, this.escenario);
-        if (x > this.x) {
-            this.casillasmovidasx = -1 * (this.x - x);
-        }
-        if (x <= this.x) {
-            this.casillasmovidasx = this.x - x;
-        }
-        if (y > this.y) {
-            this.casillasmovidasy = -1 * (this.y - y);
-        }
-        if (y <= this.y) {
-            this.casillasmovidasy = this.y - y;
-        }
-
+        comprobarDentroDelMapa(this.x, this.y, this.escenario);
+        // Las casillas recorridas se guardan en valor absoluto: solo se usan
+        // para calcular el gasto de energia, que no depende del sentido del
+        // movimiento.
+        this.casillasmovidasx = Math.abs(this.x - x);
+        this.casillasmovidasy = Math.abs(this.y - y);
     }
 
     /**
@@ -184,9 +199,10 @@ public class Coordenadas implements Serializable {
      * @throws modelos.excepciones.FueradeMapaException
      */
     public void setX(int x) throws FueradeMapaException {
-        this.x = x;
+        // Se valida antes de asignar: al hacerlo al reves, una coordenada
+        // rechazada quedaba igualmente guardada en el objeto.
         checkCoordenadaX(x, this.escenario);
-
+        this.x = x;
     }
 
     /**
@@ -195,8 +211,8 @@ public class Coordenadas implements Serializable {
      * @throws FueradeMapaException
      */
     public void setY(int y) throws FueradeMapaException {
+        checkCoordenadaY(y, this.escenario);
         this.y = y;
-        checkCoordenadaY(this.y, this.escenario);
     }
 
     /**
@@ -233,33 +249,53 @@ public class Coordenadas implements Serializable {
     }
 
     /**
-     * Funcion para comprobar la excepcion de si esta fuera del mapa la
-     * coordenada X. Recibe un escenario para comprobar dependiendo de su maximo
-     * en X.
+     * Comprueba que una coordenada del eje X cabe en el mapa del escenario.
      *
-     * @param X
-     * @param escenario
-     * @throws modelos.excepciones.FueradeMapaException
+     * <p>
+     * El mapa se crea como {@code new Unidad[xmax][ymax]}, asi que los indices
+     * validos van de 0 a {@code xmax - 1}. La comprobacion original usaba
+     * {@code X > xmax} y por tanto dejaba pasar {@code X == xmax}, que luego
+     * reventaba al indexar el array: bastaba que una unidad se moviera al borde
+     * del mapa para abortar la partida con un
+     * ArrayIndexOutOfBoundsException.
+     *
+     * @param x coordenada a comprobar
+     * @param escenario escenario que fija los limites del mapa
+     * @throws modelos.excepciones.FueradeMapaException si la coordenada no es
+     * un indice valido del mapa
      */
-    public void checkCoordenadaX(int X, Escenario escenario) throws FueradeMapaException {
-        if (X > escenario.getXmax()) {
+    public static void checkCoordenadaX(int x, Escenario escenario) throws FueradeMapaException {
+        if (x < 0 || x >= escenario.getXmax()) {
             throw new FueradeMapaException();
         }
     }
 
     /**
-     * Funcion para comprobar la excepcion de si esta fuera del mapa la
-     * coordenada Y.Recibe un escenario para comprobar dependiendo de su maximo
-     * en Y.
+     * Comprueba que una coordenada del eje Y cabe en el mapa del escenario.
      *
-     * @param Y
-     * @param escenario
-     * @throws modelos.excepciones.FueradeMapaException
+     * @param y coordenada a comprobar
+     * @param escenario escenario que fija los limites del mapa
+     * @throws modelos.excepciones.FueradeMapaException si la coordenada no es
+     * un indice valido del mapa
      */
-    public void checkCoordenadaY(int Y, Escenario escenario) throws FueradeMapaException {
-        if (Y > escenario.getYmax()) {
+    public static void checkCoordenadaY(int y, Escenario escenario) throws FueradeMapaException {
+        if (y < 0 || y >= escenario.getYmax()) {
             throw new FueradeMapaException();
         }
+    }
+
+    /**
+     * Comprueba de una vez las dos coordenadas de una casilla.
+     *
+     * @param x coordenada en el eje X
+     * @param y coordenada en el eje Y
+     * @param escenario escenario que fija los limites del mapa
+     * @throws modelos.excepciones.FueradeMapaException si la casilla cae fuera
+     * del mapa
+     */
+    public static void comprobarDentroDelMapa(int x, int y, Escenario escenario) throws FueradeMapaException {
+        checkCoordenadaX(x, escenario);
+        checkCoordenadaY(y, escenario);
     }
 
     /**
@@ -277,7 +313,7 @@ public class Coordenadas implements Serializable {
      */
     @Override
     public boolean equals(Object o) {
-        if (o != null && o instanceof Coordenadas) {
+        if (o instanceof Coordenadas) {
             Coordenadas c = (Coordenadas) o;
             return (this.x == c.x && this.y == c.y);
         } else {
@@ -290,13 +326,11 @@ public class Coordenadas implements Serializable {
      */
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 53 * hash + this.x;
-        hash = 53 * hash + this.y;
-        hash = 53 * hash + Objects.hashCode(this.escenario);
-        hash = 53 * hash + this.casillasmovidasx;
-        hash = 53 * hash + this.casillasmovidasy;
-        return hash;
+        // Solo x e y, los dos unicos campos que compara equals(). Incluir el
+        // escenario o las casillas movidas rompia el contrato entre ambos
+        // metodos: dos coordenadas iguales podian devolver codigos hash
+        // distintos y no encontrarse dentro de un HashSet o un HashMap.
+        return Objects.hash(this.x, this.y);
     }
 
 }
