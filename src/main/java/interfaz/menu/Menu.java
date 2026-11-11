@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package interfaz.menu;
 
 import interfaz.centrodemandos.CentroDeMandos;
@@ -31,8 +27,10 @@ import modelos.unidad.maquina.MK6;
 import utils.Utils;
 
 /**
+ * Menu de acciones de un turno: comprar unidades y tripulantes, mover,
+ * atacar, consultar el centro de mandos, pasar turno o guardar y salir.
  *
- * @author artur
+ * @author Arturo Fierro Pardo
  */
 public class Menu {
 
@@ -551,7 +549,7 @@ public class Menu {
                         } else {
                             this.jugadorjuega.restarEnergia(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
                             Unidad unidad = this.jugadorjuega.moverUnidad(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover));
-                            System.out.println(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover).getNombre() + " se ha movida a " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover).getPosicion());
+                            System.out.println(this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover).getNombre() + " se ha movido a " + this.jugadorjuega.getEjercito().getUnidades().get(eleccionmover).getPosicion());
                             buclemover = false;
                             return unidad;
                         }

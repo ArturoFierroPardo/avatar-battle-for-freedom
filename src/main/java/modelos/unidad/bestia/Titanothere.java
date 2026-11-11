@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelos.unidad.bestia;
 
 import java.util.ArrayList;
@@ -9,8 +5,11 @@ import modelos.excepciones.SinEnergiaMovimientoException;
 import modelos.ser.Ser;
 
 /**
+ * Titanothere Cabezamartillo: bestia barata y muy resistente, pero lenta y
+ * de alcance de ataque corto. Gasta una cantidad fija de energia al
+ * moverse.
  *
- * @author artur
+ * @author Arturo Fierro Pardo
  */
 public class Titanothere extends Bestia {
 

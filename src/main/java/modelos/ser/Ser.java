@@ -1,15 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelos.ser;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
+ * Ser vivo que puede tripular una unidad. Aporta su vida al aguante de la
+ * unidad y unos puntos al enemigo que lo derrota.
  *
- * @author artur
+ * @author Arturo Fierro Pardo
  */
 public abstract class Ser implements Serializable {
 

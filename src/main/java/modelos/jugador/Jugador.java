@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelos.jugador;
 
 import java.io.Serializable;
@@ -21,8 +17,11 @@ import modelos.ser.Ser;
 import modelos.unidad.Unidad;
 
 /**
+ * Uno de los dos contendientes de la partida. Gestiona sus puntos, su
+ * ejercito y las acciones que puede ejecutar: comprar, mover, atacar y
+ * aplicar el dano recibido.
  *
- * @author artur
+ * @author Arturo Fierro Pardo
  */
 public class Jugador implements Serializable {
 

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelos.ser.navi;
 
 import modelos.ser.Ser;
@@ -9,8 +5,9 @@ import modelos.ser.TipoCargo;
 import modelos.ser.TipoRaza;
 
 /**
+ * Tripulante del bando Navi. Fija la raza navi para todos sus hijos.
  *
- * @author artur
+ * @author Arturo Fierro Pardo
  */
 public abstract class Navi extends Ser {
 

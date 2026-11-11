@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package interfaz.partida;
 
 import interfaz.centrodemandos.CentroDeMandos;
@@ -18,8 +14,11 @@ import modelos.excepciones.SinTripulantesSuficientesException;
 import modelos.jugador.Jugador;
 
 /**
+ * Una partida entre dos jugadores en un escenario. Alterna los turnos,
+ * lleva la cuenta de cuantos van y decide cuando hay ganador, empate o
+ * final anticipado.
  *
- * @author artur
+ * @author Arturo Fierro Pardo
  */
 public class Partida implements Serializable {
 

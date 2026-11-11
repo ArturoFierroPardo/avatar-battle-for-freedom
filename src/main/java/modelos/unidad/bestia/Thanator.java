@@ -1,15 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelos.unidad.bestia;
 
 import java.util.ArrayList;
 import modelos.ser.Ser;
 
 /**
+ * Thanator: la bestia mas potente del bando Navi, con mucho aguante y buen
+ * alcance de movimiento.
  *
- * @author artur
+ * @author Arturo Fierro Pardo
  */
 public class Thanator extends Bestia {
 

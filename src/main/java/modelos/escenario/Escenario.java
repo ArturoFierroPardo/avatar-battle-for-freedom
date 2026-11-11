@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelos.escenario;
 
 import java.io.Serializable;
@@ -12,8 +8,11 @@ import modelos.excepciones.FueradeMapaException;
 import modelos.unidad.Unidad;
 
 /**
+ * Campo de batalla donde se disputa una partida. Fija las dimensiones del
+ * mapa y los puntos con los que empieza cada jugador, y mantiene la
+ * rejilla de unidades desplegadas.
  *
- * @author artur
+ * @author Arturo Fierro Pardo
  */
 public abstract class Escenario implements Serializable {
 

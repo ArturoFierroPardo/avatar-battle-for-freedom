@@ -170,7 +170,7 @@ public class Main {
                         }
                     } while (bucle);
                     String nombre1 = Utils.leerCadena("Jugador 1, elija su nombre: ");
-                    String nombre2 = Utils.leerCadena("Jugador2, elija su nombre: ");
+                    String nombre2 = Utils.leerCadena("Jugador 2, elija su nombre: ");
                     do {
                         System.out.println("\n-------------------SELECCION DE EQUIPO-------------------\n");
                         System.out.println("\t1) Equipo RDA");

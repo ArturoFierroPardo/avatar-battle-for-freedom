@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelos.unidad;
 
 import java.io.Serializable;
@@ -18,8 +14,11 @@ import modelos.ser.Ser;
 import utils.Utils;
 
 /**
+ * Pieza que un jugador despliega y maneja sobre el mapa. Define las
+ * caracteristicas comunes a maquinas y bestias (coste, energias, potencia,
+ * alcance y tripulacion) y como se mueven y atacan.
  *
- * @author artur
+ * @author Arturo Fierro Pardo
  */
 public abstract class Unidad implements Serializable {
 
@@ -475,9 +474,9 @@ public abstract class Unidad implements Serializable {
                         System.out.println("\nHA ACERTADO Y DISPARADO CON EXITO\n");
                         nounidad = false;
                         if (this.jugador.equals(unidadahi.jugador)) {
-                            return "El jugador " + this.jugador.getNombre() + " ha atacado con su " + this.nombre + " a un " + unidadahi.getNombre() + " en la posicion " + unidadahi.posicion.toString() + ". Le quedan " + unidadahi.getEnergiadefensa() + " puntos de energia de defensa y esta trpulado por " + unidadahi.getTripulantes() + ". HA SIDO FUEGO AMIGO" + "\n";
+                            return "El jugador " + this.jugador.getNombre() + " ha atacado con su " + this.nombre + " a un " + unidadahi.getNombre() + " en la posicion " + unidadahi.posicion.toString() + ". Le quedan " + unidadahi.getEnergiadefensa() + " puntos de energia de defensa y esta tripulado por " + unidadahi.getTripulantes() + ". HA SIDO FUEGO AMIGO" + "\n";
                         } else {
-                            return "El jugador " + this.jugador.getNombre() + " ha atacado con su " + this.nombre + " a un " + unidadahi.getNombre() + " en la posicion " + unidadahi.posicion.toString() + ". Le quedan " + unidadahi.getEnergiadefensa() + " puntos de energia de defensa y esta trpulado por " + unidadahi.getTripulantes() + ". NO HA SIDO FUEGO AMIGO" + "\n";
+                            return "El jugador " + this.jugador.getNombre() + " ha atacado con su " + this.nombre + " a un " + unidadahi.getNombre() + " en la posicion " + unidadahi.posicion.toString() + ". Le quedan " + unidadahi.getEnergiadefensa() + " puntos de energia de defensa y esta tripulado por " + unidadahi.getTripulantes() + ". NO HA SIDO FUEGO AMIGO" + "\n";
                         }
                     }
                 } else {

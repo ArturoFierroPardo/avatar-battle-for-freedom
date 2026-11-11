@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelos.unidad.bestia;
 
 import java.util.ArrayList;
@@ -12,8 +8,11 @@ import modelos.excepciones.SinEnergiaMovimientoException;
 import modelos.ser.Ser;
 
 /**
+ * Banshee de Montana: bestia voladora sin alcance maximo de movimiento,
+ * salta a una casilla cualquiera del mapa y gasta una cantidad fija de
+ * energia al hacerlo.
  *
- * @author artur
+ * @author Arturo Fierro Pardo
  */
 public class Banshee extends Bestia {
 

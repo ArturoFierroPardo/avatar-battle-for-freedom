@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelos.unidad.maquina;
 
 import java.util.ArrayList;
@@ -9,8 +5,10 @@ import modelos.excepciones.SinEnergiaMovimientoException;
 import modelos.ser.Ser;
 
 /**
+ * Plataforma de Movilidad Amplificada Mitsubishi MK-6: el exoesqueleto
+ * barato de la RDA. Gasta una cantidad fija de energia al moverse.
  *
- * @author artur
+ * @author Arturo Fierro Pardo
  */
 public class MK6 extends Maquina {
 

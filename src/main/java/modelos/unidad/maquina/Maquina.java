@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelos.unidad.maquina;
 
 import java.util.ArrayList;
@@ -11,8 +7,10 @@ import modelos.ser.Ser;
 import modelos.unidad.Unidad;
 
 /**
+ * Unidad del bando de la RDA: vehiculos y exoesqueletos tripulados por
+ * humanos.
  *
- * @author artur
+ * @author Arturo Fierro Pardo
  */
 public abstract class Maquina extends Unidad {
 

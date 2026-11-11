@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelos.unidad.bestia;
 
 import java.util.ArrayList;
@@ -11,8 +7,9 @@ import modelos.ser.Ser;
 import modelos.unidad.Unidad;
 
 /**
+ * Unidad del bando Navi: criaturas de Pandora montadas por sus guerreros.
  *
- * @author artur
+ * @author Arturo Fierro Pardo
  */
 public abstract class Bestia extends Unidad {
 

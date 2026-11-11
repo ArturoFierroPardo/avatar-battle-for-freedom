@@ -1,14 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelos.ser.humano;
 
 import modelos.ser.TipoCargo;
 
 /**
+ * Artillero de la RDA: el tripulante humano barato, de cargo guerrero.
  *
- * @author artur
+ * @author Arturo Fierro Pardo
  */
 public class Artillero extends Humano {
 

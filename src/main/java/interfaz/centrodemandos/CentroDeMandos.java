@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package interfaz.centrodemandos;
 
 import java.io.Serializable;
@@ -14,8 +10,11 @@ import modelos.unidad.Unidad;
 import utils.Utils;
 
 /**
+ * Registro de lo que ocurre en la partida desde el punto de vista de un
+ * jugador, y menu para consultarlo: sucesos, estado del ejercito y datos
+ * del propio jugador.
  *
- * @author artur
+ * @author Arturo Fierro Pardo
  */
 public class CentroDeMandos implements Serializable {
 
@@ -120,7 +119,7 @@ public class CentroDeMandos implements Serializable {
                                 while (true) {
                                     try {
                                         do {
-                                            int eleccionver = Utils.leerEntero("\nDe que unidad de su ejercito dese su informacion? Pulse el 0 para volver") - 1;
+                                            int eleccionver = Utils.leerEntero("\nDe que unidad de su ejercito desea su informacion? Pulse el 0 para volver") - 1;
                                             if (this.jugador.getEjercito().getUnidades().isEmpty() || this.jugador.getEjercito().getUnidades().size() < eleccionver + 1 || eleccionver < -1) {
                                                 buclever = true;
                                                 throw new IndexOutofBounceException();

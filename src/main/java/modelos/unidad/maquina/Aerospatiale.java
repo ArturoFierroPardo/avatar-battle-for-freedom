@@ -1,15 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelos.unidad.maquina;
 
 import java.util.ArrayList;
 import modelos.ser.Ser;
 
 /**
+ * Aerospatiale SA-2 Samson: transporte ligero de la RDA, equilibrado en
+ * coste y alcance.
  *
- * @author artur
+ * @author Arturo Fierro Pardo
  */
 public class Aerospatiale extends Maquina {
 

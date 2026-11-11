@@ -1,12 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelos.excepciones;
 
 /**
+ * Se lanza al intentar usar una casilla que cae fuera de los limites del
+ * escenario.
  *
- * @author artur
+ * @author Arturo Fierro Pardo
  */
 public class FueradeMapaException extends Exception {
 

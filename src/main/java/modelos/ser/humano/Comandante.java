@@ -1,14 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelos.ser.humano;
 
 import modelos.ser.TipoCargo;
 
 /**
+ * Comandante de SecOps: el tripulante humano de cargo oficial, mas caro y
+ * que da mas puntos al enemigo que lo derrota.
  *
- * @author artur
+ * @author Arturo Fierro Pardo
  */
 public class Comandante extends Humano {
 

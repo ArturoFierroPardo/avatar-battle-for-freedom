@@ -1,12 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelos.escenario;
 
 /**
+ * Escenario del Arbol Madre: el mas grande, 300x300 casillas y 45.000
+ * puntos iniciales por jugador.
  *
- * @author artur
+ * @author Arturo Fierro Pardo
  */
 public class ArbolMadre extends Escenario {
 

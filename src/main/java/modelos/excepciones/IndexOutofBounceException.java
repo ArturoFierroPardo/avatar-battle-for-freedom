@@ -1,12 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelos.excepciones;
 
 /**
+ * Se lanza cuando el jugador elige una unidad de su ejercito que no existe.
  *
- * @author artur
+ * @author Arturo Fierro Pardo
  */
 public class IndexOutofBounceException extends Exception {
 

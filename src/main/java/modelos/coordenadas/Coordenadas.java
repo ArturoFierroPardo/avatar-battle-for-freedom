@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelos.coordenadas;
 
 import java.io.Serializable;
@@ -12,8 +8,11 @@ import modelos.excepciones.FueradeMapaException;
 import modelos.unidad.Unidad;
 
 /**
+ * Casilla del mapa de un escenario. Ademas de la pareja de coordenadas,
+ * guarda cuantas casillas se ha recorrido al llegar hasta ella, dato con el
+ * que se calcula el gasto de energia de movimiento.
  *
- * @author artur
+ * @author Arturo Fierro Pardo
  */
 public class Coordenadas implements Serializable {
 

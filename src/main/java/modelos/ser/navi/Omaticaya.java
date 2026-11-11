@@ -1,14 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelos.ser.navi;
 
 import modelos.ser.TipoCargo;
 
 /**
+ * Guerrero del clan Omaticaya: el tripulante navi de cargo oficial.
  *
- * @author artur
+ * @author Arturo Fierro Pardo
  */
 public class Omaticaya extends Navi {
 

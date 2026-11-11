@@ -1,14 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelos.equipo;
 
 import java.io.Serializable;
 
 /**
+ * Los dos bandos del juego: la RDA humana y los Navi de Pandora. El bando
+ * decide que unidades y que tripulantes puede comprar cada jugador.
  *
- * @author artur
+ * @author Arturo Fierro Pardo
  */
 public enum Equipo implements Serializable {
 
