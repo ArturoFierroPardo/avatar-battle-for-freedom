@@ -23,9 +23,14 @@ import java.util.List;
 public class Io {
 
     /**
-     * Fichero donde se guardan todas las partidas.
+     * Nombre por defecto del fichero donde se guardan todas las partidas.
      */
-    private static final String ARCHIVO = "partidas.dat";
+    public static final String ARCHIVO_POR_DEFECTO = "partidas.dat";
+
+    /**
+     * Fichero sobre el que trabaja este gestor.
+     */
+    private final String archivo;
 
     /**
      * Lista de partidas cargadas del fichero.
@@ -33,9 +38,23 @@ public class Io {
     private ArrayList<Partida> partidas;
 
     /**
-     * Crea el gestor de ficheros con una lista de partidas vacia.
+     * Crea el gestor sobre el fichero de partidas por defecto.
      */
     public Io() {
+        this(ARCHIVO_POR_DEFECTO);
+    }
+
+    /**
+     * Crea el gestor sobre el fichero indicado.
+     *
+     * <p>
+     * Tener la ruta como parametro permite probar el guardado y la carga sobre
+     * un fichero temporal, sin tocar las partidas guardadas de verdad.
+     *
+     * @param archivo ruta del fichero de partidas
+     */
+    public Io(String archivo) {
+        this.archivo = archivo;
         this.partidas = new ArrayList<>();
     }
 
@@ -68,7 +87,7 @@ public class Io {
     public void guardarArchivo(ArrayList<Partida> partidaslist) throws FileNotFoundException {
         // try-with-resources cierra los dos flujos tambien si salta una
         // excepcion, lo que antes exigia dos bloques finally anidados.
-        try (FileOutputStream fos = new FileOutputStream(ARCHIVO);
+        try (FileOutputStream fos = new FileOutputStream(this.archivo);
              ObjectOutputStream oos = new ObjectOutputStream(fos)) {
             oos.writeObject(partidaslist);
         } catch (IOException ex) {
@@ -88,7 +107,7 @@ public class Io {
      * @return las partidas guardadas, o una lista vacia si no hay ninguna
      */
     public ArrayList<Partida> cargarArchivo() {
-        try (FileInputStream fis = new FileInputStream(ARCHIVO);
+        try (FileInputStream fis = new FileInputStream(this.archivo);
              ObjectInputStream is = new ObjectInputStream(fis)) {
             this.partidas = leerPartidas(is);
         } catch (FileNotFoundException fnf) {

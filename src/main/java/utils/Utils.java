@@ -3,6 +3,7 @@ package utils;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.io.UncheckedIOException;
 
 /**
@@ -24,13 +25,40 @@ public final class Utils {
     /**
      * Lector unico y compartido sobre la entrada estandar.
      */
-    private static final BufferedReader CONSOLA =
-            new BufferedReader(new InputStreamReader(System.in));
+    private static BufferedReader consola;
 
     /**
      * Clase de utilidades: no se instancia.
      */
     private Utils() {
+    }
+
+    /**
+     * Devuelve el lector compartido, creandolo la primera vez sobre la entrada
+     * estandar que haya en ese momento.
+     *
+     * @return el lector de la entrada estandar
+     */
+    private static BufferedReader consola() {
+        if (consola == null) {
+            consola = new BufferedReader(new InputStreamReader(System.in));
+        }
+        return consola;
+    }
+
+    /**
+     * Hace que las siguientes lecturas se tomen de la entrada indicada.
+     *
+     * <p>
+     * Pensado para las pruebas automaticas y para cuando se sustituye
+     * {@code System.in}: sin esto el lector quedaria atado para siempre a la
+     * entrada que hubiera al cargar la clase.
+     *
+     * @param entrada nueva fuente de datos, o {@code null} para volver a
+     * {@code System.in}
+     */
+    public static void usarEntrada(Reader entrada) {
+        consola = entrada == null ? null : new BufferedReader(entrada);
     }
 
     /**
@@ -55,7 +83,7 @@ public final class Utils {
     public static String leerCadena() {
         String linea;
         try {
-            linea = CONSOLA.readLine();
+            linea = consola().readLine();
         } catch (IOException ex) {
             throw new UncheckedIOException("Error de lectura por entrada estandar", ex);
         }
