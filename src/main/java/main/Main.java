@@ -178,7 +178,7 @@ public class Main {
                         do {
                             System.out.println("\n-------------------SELECCION DE EQUIPO-------------------\n");
                             System.out.println("\t1) Equipo RDA");
-                            System.out.println("\t2) Equip NAVI\n");
+                            System.out.println("\t2) Equipo NAVI\n");
                             int eleccionequipo = Utils.leerEntero("Jugador 1 seleccione su equipo: (El Jugador 2 será del equipo contrario) ");
                             switch (eleccionequipo) {
                                 case 1:
