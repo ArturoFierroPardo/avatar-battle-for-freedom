@@ -100,116 +100,122 @@ public class Main {
         boolean buclepart = true;
         boolean bucleequip = true;
         System.out.println("\tAVATAR BATTLE FOR FREEDOM\n");
-        do {
-            System.out.println("\n-------------------SELECCION DE PARTIDA-------------------\n");
-            System.out.println("\t1) Cargar Partida Anterior\n");
-            System.out.println("\t2) Nueva Partida\n");
-            int eleccionpartida = Utils.leerEntero("Quieres cargar otra partida o empezar una nueva? ");
-            switch (eleccionpartida) {
-                case 1:
-                    while (buclecarga) {
-                        if (!(listapartidas.isEmpty())) {
-                            System.out.println("\nPARTIDAS GUARDADAS: ");
-                            for (int i = 0; i < listapartidas.size(); i++) {
-                                int j = 1 + i;
-                                System.out.println("\t" + j + ") Partida " + j + " en " + listapartidas.get(i).getEscenario().getNombre() + " en el turno " + listapartidas.get(i).getTurnos() + "\n");
-                            }
-                            int opcion = Utils.leerEntero("Introduzca el numero de la partida: (Pulse 0 para volver atras)") - 1;
-                            if (opcion == -1) {
-                                System.out.println("\nNo ha querido cargar ninguna partida anterior. Volviendo al menu de seleccion de partida.");
-                                buclecarga = false;
-                            } else if (opcion >= 0 && opcion < listapartidas.size()) {
-                                Partida partida = listapartidas.get(opcion);
-                                listapartidas.remove(partida);
-                                partida.comienzaPartida();
-                                if (!(partida.getTerminada())) {
-                                    listapartidas.add(partida);
+        // El guardado va en un finally para que las partidas se escriban
+        // tambien cuando se cierra la entrada estandar a mitad de juego
+        // (Ctrl+D), y no solo al salir por la opcion del menu.
+        try {
+            do {
+                System.out.println("\n-------------------SELECCION DE PARTIDA-------------------\n");
+                System.out.println("\t1) Cargar Partida Anterior\n");
+                System.out.println("\t2) Nueva Partida\n");
+                int eleccionpartida = Utils.leerEntero("Quieres cargar otra partida o empezar una nueva? ");
+                switch (eleccionpartida) {
+                    case 1:
+                        while (buclecarga) {
+                            if (!(listapartidas.isEmpty())) {
+                                System.out.println("\nPARTIDAS GUARDADAS: ");
+                                for (int i = 0; i < listapartidas.size(); i++) {
+                                    int j = 1 + i;
+                                    System.out.println("\t" + j + ") Partida " + j + " en " + listapartidas.get(i).getEscenario().getNombre() + " en el turno " + listapartidas.get(i).getTurnos() + "\n");
                                 }
-                                buclecarga = false;
-                                buclepart = false;
+                                int opcion = Utils.leerEntero("Introduzca el numero de la partida: (Pulse 0 para volver atras)") - 1;
+                                if (opcion == -1) {
+                                    System.out.println("\nNo ha querido cargar ninguna partida anterior. Volviendo al menu de seleccion de partida.");
+                                    buclecarga = false;
+                                } else if (opcion >= 0 && opcion < listapartidas.size()) {
+                                    Partida partida = listapartidas.get(opcion);
+                                    listapartidas.remove(partida);
+                                    partida.comienzaPartida();
+                                    if (!(partida.getTerminada())) {
+                                        listapartidas.add(partida);
+                                    }
+                                    buclecarga = false;
+                                    buclepart = false;
+                                } else {
+                                    System.out.println("\tOPCION INVALIDA. VUELVA A INTENTARLO CORRECTAMENTE\n");
+                                    buclecarga = true;
+                                }
                             } else {
-                                System.out.println("\tOPCION INVALIDA. VUELVA A INTENTARLO CORRECTAMENTE\n");
-                                buclecarga = true;
+                                System.out.println("\tOPCION INVALIDA. NO TIENE PARTIDAS GUARDADAS ANTERIORMENTE. SELECCIONE NUEVA PARTIDA.\n");
+                                buclecarga = false;
                             }
-                        } else {
-                            System.out.println("\tOPCION INVALIDA. NO TIENE PARTIDAS GUARDADAS ANTERIORMENTE. SELECCIONE NUEVA PARTIDA.\n");
-                            buclecarga = false;
                         }
-                    }
-                    buclecarga = true;
-                    break;
-                case 2:
-                    Escenario escenario = null;
-                    boolean bucle = true;
-                    Escenario arbolalmas = new ArbolAlmas();
-                    Escenario jardines = new Jardines();
-                    Escenario arbolmadre = new ArbolMadre();
-                    System.out.println("\n-------------------ESCENARIOS-------------------\n");
-                    System.out.println("1) Arbol de las Almas:\n" + arbolalmas.toString());
-                    System.out.println("2) Jardines Colgantes:\n" + jardines.toString());
-                    System.out.println("3) Arbol Madre:\n" + arbolmadre.toString());
-                    do {
-                        int eleccionesc = Utils.leerEntero("Elija en que escenario quiere disputar la batalla introduciendo el numero correspondiente ");
-                        switch (eleccionesc) {
-                            case 1:
-                                escenario = arbolalmas;
-                                bucle = false;
-                                break;
-                            case 2:
-                                escenario = jardines;
-                                bucle = false;
-                                break;
-                            case 3:
-                                escenario = arbolmadre;
-                                bucle = false;
-                                break;
-                            default:
-                                System.out.println("\tOPCION INVALIDA. VUELVA A INTENTARLO CORRECTAMENTE\n");
-                                bucle = true;
-                                break;
-                        }
-                    } while (bucle);
-                    String nombre1 = Utils.leerCadena("Jugador 1, elija su nombre: ");
-                    String nombre2 = Utils.leerCadena("Jugador 2, elija su nombre: ");
-                    do {
-                        System.out.println("\n-------------------SELECCION DE EQUIPO-------------------\n");
-                        System.out.println("\t1) Equipo RDA");
-                        System.out.println("\t2) Equip NAVI\n");
-                        int eleccionequipo = Utils.leerEntero("Jugador 1 seleccione su equipo: (El Jugador 2 será del equipo contrario) ");
-                        switch (eleccionequipo) {
-                            case 1:
-                                equipo1 = Equipo.RDA;
-                                equipo2 = Equipo.NAVI;
-                                bucleequip = false;
-                                break;
-                            case 2:
-                                equipo1 = Equipo.NAVI;
-                                equipo2 = Equipo.RDA;
-                                bucleequip = false;
-                                break;
-                            default:
-                                System.out.println("\tOPCION INVALIDA. VUELVA A INTENTARLO CORRECTAMENTE\n");
-                                break;
-                        }
-                    } while (bucleequip);
-                    Jugador jugador1 = new Jugador(nombre1, equipo1, escenario);
-                    Jugador jugador2 = new Jugador(nombre2, equipo2, escenario);
-                    CentroDeMandos CM1 = new CentroDeMandos(jugador1);
-                    CentroDeMandos CM2 = new CentroDeMandos(jugador2);
-                    Partida partida = new Partida(jugador1, jugador2, escenario, CM1, CM2);
-                    partida.comienzaPartida();
-                    listapartidas.add(partida);
-                    buclepart = false;
-                    break;
-                default:
-                    System.out.println("\tOPCION INVALIDA. VUELVA A INTENTARLO CORRECTAMENTE\n");
-                    buclepart = true;
-                    break;
+                        buclecarga = true;
+                        break;
+                    case 2:
+                        Escenario escenario = null;
+                        boolean bucle = true;
+                        Escenario arbolalmas = new ArbolAlmas();
+                        Escenario jardines = new Jardines();
+                        Escenario arbolmadre = new ArbolMadre();
+                        System.out.println("\n-------------------ESCENARIOS-------------------\n");
+                        System.out.println("1) Arbol de las Almas:\n" + arbolalmas.toString());
+                        System.out.println("2) Jardines Colgantes:\n" + jardines.toString());
+                        System.out.println("3) Arbol Madre:\n" + arbolmadre.toString());
+                        do {
+                            int eleccionesc = Utils.leerEntero("Elija en que escenario quiere disputar la batalla introduciendo el numero correspondiente ");
+                            switch (eleccionesc) {
+                                case 1:
+                                    escenario = arbolalmas;
+                                    bucle = false;
+                                    break;
+                                case 2:
+                                    escenario = jardines;
+                                    bucle = false;
+                                    break;
+                                case 3:
+                                    escenario = arbolmadre;
+                                    bucle = false;
+                                    break;
+                                default:
+                                    System.out.println("\tOPCION INVALIDA. VUELVA A INTENTARLO CORRECTAMENTE\n");
+                                    bucle = true;
+                                    break;
+                            }
+                        } while (bucle);
+                        String nombre1 = Utils.leerCadena("Jugador 1, elija su nombre: ");
+                        String nombre2 = Utils.leerCadena("Jugador 2, elija su nombre: ");
+                        do {
+                            System.out.println("\n-------------------SELECCION DE EQUIPO-------------------\n");
+                            System.out.println("\t1) Equipo RDA");
+                            System.out.println("\t2) Equip NAVI\n");
+                            int eleccionequipo = Utils.leerEntero("Jugador 1 seleccione su equipo: (El Jugador 2 será del equipo contrario) ");
+                            switch (eleccionequipo) {
+                                case 1:
+                                    equipo1 = Equipo.RDA;
+                                    equipo2 = Equipo.NAVI;
+                                    bucleequip = false;
+                                    break;
+                                case 2:
+                                    equipo1 = Equipo.NAVI;
+                                    equipo2 = Equipo.RDA;
+                                    bucleequip = false;
+                                    break;
+                                default:
+                                    System.out.println("\tOPCION INVALIDA. VUELVA A INTENTARLO CORRECTAMENTE\n");
+                                    break;
+                            }
+                        } while (bucleequip);
+                        Jugador jugador1 = new Jugador(nombre1, equipo1, escenario);
+                        Jugador jugador2 = new Jugador(nombre2, equipo2, escenario);
+                        CentroDeMandos CM1 = new CentroDeMandos(jugador1);
+                        CentroDeMandos CM2 = new CentroDeMandos(jugador2);
+                        Partida partida = new Partida(jugador1, jugador2, escenario, CM1, CM2);
+                        partida.comienzaPartida();
+                        listapartidas.add(partida);
+                        buclepart = false;
+                        break;
+                    default:
+                        System.out.println("\tOPCION INVALIDA. VUELVA A INTENTARLO CORRECTAMENTE\n");
+                        buclepart = true;
+                        break;
 
-            }
+                }
 
-        } while (buclepart);
-        io.guardarArchivo(listapartidas);
+            } while (buclepart);
+        } finally {
+            io.guardarArchivo(listapartidas);
+        }
     }
 
 }
