@@ -11,10 +11,6 @@ import modelos.escenario.ArbolMadre;
 import modelos.escenario.Escenario;
 import modelos.escenario.Jardines;
 import modelos.excepciones.FueradeMapaException;
-import modelos.excepciones.PuntosdeCompraInsuficientesException;
-import modelos.excepciones.SinEnergiaAtaqueException;
-import modelos.excepciones.SinEnergiaMovimientoException;
-import modelos.excepciones.SinTripulantesSuficientesException;
 import modelos.jugador.Jugador;
 import utils.EntradaCerradaException;
 import utils.Utils;
@@ -34,20 +30,10 @@ public class Main {
      * @param args argumentos de linea de comandos; no se utilizan
      * @throws modelos.excepciones.FueradeMapaException si se intenta usar una
      * coordenada fuera de los limites del escenario
-     * @throws modelos.excepciones.PuntosdeCompraInsuficientesException si no
-     * hay puntos suficientes para una compra
-     * @throws modelos.excepciones.SinEnergiaMovimientoException si una unidad
-     * se queda sin energia de movimiento
-     * @throws modelos.excepciones.SinEnergiaAtaqueException si una unidad se
-     * queda sin energia de ataque
-     * @throws modelos.excepciones.SinTripulantesSuficientesException si una
-     * unidad no tiene los tripulantes necesarios
      * @throws java.io.FileNotFoundException si no se puede escribir el fichero
      * de partidas guardadas
-     * @throws java.lang.ClassNotFoundException si el fichero de partidas
-     * guardadas no se corresponde con las clases del juego
      */
-    public static void main(String[] args) throws FueradeMapaException, PuntosdeCompraInsuficientesException, SinEnergiaMovimientoException, SinEnergiaAtaqueException, SinTripulantesSuficientesException, FileNotFoundException, ClassNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException, FueradeMapaException {
         try {
             jugar();
         } catch (EntradaCerradaException ece) {
@@ -78,20 +64,10 @@ public class Main {
      *
      * @throws modelos.excepciones.FueradeMapaException si se intenta usar una
      * coordenada fuera de los limites del escenario
-     * @throws modelos.excepciones.PuntosdeCompraInsuficientesException si no
-     * hay puntos suficientes para una compra
-     * @throws modelos.excepciones.SinEnergiaMovimientoException si una unidad
-     * se queda sin energia de movimiento
-     * @throws modelos.excepciones.SinEnergiaAtaqueException si una unidad se
-     * queda sin energia de ataque
-     * @throws modelos.excepciones.SinTripulantesSuficientesException si una
-     * unidad no tiene los tripulantes necesarios
      * @throws java.io.FileNotFoundException si no se puede escribir el fichero
      * de partidas guardadas
-     * @throws java.lang.ClassNotFoundException si el fichero de partidas
-     * guardadas no se corresponde con las clases del juego
      */
-    private static void jugar() throws FueradeMapaException, PuntosdeCompraInsuficientesException, SinEnergiaMovimientoException, SinEnergiaAtaqueException, SinTripulantesSuficientesException, FileNotFoundException, ClassNotFoundException {
+    private static void jugar() throws FileNotFoundException, FueradeMapaException {
         Io io = new Io();
         Equipo equipo1 = null;
         Equipo equipo2 = null;

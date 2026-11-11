@@ -81,13 +81,9 @@ public class Menu {
      * el usuario ha introducido la opcion mal. Añade al centro de mandos la
      * accion de cada opcion del menu.
      *
-     * @throws modelos.excepciones.PuntosdeCompraInsuficientesException
      * @throws modelos.excepciones.FueradeMapaException
-     * @throws modelos.excepciones.SinEnergiaMovimientoException
-     * @throws modelos.excepciones.SinEnergiaAtaqueException
-     * @throws modelos.excepciones.SinTripulantesSuficientesException
      */
-    public void mostrarMenu() throws PuntosdeCompraInsuficientesException, FueradeMapaException, SinEnergiaMovimientoException, SinEnergiaAtaqueException, SinTripulantesSuficientesException {
+    public void mostrarMenu() throws FueradeMapaException {
         boolean bucle = false;
         while (true) {
             do {
@@ -385,10 +381,8 @@ public class Menu {
      *
      * @return 
      * @throws modelos.excepciones.FueradeMapaException
-     * @throws modelos.excepciones.SinEnergiaMovimientoException
-     * @throws modelos.excepciones.SinTripulantesSuficientesException
      */
-    public Unidad moverUnidad() throws FueradeMapaException, SinEnergiaMovimientoException, SinTripulantesSuficientesException {
+    public Unidad moverUnidad() throws FueradeMapaException {
         boolean buclemover = false;
         System.out.println(this.jugadorjuega.getEjercito());
         while (true) {
@@ -435,12 +429,9 @@ public class Menu {
  la de defensa en la clase jugador y unidad. Puede haber fuego amigo.
      *
      * @return 
-     * @throws modelos.excepciones.IndexOutofBounceException
      * @throws modelos.excepciones.FueradeMapaException
-     * @throws modelos.excepciones.SinEnergiaAtaqueException
-     * @throws modelos.excepciones.SinTripulantesSuficientesException
      */
-    public String atacarUnidad() throws IndexOutofBounceException, FueradeMapaException, SinEnergiaAtaqueException, SinTripulantesSuficientesException {
+    public String atacarUnidad() throws FueradeMapaException {
         boolean bucleatacar = true;
         System.out.println(this.jugadorjuega.getEjercito());
         while (true) {

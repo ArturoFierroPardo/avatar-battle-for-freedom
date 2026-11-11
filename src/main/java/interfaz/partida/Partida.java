@@ -2,15 +2,10 @@ package interfaz.partida;
 
 import interfaz.centrodemandos.CentroDeMandos;
 import interfaz.menu.Menu;
-import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.Objects;
 import modelos.escenario.Escenario;
 import modelos.excepciones.FueradeMapaException;
-import modelos.excepciones.PuntosdeCompraInsuficientesException;
-import modelos.excepciones.SinEnergiaAtaqueException;
-import modelos.excepciones.SinEnergiaMovimientoException;
-import modelos.excepciones.SinTripulantesSuficientesException;
 import modelos.jugador.Jugador;
 
 /**
@@ -134,14 +129,9 @@ public class Partida implements Serializable {
      * 5 turnos como maximo. Si uno de los dos jugadores decide guardar partida
      * y acabar se cierra y se guarda en ses mimso turno.
      *
-     * @throws modelos.excepciones.PuntosdeCompraInsuficientesException
      * @throws modelos.excepciones.FueradeMapaException
-     * @throws modelos.excepciones.SinEnergiaMovimientoException
-     * @throws modelos.excepciones.SinEnergiaAtaqueException
-     * @throws modelos.excepciones.SinTripulantesSuficientesException
-     * @throws java.io.FileNotFoundException
      */
-    public void comienzaPartida() throws PuntosdeCompraInsuficientesException, FueradeMapaException, SinEnergiaMovimientoException, SinEnergiaAtaqueException, SinTripulantesSuficientesException, FileNotFoundException {
+    public void comienzaPartida() throws FueradeMapaException {
         System.out.println(toString());
         boolean bucle = true;
         do {
