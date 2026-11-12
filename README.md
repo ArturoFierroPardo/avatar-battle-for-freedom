@@ -1,6 +1,6 @@
 # Avatar: Battle for Freedom
 
-[![build](https://github.com/ArturoFierroPardo/afierrop/actions/workflows/build.yml/badge.svg)](https://github.com/ArturoFierroPardo/afierrop/actions/workflows/build.yml)
+[![build](https://github.com/ArturoFierroPardo/avatar-battle-for-freedom/actions/workflows/build.yml/badge.svg)](https://github.com/ArturoFierroPardo/avatar-battle-for-freedom/actions/workflows/build.yml)
 [![Java 17](https://img.shields.io/badge/Java-17-orange)](https://openjdk.org/projects/jdk/17/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
@@ -160,8 +160,8 @@ to its pilot.
 Requires a **JDK 17 or newer** and Maven.
 
 ```bash
-git clone https://github.com/ArturoFierroPardo/afierrop.git
-cd afierrop
+git clone https://github.com/ArturoFierroPardo/avatar-battle-for-freedom.git
+cd avatar-battle-for-freedom
 mvn package
 java -jar target/avatar-battle-for-freedom.jar
 ```
