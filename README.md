@@ -4,7 +4,7 @@
 [![Java 17](https://img.shields.io/badge/Java-17-orange)](https://openjdk.org/projects/jdk/17/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-[English](README.md) · **Español**
+[English](README.en.md) · **Español**
 
 Un juego de estrategia por turnos para dos jugadores, jugado en la consola y
 ambientado en Pandora. Cada jugador manda una facción — la **RDA** humana o los
