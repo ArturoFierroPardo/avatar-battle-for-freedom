@@ -17,6 +17,9 @@ Universidad CEU San Pablo. La entrega original se conserva en el historial del
 repositorio; la versión actual añade compilación con Maven, una batería de
 pruebas y los arreglos de los defectos que se listan al final de este fichero.
 
+> La interfaz del juego está en español, igual que los identificadores del código y el
+> Javadoc.
+
 ---
 
 ## Contenido
