@@ -162,7 +162,7 @@ class UnidadTest {
     @DisplayName("El comparador ordena las unidades de mas a menos energia de defensa")
     void elComparadorOrdenaDeMasAMenosDefensa() {
         List<Unidad> unidades = new ArrayList<>();
-        unidades.add(new MK6());          // defensa 0
+        unidades.add(new MK6());          // defensa 500
         unidades.add(new Titanothere());  // defensa 11000
         unidades.add(new AT99());         // defensa 7500
 
@@ -170,7 +170,7 @@ class UnidadTest {
 
         assertEquals(11000, unidades.get(0).getEnergiadefensa());
         assertEquals(7500, unidades.get(1).getEnergiadefensa());
-        assertEquals(0, unidades.get(2).getEnergiadefensa());
+        assertEquals(500, unidades.get(2).getEnergiadefensa());
     }
 
     @Test

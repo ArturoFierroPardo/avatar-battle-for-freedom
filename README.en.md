@@ -124,7 +124,7 @@ ridden by Na'vi.
 |---|---|---|---|---|---|---|---|
 | AT-99 Escorpion | 15000 | 7500 | 7500 | 500 | 10 | 20 | 4 |
 | Aerospatiale SA-2 Samson | 2500 | 1000 | 1000 | 80 | 5 | 10 | 2 |
-| Mitsubishi MK-6 | 500 | 0 | 1000 | 20 | 1 | 2 | 1 |
+| Mitsubishi MK-6 | 500 | 500 | 1000 | 20 | 1 | 2 | 1 |
 
 ### Na'vi — beasts
 
@@ -135,9 +135,10 @@ ridden by Na'vi.
 | Titanothere Cabezamartillo | 1000 | 11000 | 11000 | 300 | 1 | 2 | 1 |
 
 The Banshee is the odd one out: it has no movement range at all and teleports
-to a random free square anywhere on the map, at a flat energy cost. The MK-6 is
-the other special case — by design it carries no defence energy at all, so every
-hit goes straight through to its pilot. It is the cheap, disposable unit.
+to a random free square anywhere on the map, at a flat energy cost. The MK-6 sits at
+the other extreme: the cheapest unit in the game and the shortest-ranged, in both
+attack and movement, though its defence energy is just enough to absorb one hit
+from any unit without its pilot feeling it.
 
 ### Crew
 
@@ -294,27 +295,6 @@ classDiagram
     Escenario <|-- Jardines
     Escenario <|-- ArbolMadre
 ```
-
-A few decisions worth calling out:
-
-- **The board is a `Unidad[][]`.** Occupancy and position are therefore stored
-  twice — in the grid and in each unit's `Coordenadas` — and have to be kept in
-  step by hand. `colocarUnidadSiLibre` is the single entry point that writes to
-  the grid, which is what makes that tractable.
-- **Energy as three separate pools** (defence, attack, movement) is what gives
-  each unit its character: the Titanothere is a wall that can barely move, the
-  Banshee is fragile but roams the whole map.
-- **Everything is `Serializable`** so a game in progress can be written whole
-  to disk with one `writeObject`, including the command centre logs. Every such
-  class pins its `serialVersionUID` so that editing the code does not invalidate
-  existing saves.
-- **Custom checked exceptions** (`FueradeMapaException`,
-  `PuntosdeCompraInsuficientesException`, `SinEnergiaAtaqueException`, …) carry
-  rule violations up to the menu, which is the only layer that knows how to
-  explain them to the player.
-- **Back-references are excluded from `equals` and `hashCode`.** A unit knows
-  its owner, the owner knows its army and the army knows its units, so
-  comparing a unit by its owner would recurse forever.
 
 ---
 

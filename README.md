@@ -124,7 +124,7 @@ bestias las montan los Na'vi.
 |---|---|---|---|---|---|---|---|
 | AT-99 Escorpion | 15000 | 7500 | 7500 | 500 | 10 | 20 | 4 |
 | Aerospatiale SA-2 Samson | 2500 | 1000 | 1000 | 80 | 5 | 10 | 2 |
-| Mitsubishi MK-6 | 500 | 0 | 1000 | 20 | 1 | 2 | 1 |
+| Mitsubishi MK-6 | 500 | 500 | 1000 | 20 | 1 | 2 | 1 |
 
 ### Na'vi — bestias
 
@@ -135,9 +135,9 @@ bestias las montan los Na'vi.
 | Titanothere Cabezamartillo | 1000 | 11000 | 11000 | 300 | 1 | 2 | 1 |
 
 La Banshee es la excepción: no tiene alcance de movimiento y salta a una casilla
-libre cualquiera del mapa, a un coste fijo de energía. El MK-6 es el otro caso
-especial — por diseño no lleva nada de energía de defensa, así que cada impacto
-atraviesa directo hasta su piloto. Es la unidad barata y prescindible.
+libre cualquiera del mapa, a un coste fijo de energía. El MK-6 está en el otro extremo: es la unidad más barata del juego y la de menor
+alcance, tanto de ataque como de movimiento, pero su energía de defensa le basta
+para encajar un impacto de cualquier unidad sin que su piloto llegue a sufrirlo.
 
 ### Tripulantes
 
@@ -296,28 +296,6 @@ classDiagram
     Escenario <|-- Jardines
     Escenario <|-- ArbolMadre
 ```
-
-Algunas decisiones que merece la pena señalar:
-
-- **El tablero es un `Unidad[][]`.** Eso guarda la ocupación y la posición dos
-  veces — en la rejilla y en las `Coordenadas` de cada unidad — y hay que
-  mantenerlas sincronizadas a mano. `colocarUnidadSiLibre` es el único punto de
-  entrada que escribe en la rejilla, y es lo que hace eso manejable.
-- **Tres reservas de energía separadas** (defensa, ataque y movimiento) es lo
-  que da carácter a cada unidad: el Titanothere es un muro que apenas se mueve,
-  la Banshee es frágil pero recorre todo el mapa.
-- **Todo es `Serializable`**, de modo que una partida en curso se escribe entera
-  en disco con un solo `writeObject`, incluidos los registros del centro de
-  mandos. Cada una de esas clases fija su `serialVersionUID` para que modificar
-  el código no invalide las partidas ya guardadas.
-- **Excepciones comprobadas propias** (`FueradeMapaException`,
-  `PuntosdeCompraInsuficientesException`, `SinEnergiaAtaqueException`, …) llevan
-  las violaciones de las reglas hasta el menú, que es la única capa que sabe
-  cómo explicárselas al jugador.
-- **Las referencias hacia atrás quedan fuera de `equals` y `hashCode`.** Una
-  unidad conoce a su dueño, el dueño conoce su ejército y el ejército conoce sus
-  unidades, así que comparar una unidad por su dueño entraría en recursión
-  infinita.
 
 ---
 

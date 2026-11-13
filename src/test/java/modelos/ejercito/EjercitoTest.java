@@ -80,7 +80,7 @@ class EjercitoTest {
 
         // Se compran de menos a mas resistente para comprobar que el orden no
         // es el de compra.
-        Unidad mk6 = new MK6();          // defensa 0
+        Unidad mk6 = new MK6();          // defensa 500
         Unidad at99 = new AT99();        // defensa 7500
         jugador.comprarUnidad(mk6);
         jugador.comprarUnidad(at99);
