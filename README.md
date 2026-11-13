@@ -4,73 +4,72 @@
 [![Java 17](https://img.shields.io/badge/Java-17-orange)](https://openjdk.org/projects/jdk/17/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-A two-player, turn-based strategy game played on the console, set on Pandora.
-Each player commands a faction — the human **RDA** or the **Na'vi** — buys
-units, crews them, deploys them on a grid and fights until one army is wiped
-out.
+[English](README.md) · **Español**
 
-Written in Java as a coursework project for the Object-Oriented Programming
-module of the Telecommunication Systems Engineering degree at Universidad CEU
-San Pablo. The original submission is preserved in this repository's history;
-the current version adds a Maven build, a test suite and fixes for the defects
-listed at the end of this file.
+Un juego de estrategia por turnos para dos jugadores, jugado en la consola y
+ambientado en Pandora. Cada jugador manda una facción — la **RDA** humana o los
+**Na'vi** —, compra unidades, las tripula, las despliega en una rejilla y lucha
+hasta que uno de los dos ejércitos queda aniquilado.
 
-> The game's interface is in Spanish, and so are the code identifiers and the
-> Javadoc. This README is in English.
-
----
-
-## Contents
-
-- [How it plays](#how-it-plays)
-- [Units and crew](#units-and-crew)
-- [Battlegrounds](#battlegrounds)
-- [Running it](#running-it)
-- [Design](#design)
-- [Project layout](#project-layout)
-- [Tests](#tests)
-- [Code review: defects found and fixed](#code-review-defects-found-and-fixed)
-- [License](#license)
+Escrito en Java como práctica de la asignatura de Programación Orientada a
+Objetos del grado en Ingeniería de Sistemas de Telecomunicación de la
+Universidad CEU San Pablo. La entrega original se conserva en el historial del
+repositorio; la versión actual añade compilación con Maven, una batería de
+pruebas y los arreglos de los defectos que se listan al final de este fichero.
 
 ---
 
-## How it plays
+## Contenido
 
-Players alternate turns. On your turn you pick one action from the menu:
+- [Cómo se juega](#cómo-se-juega)
+- [Unidades y tripulantes](#unidades-y-tripulantes)
+- [Escenarios](#escenarios)
+- [Cómo ejecutarlo](#cómo-ejecutarlo)
+- [Diseño](#diseño)
+- [Estructura del proyecto](#estructura-del-proyecto)
+- [Pruebas](#pruebas)
+- [Revisión de código: defectos encontrados y corregidos](#revisión-de-código-defectos-encontrados-y-corregidos)
+- [Licencia](#licencia)
 
-| Option | Action |
+---
+
+## Cómo se juega
+
+Los jugadores alternan turnos. En tu turno eliges una acción del menú:
+
+| Opción | Acción |
 |---|---|
-| 1 | Buy units, and the crew each one needs to operate |
-| 2 | Move a unit |
-| 3 | Attack an enemy unit |
-| 4 | Open your command centre |
-| 5 | End your turn |
-| 6 | Save the game and quit |
+| 1 | Comprar unidades, y los tripulantes que cada una necesita para operar |
+| 2 | Mover una unidad |
+| 3 | Atacar a una unidad enemiga |
+| 4 | Abrir tu centro de mandos |
+| 5 | Finalizar el turno |
+| 6 | Guardar la partida y salir |
 
-Everything costs **points**. You start with an allowance that depends on the
-battleground, you spend it on units and crew, and you earn more by destroying
-enemy units and killing their crew. A unit without its full crew can neither
-move nor attack.
+Todo cuesta **puntos**. Empiezas con una asignación que depende del escenario,
+la gastas en unidades y tripulantes, y ganas más destruyendo unidades enemigas
+y matando a sus tripulantes. Una unidad sin la tripulación completa no puede
+moverse ni atacar.
 
-Combat resolves against a unit's **defence energy** first. Once that is gone,
-the surplus damage is split evenly among the crew; crew members who run out of
-life die, and a unit that loses its whole crew is destroyed and removed from
-the board. Friendly fire is possible, and the command centre log says so when
-it happens.
+El combate se resuelve primero contra la **energía de defensa** de la unidad.
+Una vez agotada, el daño sobrante se reparte a partes iguales entre los
+tripulantes; los que se quedan sin vida mueren, y una unidad que pierde a toda
+su tripulación queda destruida y se retira del tablero. El fuego amigo es
+posible, y el registro del centro de mandos lo indica cuando ocurre.
 
-Moving and attacking also burn **movement energy** and **attack energy**, which
-do not regenerate — so a unit has a finite useful life regardless of how much
-damage it takes.
+Moverse y atacar también consumen **energía de movimiento** y **energía de
+ataque**, que no se regeneran: una unidad tiene una vida útil finita por mucho
+daño que sea capaz de aguantar.
 
-The **command centre** is each player's private log: every action by either
-side is recorded with a timestamp, but you see more detail about your own moves
-than about your opponent's — you are told that the enemy moved a unit, not
-where it went.
+El **centro de mandos** es el registro privado de cada jugador: toda acción de
+cualquiera de los dos bandos queda anotada con su hora, pero ves más detalle de
+tus propios movimientos que de los del rival — a ti te dicen que el enemigo ha
+movido una unidad, no a dónde.
 
-Games can be saved and resumed; several saved games live side by side in
-`partidas.dat` and are offered as a list on startup.
+Las partidas se pueden guardar y retomar; varias conviven en `partidas.dat` y se
+ofrecen como lista al arrancar.
 
-### A session, abbreviated
+### Una sesión, abreviada
 
 ```
 	AVATAR BATTLE FOR FREEDOM
@@ -108,46 +107,46 @@ Turno de Arturo
 
 ---
 
-## Units and crew
+## Unidades y tripulantes
 
-Each faction has its own roster. Machines are crewed by humans, beasts are
-ridden by Na'vi.
+Cada facción tiene su propio catálogo. Las máquinas las tripulan humanos, a las
+bestias las montan los Na'vi.
 
-### RDA — machines
+### RDA — máquinas
 
-| Unit | Cost | Defence | Attack | Power | Range | Move | Crew |
+| Unidad | Coste | Defensa | Ataque | Potencia | Alcance ataque | Movimiento | Tripulantes |
 |---|---|---|---|---|---|---|---|
 | AT-99 Escorpion | 15000 | 7500 | 7500 | 500 | 10 | 20 | 4 |
 | Aerospatiale SA-2 Samson | 2500 | 1000 | 1000 | 80 | 5 | 10 | 2 |
 | Mitsubishi MK-6 | 500 | 0 | 1000 | 20 | 1 | 2 | 1 |
 
-### Na'vi — beasts
+### Na'vi — bestias
 
-| Unit | Cost | Defence | Attack | Power | Range | Move | Crew |
+| Unidad | Coste | Defensa | Ataque | Potencia | Alcance ataque | Movimiento | Tripulantes |
 |---|---|---|---|---|---|---|---|
 | Thanator | 8000 | 9000 | 9000 | 600 | 5 | 50 | 3 |
-| Banshee de Montaña | 2000 | 3500 | 8000 | 300 | 10 | anywhere | 2 |
+| Banshee de Montaña | 2000 | 3500 | 8000 | 300 | 10 | todo el mapa | 2 |
 | Titanothere Cabezamartillo | 1000 | 11000 | 11000 | 300 | 1 | 2 | 1 |
 
-The Banshee is the odd one out: it has no movement range at all and teleports
-to a random free square anywhere on the map, at a flat energy cost. The MK-6 is
-the other special case — it has no defence energy, so every hit goes straight
-to its pilot.
+La Banshee es la excepción: no tiene alcance de movimiento y salta a una casilla
+libre cualquiera del mapa, a un coste fijo de energía. El MK-6 es el otro caso
+especial — no tiene energía de defensa, así que cada impacto va directo a su
+piloto.
 
-### Crew
+### Tripulantes
 
-| Crew | Faction | Rank | Cost | Life | Points when killed |
+| Tripulante | Facción | Cargo | Coste | Vida | Puntos al derrotarlo |
 |---|---|---|---|---|---|
-| Comandante de SecOps | RDA | Officer | 100 | 150 | 400 |
-| Artillero | RDA | Warrior | 50 | 150 | 100 |
-| Omaticaya | Na'vi | Officer | 100 | 300 | 400 |
-| Tipani | Na'vi | Warrior | 50 | 300 | 250 |
+| Comandante de SecOps | RDA | Oficial | 100 | 150 | 400 |
+| Artillero | RDA | Guerrero | 50 | 150 | 100 |
+| Omaticaya | Na'vi | Oficial | 100 | 300 | 400 |
+| Tipani | Na'vi | Guerrero | 50 | 300 | 250 |
 
 ---
 
-## Battlegrounds
+## Escenarios
 
-| Battleground | Grid | Starting points |
+| Escenario | Rejilla | Puntos iniciales |
 |---|---|---|
 | Árbol de las Almas | 100 × 100 | 5 000 |
 | Jardines Colgantes | 200 × 200 | 20 000 |
@@ -155,9 +154,9 @@ to its pilot.
 
 ---
 
-## Running it
+## Cómo ejecutarlo
 
-Requires a **JDK 17 or newer** and Maven.
+Necesitas un **JDK 17 o posterior** y Maven.
 
 ```bash
 git clone https://github.com/ArturoFierroPardo/avatar-battle-for-freedom.git
@@ -166,32 +165,34 @@ mvn package
 java -jar target/avatar-battle-for-freedom.jar
 ```
 
-Two of the game's messages contain accented characters. On a console that is
-not already using UTF-8 — the Windows command prompt, typically — run `chcp
-65001` first so they display correctly.
+Dos de los mensajes del juego llevan caracteres acentuados, así que en una
+consola que no esté en UTF-8 — típicamente el símbolo del sistema de Windows —
+conviene ejecutar antes `chcp 65001` para que se vean bien.
 
-Saved games are written to `partidas.dat` in the working directory.
+Las partidas guardadas se escriben en `partidas.dat`, en el directorio de
+trabajo.
 
-In an IDE, open the folder as a Maven project — NetBeans, IntelliJ IDEA and
-Eclipse all read `pom.xml` directly, with no further setup.
+En un IDE, abre la carpeta como proyecto Maven: NetBeans, IntelliJ IDEA y
+Eclipse leen el `pom.xml` directamente, sin configurar nada más.
 
-Other useful targets:
+Otros comandos útiles:
 
 ```bash
-mvn test              # run the test suite
-mvn javadoc:javadoc   # generate the Javadoc under target/
+mvn test              # ejecuta la batería de pruebas
+mvn javadoc:javadoc   # genera el Javadoc dentro de target/
 ```
 
 ---
 
-## Design
+## Diseño
 
-The model is a plain inheritance hierarchy with two abstract roots. `Unidad`
-holds everything a playable piece has in common — cost, the three energy
-pools, power, range and crew — and leaves each concrete unit to supply its own
-numbers. Units that spend movement energy at a flat rate rather than per square
-override `restarEnergia`, and the Banshee overrides `moverUnidad` outright
-because it ignores movement range.
+El modelo es una jerarquía de herencia con dos raíces abstractas. `Unidad`
+recoge todo lo que tienen en común las piezas jugables — coste, las tres
+reservas de energía, potencia, alcance y tripulación — y deja que cada unidad
+concreta aporte sus propios números. Las unidades que gastan energía de
+movimiento a un coste fijo en lugar de por casilla sobrescriben `restarEnergia`,
+y la Banshee sobrescribe `moverUnidad` por completo porque ignora el alcance de
+movimiento.
 
 ```mermaid
 classDiagram
@@ -285,163 +286,172 @@ classDiagram
     Escenario <|-- ArbolMadre
 ```
 
-A few decisions worth calling out:
+Algunas decisiones que merece la pena señalar:
 
-- **The board is a `Unidad[][]`.** Occupancy and position are therefore stored
-  twice — in the grid and in each unit's `Coordenadas` — and have to be kept in
-  step by hand. `colocarUnidadSiLibre` is the single entry point that writes to
-  the grid, which is what makes that tractable.
-- **Energy as three separate pools** (defence, attack, movement) is what gives
-  each unit its character: the Titanothere is a wall that can barely move, the
-  Banshee is fragile but roams the whole map.
-- **Everything is `Serializable`** so a game in progress can be written whole
-  to disk with one `writeObject`, including the command centre logs. Every such
-  class pins its `serialVersionUID` so that editing the code does not invalidate
-  existing saves.
-- **Custom checked exceptions** (`FueradeMapaException`,
-  `PuntosdeCompraInsuficientesException`, `SinEnergiaAtaqueException`, …) carry
-  rule violations up to the menu, which is the only layer that knows how to
-  explain them to the player.
-- **Back-references are excluded from `equals` and `hashCode`.** A unit knows
-  its owner, the owner knows its army and the army knows its units, so
-  comparing a unit by its owner would recurse forever.
+- **El tablero es un `Unidad[][]`.** Eso guarda la ocupación y la posición dos
+  veces — en la rejilla y en las `Coordenadas` de cada unidad — y hay que
+  mantenerlas sincronizadas a mano. `colocarUnidadSiLibre` es el único punto de
+  entrada que escribe en la rejilla, y es lo que hace eso manejable.
+- **Tres reservas de energía separadas** (defensa, ataque y movimiento) es lo
+  que da carácter a cada unidad: el Titanothere es un muro que apenas se mueve,
+  la Banshee es frágil pero recorre todo el mapa.
+- **Todo es `Serializable`**, de modo que una partida en curso se escribe entera
+  en disco con un solo `writeObject`, incluidos los registros del centro de
+  mandos. Cada una de esas clases fija su `serialVersionUID` para que modificar
+  el código no invalide las partidas ya guardadas.
+- **Excepciones comprobadas propias** (`FueradeMapaException`,
+  `PuntosdeCompraInsuficientesException`, `SinEnergiaAtaqueException`, …) llevan
+  las violaciones de las reglas hasta el menú, que es la única capa que sabe
+  cómo explicárselas al jugador.
+- **Las referencias hacia atrás quedan fuera de `equals` y `hashCode`.** Una
+  unidad conoce a su dueño, el dueño conoce su ejército y el ejército conoce sus
+  unidades, así que comparar una unidad por su dueño entraría en recursión
+  infinita.
 
 ---
 
-## Project layout
+## Estructura del proyecto
 
 ```
 src/main/java/
-├── main/                      entry point
+├── main/                      punto de entrada
 ├── interfaz/
-│   ├── partida/               turn loop and win conditions
-│   ├── menu/                  the turn menu and the markets
-│   └── centrodemandos/        per-player action log
+│   ├── partida/               bucle de turnos y condiciones de victoria
+│   ├── menu/                  el menú del turno y los mercados
+│   └── centrodemandos/        registro de acciones por jugador
 ├── modelos/
-│   ├── jugador/               points, army, actions
+│   ├── jugador/               puntos, ejército, acciones
 │   ├── ejercito/
 │   ├── equipo/                RDA / NAVI
-│   ├── escenario/             battlegrounds and the board
-│   ├── coordenadas/           squares, bounds and displacement
+│   ├── escenario/             escenarios y el tablero
+│   ├── coordenadas/           casillas, límites y desplazamiento
 │   ├── unidad/                Unidad → Maquina | Bestia
 │   ├── ser/                   Ser → Humano | Navi
-│   └── excepciones/           rule violations
-├── io/                        saving and loading
-└── utils/                     console input
+│   └── excepciones/           violaciones de las reglas
+├── io/                        guardado y carga
+└── utils/                     lectura por consola
 
-src/test/java/                 77 JUnit 5 tests
+src/test/java/                 77 pruebas con JUnit 5
 ```
 
 ---
 
-## Tests
+## Pruebas
 
-77 JUnit 5 tests over the domain logic — board bounds, scenarios, units, crew,
-the army, the player's actions and persistence:
+77 pruebas con JUnit 5 sobre la lógica de dominio: límites del tablero,
+escenarios, unidades, tripulantes, el ejército, las acciones del jugador y la
+persistencia.
 
 ```bash
 mvn test
 ```
 
-They are regression tests as much as unit tests: every defect in the list below
-has a test that pins it, with a comment explaining what used to go wrong. The
-suite was checked by mutation — reintroducing the fixes' original bugs by hand
-makes it fail, and undoing that makes it pass again.
+Son pruebas de regresión tanto como pruebas unitarias: cada defecto de la lista
+de abajo tiene una prueba que lo fija, con un comentario que explica qué fallaba
+antes. La batería se comprobó por mutación — al reintroducir a mano los bugs
+originales que arreglan, falla; al deshacerlo, vuelve a pasar entera.
 
 ---
 
-## Code review: defects found and fixed
+## Revisión de código: defectos encontrados y corregidos
 
-Reviewing the original submission before publishing it turned up the following.
-They are listed because the fixes are the bulk of the diff against the
-coursework version, and because a couple of them are the kind of mistake worth
-remembering.
+Revisar la entrega original antes de publicarla sacó a la luz lo siguiente. Se
+listan porque los arreglos son el grueso de la diferencia respecto a la versión
+de la práctica, y porque un par de ellos son de la clase de error que conviene
+recordar.
 
-**The console reader lost input.** `Utils` created a new `BufferedReader` over
-`System.in` on every single read. Each one filled its internal buffer with a
-whole block of input and then threw the remainder away when the object went out
-of scope, so up to 8 KB of input vanished per read. Typing at a keyboard hid
-the problem, because a terminal hands over one line at a time; redirecting
-input from a file made the game unplayable. There is now one shared reader.
+**La lectura por consola perdía datos.** `Utils` creaba un `BufferedReader`
+nuevo sobre `System.in` en cada lectura. Cada uno llenaba su buffer interno con
+un bloque entero de la entrada y descartaba el resto al quedar el objeto fuera
+de uso, así que se perdían hasta 8 KB por lectura. Teclear a mano ocultaba el
+problema, porque la consola entrega los datos línea a línea; redirigir la
+entrada desde un fichero hacía el juego inusable. Ahora el lector es único y
+compartido.
 
-**End of input meant an infinite loop.** At the end of the stream `readLine`
-returns `null`, `Integer.parseInt(null)` throws `NumberFormatException`, and
-`leerEntero` treated that as a recoverable typo and asked again — forever.
-A minute of running produced 19 million lines of "please enter a number".
-There is now an `EntradaCerradaException`, caught in `main`, and the game saves
-and exits cleanly.
+**El fin de la entrada provocaba un bucle infinito.** Al final del flujo
+`readLine` devuelve `null`, `Integer.parseInt(null)` lanza
+`NumberFormatException`, y `leerEntero` lo trataba como una errata corregible y
+volvía a preguntar, indefinidamente. Un minuto de ejecución generaba 19 millones
+de líneas de «introduzca un número». Ahora existe `EntradaCerradaException`, se
+captura en `main`, y el juego guarda y termina de forma ordenada.
 
-**Buying one unit put it on 828 squares.** `comprarUnidad` had its placement
-condition inverted: `colocarUnidadSiLibre` returns `true` when it has placed
-the unit, and the code kept drawing new random squares in exactly that case. On
-the 300×300 map a single purchase scattered references to the same unit across
-hundreds of squares, every one of which could be attacked.
+**Comprar una unidad la colocaba en 828 casillas.** `comprarUnidad` tenía la
+condición de colocación invertida: `colocarUnidadSiLibre` devuelve `true` cuando
+ha colocado la unidad, y el código seguía sorteando casillas precisamente en ese
+caso. En el mapa de 300×300, una sola compra esparcía referencias a la misma
+unidad por centenares de casillas, y se la podía atacar en todas ellas.
 
-**`hashCode` overflowed the stack.** `Unidad`, `Jugador` and `Escenario` each
-included a reference that closed a cycle — unit → player → army → unit — so as
-soon as a unit had an owner, `hashCode()` and `equals()` called themselves
-until the stack ran out. Putting any of these objects in a `HashMap` or
-`HashSet` crashed the program.
+**`hashCode` desbordaba la pila.** `Unidad`, `Jugador` y `Escenario` incluían
+cada uno una referencia que cerraba un ciclo — unidad → jugador → ejército →
+unidad —, así que en cuanto una unidad tenía dueño, `hashCode()` y `equals()` se
+llamaban a sí mismos hasta agotar la pila. Meter cualquiera de esos objetos en
+un `HashMap` o un `HashSet` abortaba el programa.
 
-**Several `equals` compared objects with `==`.** The board in `Escenario`, the
-unit list in `Ejercito`, the players in `Partida` and `CentroDeMandos`: they
-tested whether two objects were the *same* instance, so two equal values were
-never equal.
+**Varios `equals` comparaban objetos con `==`.** El tablero en `Escenario`, la
+lista de unidades en `Ejercito`, los jugadores en `Partida` y `CentroDeMandos`:
+comprobaban si dos objetos eran *el mismo*, de modo que dos valores iguales
+nunca resultaban iguales.
 
-**`Coordenadas` broke the `equals`/`hashCode` contract.** `hashCode` mixed in
-the scenario and the squares travelled, which `equals` does not look at, so two
-equal coordinates could hash differently and fail to be found in a `HashSet`.
+**`Coordenadas` rompía el contrato entre `equals` y `hashCode`.** `hashCode`
+mezclaba el escenario y las casillas recorridas, que `equals` no mira, así que
+dos coordenadas iguales podían dar códigos distintos y no encontrarse dentro de
+un `HashSet`.
 
-**An off-by-one on the board edge crashed the game.** The board is
-`new Unidad[xmax][ymax]`, so the last valid index is `xmax - 1`, but the bounds
-check was `> xmax` and let `xmax` through. A unit moving to the edge of the map
-aborted the game with an `ArrayIndexOutOfBoundsException`. In
-`Unidad.atacarUnidad` the "you cannot attack off the map" warning also failed
-to stop the iteration, so the attack could go ahead anyway.
+**Un off-by-one en el borde del tablero abortaba la partida.** El tablero es
+`new Unidad[xmax][ymax]`, luego el último índice válido es `xmax - 1`, pero la
+comprobación de límites era `> xmax` y dejaba pasar `xmax`. Una unidad que se
+moviera al borde del mapa abortaba la partida con un
+`ArrayIndexOutOfBoundsException`. En `Unidad.atacarUnidad`, el aviso de «no
+puede atacar fuera del mapa» además no cortaba la iteración, así que el ataque
+podía ejecutarse igualmente.
 
-**Damage was over-counted, and destroying a unit threw.**
-`Jugador.recibirDano` zeroed the defence energy *before* computing the surplus,
-so it divided the attacker's full power among the crew instead of only the part
-that got through the armour. It also removed dead crew inside a for-each over
-their own list — a `ConcurrentModificationException` the moment a unit was
-destroyed — and divided by the crew count without checking it was not zero.
+**El daño se contaba de más, y destruir una unidad lanzaba una excepción.**
+`Jugador.recibirDano` ponía la energía de defensa a cero *antes* de calcular el
+sobrante, así que repartía entre la tripulación la potencia entera del atacante
+en vez de solo la parte que atravesaba la armadura. También eliminaba a los
+tripulantes muertos dentro de un for-each sobre su propia lista — un
+`ConcurrentModificationException` en el momento en que se destruía una unidad — y
+dividía entre el número de tripulantes sin comprobar que no fuera cero.
 
-**`maxmov` was a `String`.** It held the text "Casilla aleatoria" for the
-Banshee, and the getter ran `Integer.parseInt` over it, so asking a Banshee for
-its movement range threw `NumberFormatException`. It is an `int` now, and the
-label is produced only when the value is displayed.
+**`maxmov` era un `String`.** Contenía el texto «Casilla aleatoria» para la
+Banshee, y el getter le aplicaba `Integer.parseInt`, así que preguntar a una
+Banshee por su alcance de movimiento lanzaba `NumberFormatException`. Ahora es un
+`int`, y la etiqueta se genera solo al mostrar el valor.
 
-**No `serialVersionUID` anywhere.** Any edit to a serializable class would have
-made every existing saved game unreadable with an `InvalidClassException`. All
-32 of them now pin it.
+**No había ningún `serialVersionUID`.** Cualquier modificación de una clase
+serializable habría dejado ilegibles todas las partidas guardadas, con un
+`InvalidClassException`. Las 32 lo fijan ahora.
 
-**The purchase flow was duplicated six times.** `Menu.compraUnidad` repeated the
-same ~50-line block once per buyable unit per faction, with the crew purchase
-nested inside each copy. Unifying it cut `Menu.java` from 649 to 500 lines and
-exposed three inconsistencies between the copies: the RDA branch returned inside
-the loop and so always bought exactly one unit however many you asked for; both
-branches nulled out a unit whose crew could not be completed and then
-immediately reassigned the return value to it, so the command centre logged the
-purchase as a success and the half-crewed unit went on occupying its square; and
-running out of points mid-crew aborted the whole purchase with the unit already
-paid for.
+**El flujo de compra estaba duplicado seis veces.** `Menu.compraUnidad` repetía
+el mismo bloque de unas 50 líneas una vez por cada unidad comprable de cada
+facción, con la compra de tripulantes anidada dentro de cada copia. Unificarlo
+bajó `Menu.java` de 649 a 500 líneas y dejó a la vista tres incoherencias entre
+las copias: la rama de la RDA hacía un `return` dentro del bucle y por tanto
+compraba siempre exactamente una unidad por muchas que pidieras; las dos ramas
+anulaban la unidad cuya tripulación no se podía completar y acto seguido
+reasignaban a ella el valor de retorno, con lo que el centro de mandos
+registraba la compra como exitosa y la unidad a medio tripular seguía ocupando
+su casilla; y quedarse sin puntos a mitad de la tripulación abortaba toda la
+compra con la unidad ya pagada.
 
-**Smaller things.** Empty `catch` blocks in `Io` swallowed I/O errors, and a
-missing save file on first run was indistinguishable from a real failure.
-`setX`/`setY` assigned before validating, so a rejected coordinate was stored
-anyway. A `Coordenadas` constructor took a fifth `int` parameter that existed
-only to disambiguate an overload. Non-ASCII identifiers (`checkMapaAñadir`,
-`recibirdaño`) were renamed. The 36 files still carried the NetBeans template
-header, the author tag read `artur`, every class-level Javadoc was empty, and
-the entry point held a personal note about the coursework deadline. The project
-now compiles clean under `-Xlint:all`; it used to emit 36 warnings.
+**Cosas menores.** Bloques `catch` vacíos en `Io` se tragaban los errores de
+entrada y salida, y la ausencia del fichero de partidas en la primera ejecución
+era indistinguible de un fallo real. `setX` y `setY` asignaban antes de validar,
+así que una coordenada rechazada se guardaba igualmente. Un constructor de
+`Coordenadas` recibía un quinto parámetro `int` que existía solo para distinguir
+una sobrecarga. Se renombraron los identificadores con caracteres no ASCII
+(`checkMapaAñadir`, `recibirdaño`). Los 36 ficheros seguían llevando la cabecera
+de la plantilla de NetBeans, la etiqueta de autor decía `artur`, todos los
+Javadoc de clase estaban vacíos, y el punto de entrada guardaba una nota
+personal sobre la fecha de entrega de la práctica. El proyecto compila ahora
+limpio con `-Xlint:all`; antes emitía 36 avisos.
 
 ---
 
-## License
+## Licencia
 
 [MIT](LICENSE) © Arturo Fierro Pardo
 
-Avatar and its setting are the property of 20th Century Studios. This is a
-non-commercial student project with no affiliation to the rights holders; the
-licence covers the source code only.
+Avatar y su universo son propiedad de 20th Century Studios. Esto es un proyecto
+de estudiante, sin ánimo de lucro y sin ninguna vinculación con los titulares de
+los derechos; la licencia cubre únicamente el código fuente.
