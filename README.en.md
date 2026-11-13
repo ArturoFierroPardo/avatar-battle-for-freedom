@@ -4,7 +4,7 @@
 [![Java 17](https://img.shields.io/badge/Java-17-orange)](https://openjdk.org/projects/jdk/17/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-**English** · [Español](README.es.md)
+**English** · [Español](README.md)
 
 A two-player, turn-based strategy game played on the console, set on Pandora.
 Each player commands a faction — the human **RDA** or the **Na'vi** — buys
