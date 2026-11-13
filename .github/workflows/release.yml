@@ -35,7 +35,64 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          # Las notas se escriben aqui en lugar de dejar el listado de commits
+          # que genera gh por defecto: quien entra a la release quiere saber
+          # como jugar, no que ficheros cambiaron. El heredoc va entre comillas
+          # para que el shell no toque los acentos graves del markdown.
+          cat > notas.md <<'NOTAS'
+          **Juego de estrategia por turnos para dos jugadores, en consola y ambientado en Pandora.**
+          **Two-player, turn-based strategy game played on the console, set on Pandora.**
+
+          <details open>
+          <summary><b>Español</b></summary>
+
+          ### Cómo jugar
+
+          Descarga `avatar-battle-for-freedom.jar` de los *Assets* de aquí abajo y ejecútalo:
+
+          ```bash
+          java -jar avatar-battle-for-freedom.jar
+          ```
+
+          Solo necesita un **JRE 17 o posterior**. En Windows, si los acentos no se ven bien, ejecuta antes `chcp 65001`.
+
+          ### Qué trae
+
+          - Dos facciones, la RDA y los Na'vi, con tres unidades y dos tipos de tripulante cada una
+          - Tres escenarios, de 100×100, 200×200 y 300×300 casillas
+          - Partidas guardables y recuperables
+          - 102 pruebas con JUnit 5 e integración continua
+
+          [Documentación del código](https://arturofierropardo.github.io/avatar-battle-for-freedom/)
+
+          </details>
+
+          <details>
+          <summary><b>English</b></summary>
+
+          ### How to play
+
+          Download `avatar-battle-for-freedom.jar` from the Assets below and run it:
+
+          ```bash
+          java -jar avatar-battle-for-freedom.jar
+          ```
+
+          It needs a **JRE 17 or newer** and nothing else. On Windows, run `chcp 65001` first if the accented characters don't display correctly.
+
+          ### What's in it
+
+          - Two factions, the RDA and the Na'vi, each with three units and two kinds of crew
+          - Three battlegrounds, of 100×100, 200×200 and 300×300 squares
+          - Saveable and resumable games
+          - 102 JUnit 5 tests and continuous integration
+
+          [Code documentation](https://arturofierropardo.github.io/avatar-battle-for-freedom/)
+
+          </details>
+          NOTAS
+
           gh release create "$GITHUB_REF_NAME" \
             target/avatar-battle-for-freedom.jar \
-            --title "$GITHUB_REF_NAME" \
-            --generate-notes
+            --title "Avatar: Battle for Freedom $GITHUB_REF_NAME" \
+            --notes-file notas.md
