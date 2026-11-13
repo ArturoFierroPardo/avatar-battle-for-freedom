@@ -1,10 +1,10 @@
+**English** · [Español](README.md)
+
 # Avatar: Battle for Freedom
 
 [![build](https://github.com/ArturoFierroPardo/avatar-battle-for-freedom/actions/workflows/build.yml/badge.svg)](https://github.com/ArturoFierroPardo/avatar-battle-for-freedom/actions/workflows/build.yml)
 [![Java 17](https://img.shields.io/badge/Java-17-orange)](https://openjdk.org/projects/jdk/17/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-
-**English** · [Español](README.md)
 
 A two-player, turn-based strategy game played on the console, set on Pandora.
 Each player commands a faction — the human **RDA** or the **Na'vi** — buys
