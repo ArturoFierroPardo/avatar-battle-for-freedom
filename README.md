@@ -1,10 +1,10 @@
+[English](README.en.md) · **Español**
+
 # Avatar: Battle for Freedom
 
 [![build](https://github.com/ArturoFierroPardo/avatar-battle-for-freedom/actions/workflows/build.yml/badge.svg)](https://github.com/ArturoFierroPardo/avatar-battle-for-freedom/actions/workflows/build.yml)
 [![Java 17](https://img.shields.io/badge/Java-17-orange)](https://openjdk.org/projects/jdk/17/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-
-[English](README.en.md) · **Español**
 
 Un juego de estrategia por turnos para dos jugadores, jugado en la consola y
 ambientado en Pandora. Cada jugador manda una facción — la **RDA** humana o los
