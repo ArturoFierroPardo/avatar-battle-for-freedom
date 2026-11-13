@@ -5,6 +5,7 @@
 [![build](https://github.com/ArturoFierroPardo/avatar-battle-for-freedom/actions/workflows/build.yml/badge.svg)](https://github.com/ArturoFierroPardo/avatar-battle-for-freedom/actions/workflows/build.yml)
 [![Java 17](https://img.shields.io/badge/Java-17-orange)](https://openjdk.org/projects/jdk/17/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Javadoc](https://img.shields.io/badge/Javadoc-online-green)](https://arturofierropardo.github.io/avatar-battle-for-freedom/)
 
 A two-player, turn-based strategy game played on the console, set on Pandora.
 Each player commands a faction — the human **RDA** or the **Na'vi** — buys
@@ -15,7 +16,7 @@ Written in Java as a coursework project for the Object-Oriented Programming
 module of the Telecommunication Systems Engineering degree at Universidad CEU
 San Pablo. The original submission is preserved in this repository's history;
 the current version adds a Maven build, a test suite and fixes for the defects
-listed at the end of this file.
+that the review turned up.
 
 > The game's interface is in Spanish, and so are the code identifiers and the
 > Javadoc.
@@ -31,7 +32,6 @@ listed at the end of this file.
 - [Design](#design)
 - [Project layout](#project-layout)
 - [Tests](#tests)
-- [Code review: defects found and fixed](#code-review-defects-found-and-fixed)
 - [License](#license)
 
 ---
@@ -46,8 +46,11 @@ Players alternate turns. On your turn you pick one action from the menu:
 | 2 | Move a unit |
 | 3 | Attack an enemy unit |
 | 4 | Open your command centre |
-| 5 | End your turn |
+| 5 | Pass, ending your turn without acting |
 | 6 | Save the game and quit |
+
+One action per turn: buying, moving or attacking ends it, and option 5 is there
+for when you would rather pass.
 
 Everything costs **points**. You start with an allowance that depends on the
 battleground, you spend it on units and crew, and you earn more by destroying
@@ -133,8 +136,8 @@ ridden by Na'vi.
 
 The Banshee is the odd one out: it has no movement range at all and teleports
 to a random free square anywhere on the map, at a flat energy cost. The MK-6 is
-the other special case — it has no defence energy, so every hit goes straight
-to its pilot.
+the other special case — by design it carries no defence energy at all, so every
+hit goes straight through to its pilot. It is the cheap, disposable unit.
 
 ### Crew
 
@@ -168,6 +171,11 @@ mvn package
 java -jar target/avatar-battle-for-freedom.jar
 ```
 
+To play without building anything, download the jar from the
+[latest release](https://github.com/ArturoFierroPardo/avatar-battle-for-freedom/releases/latest)
+and run `java -jar avatar-battle-for-freedom.jar`. It needs a JRE 17 or newer
+and nothing else.
+
 Two of the game's messages contain accented characters. On a console that is
 not already using UTF-8 — the Windows command prompt, typically — run `chcp
 65001` first so they display correctly.
@@ -181,7 +189,7 @@ Other useful targets:
 
 ```bash
 mvn test              # run the test suite
-mvn javadoc:javadoc   # generate the Javadoc under target/
+mvn javadoc:javadoc   # generate the Javadoc into target/apidocs
 ```
 
 ---
@@ -331,21 +339,23 @@ src/main/java/
 ├── io/                        saving and loading
 └── utils/                     console input
 
-src/test/java/                 77 JUnit 5 tests
+src/test/java/                 102 JUnit 5 tests
 ```
 
 ---
 
 ## Tests
 
-77 JUnit 5 tests over the domain logic — board bounds, scenarios, units, crew,
-the army, the player's actions and persistence:
+102 JUnit 5 tests. They cover the domain logic — board bounds, scenarios,
+units, crew, the army, the player's actions and persistence — and also the turn
+loop and the menu, which are driven by scripted games fed through
+`Utils.usarEntrada` with the console output captured and checked:
 
 ```bash
 mvn test
 ```
 
-They are regression tests as much as unit tests: every defect in the list below
+They are regression tests as much as unit tests: every defect that was fixed
 has a test that pins it, with a comment explaining what used to go wrong. The
 suite was checked by mutation — reintroducing the fixes' original bugs by hand
 makes it fail, and undoing that makes it pass again.

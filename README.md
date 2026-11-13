@@ -5,6 +5,7 @@
 [![build](https://github.com/ArturoFierroPardo/avatar-battle-for-freedom/actions/workflows/build.yml/badge.svg)](https://github.com/ArturoFierroPardo/avatar-battle-for-freedom/actions/workflows/build.yml)
 [![Java 17](https://img.shields.io/badge/Java-17-orange)](https://openjdk.org/projects/jdk/17/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Javadoc](https://img.shields.io/badge/Javadoc-online-green)](https://arturofierropardo.github.io/avatar-battle-for-freedom/)
 
 Un juego de estrategia por turnos para dos jugadores, jugado en la consola y
 ambientado en Pandora. Cada jugador manda una facción — la **RDA** humana o los
@@ -15,7 +16,7 @@ Escrito en Java como práctica de la asignatura de Programación Orientada a
 Objetos del grado en Ingeniería de Sistemas de Telecomunicación de la
 Universidad CEU San Pablo. La entrega original se conserva en el historial del
 repositorio; la versión actual añade compilación con Maven, una batería de
-pruebas y los arreglos de los defectos que se listan al final de este fichero.
+pruebas y los arreglos de los defectos que salieron al revisarlo.
 
 > La interfaz del juego está en español, igual que los identificadores del código y el
 > Javadoc.
@@ -31,7 +32,6 @@ pruebas y los arreglos de los defectos que se listan al final de este fichero.
 - [Diseño](#diseño)
 - [Estructura del proyecto](#estructura-del-proyecto)
 - [Pruebas](#pruebas)
-- [Revisión de código: defectos encontrados y corregidos](#revisión-de-código-defectos-encontrados-y-corregidos)
 - [Licencia](#licencia)
 
 ---
@@ -46,8 +46,11 @@ Los jugadores alternan turnos. En tu turno eliges una acción del menú:
 | 2 | Mover una unidad |
 | 3 | Atacar a una unidad enemiga |
 | 4 | Abrir tu centro de mandos |
-| 5 | Finalizar el turno |
+| 5 | Pasar, acabando el turno sin hacer nada |
 | 6 | Guardar la partida y salir |
+
+Una acción por turno: comprar, mover o atacar lo da por terminado, y la opción 5
+está para cuando prefieres pasar.
 
 Todo cuesta **puntos**. Empiezas con una asignación que depende del escenario,
 la gastas en unidades y tripulantes, y ganas más destruyendo unidades enemigas
@@ -133,8 +136,8 @@ bestias las montan los Na'vi.
 
 La Banshee es la excepción: no tiene alcance de movimiento y salta a una casilla
 libre cualquiera del mapa, a un coste fijo de energía. El MK-6 es el otro caso
-especial — no tiene energía de defensa, así que cada impacto va directo a su
-piloto.
+especial — por diseño no lleva nada de energía de defensa, así que cada impacto
+atraviesa directo hasta su piloto. Es la unidad barata y prescindible.
 
 ### Tripulantes
 
@@ -168,6 +171,11 @@ mvn package
 java -jar target/avatar-battle-for-freedom.jar
 ```
 
+Para jugar sin compilar nada, descarga el jar de la
+[última release](https://github.com/ArturoFierroPardo/avatar-battle-for-freedom/releases/latest)
+y ejecuta `java -jar avatar-battle-for-freedom.jar`. Solo necesita un JRE 17 o
+posterior.
+
 Dos de los mensajes del juego llevan caracteres acentuados, así que en una
 consola que no esté en UTF-8 — típicamente el símbolo del sistema de Windows —
 conviene ejecutar antes `chcp 65001` para que se vean bien.
@@ -182,7 +190,7 @@ Otros comandos útiles:
 
 ```bash
 mvn test              # ejecuta la batería de pruebas
-mvn javadoc:javadoc   # genera el Javadoc dentro de target/
+mvn javadoc:javadoc   # genera el Javadoc en target/apidocs
 ```
 
 ---
@@ -334,24 +342,25 @@ src/main/java/
 ├── io/                        guardado y carga
 └── utils/                     lectura por consola
 
-src/test/java/                 77 pruebas con JUnit 5
+src/test/java/                 102 pruebas con JUnit 5
 ```
 
 ---
 
 ## Pruebas
 
-77 pruebas con JUnit 5 sobre la lógica de dominio: límites del tablero,
+102 pruebas con JUnit 5. Cubren la lógica de dominio — límites del tablero,
 escenarios, unidades, tripulantes, el ejército, las acciones del jugador y la
-persistencia.
+persistencia — y también el bucle de turnos y el menú, que se ejercitan con
+partidas guionizadas inyectadas por `Utils.usarEntrada`, capturando la salida
+por consola para comprobar lo que ve el jugador.
 
 ```bash
 mvn test
 ```
 
-Son pruebas de regresión tanto como pruebas unitarias: cada defecto de la lista
-de abajo tiene una prueba que lo fija, con un comentario que explica qué fallaba
-antes. La batería se comprobó por mutación — al reintroducir a mano los bugs
+Son pruebas de regresión tanto como pruebas unitarias: cada defecto corregido
+tiene una prueba que lo fija, con un comentario que explica qué fallaba antes. La batería se comprobó por mutación — al reintroducir a mano los bugs
 originales que arreglan, falla; al deshacerlo, vuelve a pasar entera.
 
 ---
