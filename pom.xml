@@ -91,6 +91,13 @@
                 <configuration>
                     <doclint>none</doclint>
                     <locale>es_ES</locale>
+                    <!-- Ruta de salida fija, en lugar de la que cambia segun
+                         la version de Maven, para que la publicacion en
+                         GitHub Pages siempre encuentre la documentacion. -->
+                    <reportOutputDirectory>${project.build.directory}</reportOutputDirectory>
+                    <destDir>apidocs</destDir>
+                    <windowtitle>Avatar: Battle for Freedom</windowtitle>
+                    <doctitle>Avatar: Battle for Freedom</doctitle>
                 </configuration>
             </plugin>
         </plugins>
